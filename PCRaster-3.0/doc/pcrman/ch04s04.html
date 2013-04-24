@@ -1,0 +1,280 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>4.4. Neighbourhood operations</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch04.html" title="Chapter 4. Cartographic Modelling"><link rel="prev" href="ch04s03.html" title="4.3. Point operations"><link rel="next" href="ch04s05.html" title="4.5. Area operations"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">4.4. Neighbourhood operations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s03.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Cartographic Modelling</th><td width="20%" align="right"> <a accesskey="n" href="ch04s05.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secstatneigh"></a>4.4. Neighbourhood operations</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatneighintro"></a>4.4.1. Introduction</h3></div></div></div><p>
+<a class="link" href="ch06s02.html" title="6.2. Neighbourhood operators">Neighbourhood operations</a> relate the cell 
+to its neighbours. The
+property of each cell is changed on basis of some kind of relation
+with neighbouring cells or flow of material from neighbouring cells. In
+other words, for each cell a new value is calculated (and stored as a
+new layer) on the basis of the map layer values in cells that have some
+kind of spatial association with the cell.
+</p><p>
+Five categories of spatial association may be represented by the
+neighbourhood operations. First, the new value of the cell may be
+calculated on basis of the properties of cells within a specified square
+window around the cell (<a class="xref" href="ch04s04.html#fig5.3" title="Figure 4.3. Neighbourhood operations within a window.">Figure 4.3</a>).
+
+ 
+<a class="indexterm" name="id2952396"></a>
+These so called window operations are
+described in <a class="xref" href="ch04s04.html#secstatneighwin" title="4.4.2. Window operations">Section 4.4.2</a>. With the gstat module, it is 
+possible to calculate properties of
+cells that are in a circular window around the cell.
+</p><p>
+
+  </p><div class="figure"><a name="fig5.3"></a><p class="title"><b>Figure 4.3. Neighbourhood operations within a window.</b></p><div class="figure-contents"><div><img src="figures/opwin.png" alt="Neighbourhood operations within a window."></div></div></div><p><br class="figure-break">
+
+
+Second, the new value of the cell may represent the local drain direction
+to a neighbouring cell in a local drain direction network over a digital
+elevation model. These are described in
+<a class="xref" href="ch04s04.html#secstatneighldd" title="4.4.3. Local drain direction operations">Section 4.4.3</a>.
+</p><p>
+Third,
+ 
+<a class="indexterm" name="id2952455"></a>
+the new value of the cell may be
+calculated on the basis of the cells that are on a path starting at a
+given source cell through consecutive neighbouring cells to the cell in
+question, see <a class="xref" href="ch04s04.html#fig5.4" title="Figure 4.4. Neighbourhood operations over a path. For each cell the NewMap value is calculated on the basis of Map1, Map2, Map3,... values on a path from a source cell.">Figure 4.4</a>. These operations with friction
+paths are described in <a class="xref" href="ch04s04.html#secstatneighfr" title="4.4.4. Friction paths">Section 4.4.4</a>. The path
+represents the shortest distance from the source cell, incorporating
+friction. Also simply the real distance of the path (for instance the
+shortest distance to a cell with a garden-restaurant) can be calculated,
+by specifying a friction of one.  
+</p><p>
+
+</p><div class="figure"><a name="fig5.4"></a><p class="title"><b>Figure 4.4. Neighbourhood operations over a path. For each cell the
+NewMap value is calculated on the basis of Map1, Map2, Map3,... values
+on a path from a source cell.</b></p><div class="figure-contents"><div><img src="figures/oppath.png" alt="Neighbourhood operations over a path. For each cell the NewMap value is calculated on the basis of Map1, Map2, Map3,... values on a path from a source cell."></div></div></div><p><br class="figure-break">
+
+
+Fourth,  
+ 
+<a class="indexterm" name="id2952516"></a>
+
+the new value of the cell may
+be calculated on the basis of cells that are upstream from the cell (i.e
+in the catchment of the cell, see <a class="xref" href="ch04s04.html#fig5.5" title="Figure 4.5. Neighbourhood operations within the catchment of a cell. For each cell the NewMap value is calculated on the basis of Map1, Map2, Map3,... values in the catchment of the cell, defined by the local drain direction network.">Figure 4.5</a>). All these
+operations use a local drain direction map for hydrologic modelling
+of transport and accumulation of material in a catchment. These are
+discussed in <a class="xref" href="ch04s04.html#secstatneightr" title="4.4.5. Transport of material over a ldd">Section 4.4.5</a>.
+
+</p><div class="figure"><a name="fig5.5"></a><p class="title"><b>Figure 4.5. Neighbourhood operations within the catchment of a cell. For
+each cell the NewMap value is calculated on the basis of Map1, Map2,
+Map3,... values in the catchment of the cell, defined by the local drain
+direction network.</b></p><div class="figure-contents"><div><img src="figures/opaccu.png" alt="Neighbourhood operations within the catchment of a cell. For each cell the NewMap value is calculated on the basis of Map1, Map2, Map3,... values in the catchment of the cell, defined by the local drain direction network."></div></div></div><p><br class="figure-break">
+
+
+Fifth,  
+
+<a class="indexterm" name="id2952573"></a>
+the spatial association may be related to the
+visibility of cells from a target cell, in an elevation model. These
+neighbourhood operations for visibility analysis are discussed in 
+<a class="xref" href="ch04s04.html#secstatneighvi" title="4.4.6. Neighbourhood operations: visibility analysis">Section 4.4.6</a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatneighwin"></a>4.4.2. Window operations</h3></div></div></div><p>
+In a neighbourhood operation within a window,
+a new value is calculated for each cell on the basis of the cell values
+within a square window, where the cell under consideration is in the centre
+of the window.
+</p><p>
+One can discriminate between two groups of window operations: first each
+cell value that is calculated may represent a statistical value of the cell
+values in the window (for instance mean, diversity or extreme values).
+These operations can also be used to find edges between polygons on a
+classified map (<a class="link" href="rn01re113.html" title="windowdiversity"><b>windowdiversity</b> operator</a>).
+For these <a class="link" href="ch06s02.html#groupwind" title="6.2.1. Windows operations">operations</a>
+the size of the square window can be specified by
+the user and is not restricted to whole magnitudes of cells.
+</p><p>
+Second square windows of 3 x 3 cells are used for the calculation of
+land surface topography, when the PCRaster map is a digital elevation
+model.  These <a class="link" href="ch06s02.html#groupderelev" title="6.2.2. Derivatives of elevation maps">operations</a> include the calculation of slope, aspect and curvature within the window.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatneighldd"></a>4.4.3. Local drain direction operations</h3></div></div></div><p>
+A local drain direction network is made with the operator
+<a class="link" href="rn01re53.html" title="lddcreate"><b>lddcreate</b></a> on basis of a map with elevation values.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatneighfr"></a>4.4.4. Friction paths</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="secstatneighfrintro"></a>4.4.4.1. Introduction</h4></div></div></div><p>
+This section explains the use of neighbourhood operations for calculating a new value for each cell in the basis of friction cell values on a path between a source cell and the cell under
+consideration. The accumulation of friction is computed while following
+a path from a source cell to each cell over a map with frictions (for
+instance costs). The path that is followed may be determined in two ways.
+First the paths chosen yield the smallest accumulation of friction. Second
+the paths may be restricted by the local drain directions on a local drain
+direction network. In the latter case, the accumulation of friction is
+calculated for paths in upstream or downstream directions over a local
+drain direction network.
+</p><p>
+The operations with friction paths are also used for calculating ordinary
+real distances over paths (for instance distance to a cell with a railway
+station). This is done by simply specifying a friction of one.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="secstatneighfrope"></a>4.4.4.2. Operations with friction paths</h4></div></div></div><p>
+The principle of accumulation of friction is easily explained by an
+example of a car driving on an asphalt road for 50 km from point A
+to point B. This will require x litres of fuel. More fuel is needed
+if the car travels over a rough surface, such as a sandy track,
+because the friction will be larger.  In general the amount of fuel
+used is equal to the friction distance, which is the distance to travel
+(<span class="emphasis"><em>distance</em></span>) times the amount of fuel used per distance
+(<span class="emphasis"><em>friction</em></span>). In this example, the friction depends
+on the sort of road on which the car has to travel. In an equation:
+
+</p><div class="informalexample"><div class="literallayout"><p>fuel used = <span class="emphasis"><em>distance</em></span><br>
+x <span class="emphasis"><em>friction</em></span></p></div></div><p>
+
+where the fuel used can be regarded as a synonym for the friction distance
+between point A and B.
+</p><p>
+All operations with friction use the concept of friction illustrated
+with the car example. A map with friction cell values is always used
+to calculate the friction distance between source cells and target
+cells. The friction values represent some kind of friction per distance
+unit on the map and may be different between the cells. For instance,
+the friction may represent the amount of fuel used per unit distance
+in each cell or the costs of constructing a road per unit distance
+in each cell. The friction distance ('amount of fuel used') between
+a source cell and a target cell is calculated by travelling over the
+path between the cells through consecutive neighbouring cells and
+calculating the total accumulation of friction distance. Each time
+that is travelled from one cell to the next the friction distance
+increases as follows: let <span class="emphasis"><em>friction</em></span>(sourcecell) and
+<span class="emphasis"><em>friction</em></span>(destinationcell) be the friction values at
+the cell where is moved from and where is moved to, respectively. While
+moving from the source cell to the destination cell the increase of
+friction distance is:
+
+</p><div class="informalexample"><div class="literallayout"><p><span class="emphasis"><em>distance</em></span><br>
+x ((<span class="emphasis"><em>friction</em></span>(sourcecell) +<br>
+<span class="emphasis"><em>friction</em></span>(destinationcell))/2)</p></div></div><p>
+
+where <span class="emphasis"><em>distance</em></span> is the distance between the source cell and the
+destination cell. <a class="xref" href="ch04s04.html#fig5.6" title="Figure 4.6. Path from a source cell to a target cell, crossing cell A.">Figure 4.6</a> gives a simple example of a path between a
+source cell and a target cell travelling through cell A, with a cell length of
+4.
+
+</p><div class="figure"><a name="fig5.6"></a><p class="title"><b>Figure 4.6. Path from a source cell to a target cell, crossing cell
+A.</b></p><div class="figure-contents"><div><img src="figures/fric.png" alt="Path from a source cell to a target cell, crossing cell A."></div></div></div><p><br class="figure-break">
+
+Let the initial friction distance at the source cell be zero. While moving
+from the source cell to cell A the friction distance increases by:
+
+</p><div class="informalexample"><div class="literallayout"><p> <br>
+ {{4 times lpar 10 + 5 rpar} over 2} = 30<br>
+ ,</p></div></div><p>
+
+and when moving from cell A to the target cell in diagonal direction, the
+friction distance increases by:
+
+</p><div class="informalexample"><div class="literallayout"><p> <br>
+ {{sqrt{4 sup 2 + 4 sup 2} times lpar 5 + 8 rpar<br>
+} over 2} = 36.77 </p></div></div><p>
+
+So, the total friction distance between the source cell and the target cell is:
+
+</p><div class="informalexample"><div class="literallayout"><p> <br>
+ 30 + 36.77 = 66.77 .</p></div></div><p>
+
+Of course, on a real map, many possible paths can be found between a
+source cell and a target cell, through different sets of neighbouring
+cells.  The path which is followed for each target cell can be determined
+in two ways. The <b>spread</b> operation (and the closely
+related <b>spreadzone</b> operation) uses the path that
+results in the shortest friction distance between a source cell and the
+cell under consideration. For instance, if you use friction values of
+1 the real distance to the source cell is calculated which is nearest
+as the crow flies (in a straight line). Also the path that is followed
+for each target cell may be determined by a local drain direction map:
+the operators <b>ldddist</b> and <b>spreadldd</b>
+(and the closely related <b>spreadlddzone</b>) calculate
+the friction distance in upstream and downstream direction from the
+source cells, respectively. The operator <b>slopelength</b>
+calculates the friction distance in downstream direction from the
+catchment divide. The above mentioned operations belong to both the
+group of <a class="link" href="ch06s02.html#groupspread" title="6.2.3. Spread operations">spread operations</a>
+and the group of operations with local drain
+direction maps (with friction like in <b>spread</b>) <a class="link" href="ch06s02.html#groupldd" title="6.2.4. Operations with local drain direction maps">???</a> .
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatneightr"></a>4.4.5. Transport of material over a ldd</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="secstatneightrintro"></a>4.4.5.1. Introduction</h4></div></div></div><p>
+The third group of neighbourhood operations are the operations for
+hydrologic modelling of transport of material over a local drain direction
+network. These operations, discussed in the next section, calculate the
+amount of material transported from upstream cells which is stored in the
+cell or transported out of the cell.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="secstatneightrope"></a>4.4.5.2. Operations for transport of material over a ldd</h4></div></div></div><p>
+The operations for transport of material over a 
+<a class="link" href="ch06s02.html#groupldd" title="6.2.4. Operations with local drain direction maps">local drain direction network</a> , can be used for modelling
+processes that include transport in a downslope direction. In most cases
+these will be used for hydrologic modelling of water transport or for
+modelling material transported by water.
+</p><p>
+
+  </p><div class="figure"><a name="fig5.7"></a><p class="title"><b>Figure 4.7. Material transport over a local drain direction network. Bottom:
+Local drain direction map defining pattern of transport through
+neighbouring cells. Top: system diagram of an open system representing
+one cell.</b></p><div class="figure-contents"><div><img src="figures/opsysacc.png" alt="Material transport over a local drain direction network. Bottom: Local drain direction map defining pattern of transport through neighbouring cells. Top: system diagram of an open system representing one cell."></div></div></div><p><br class="figure-break">
+
+
+The principle of material transport over this drainage network can be
+explained using the general systems approach.
+
+ 
+<a class="indexterm" name="id2953002"></a>
+
+In this approach each cell is an open
+system. The direction and pattern of transport of material through the
+map representing a set of systems is given by the <span class="emphasis"><em>local drain
+direction map</em></span>: for each cell it defines its upstream neighbours
+from which material is transported to the cell and its downstream
+neighbour to which material is transported, see <a class="xref" href="ch04s04.html#fig5.7" title="Figure 4.7. Material transport over a local drain direction network. Bottom: Local drain direction map defining pattern of transport through neighbouring cells. Top: system diagram of an open system representing one cell.">Figure 4.7</a>.
+
+The state of the cells at the start of the operation is defined by
+an input map that gives the amount of material that is available for
+transport.  This <span class="emphasis"><em>material map</em></span>  <a class="indexterm" name="id2953038"></a> contains for each cell the input of material
+to the cell at the start of the operation. For instance it may have cell
+values that represent the amount of rain falling in a cell or the amount
+of loose soil material that is available in a cell for transport.
+</p><p>
+
+The most simple transport operation <a class="link" href="rn01re08.html" title="accuflux"><b>accuflux
+</b></a> does not include conditions that impose restrictions
+on the amount of material that is transported: all material that flows into
+a cell flows out of the cell. This can be compared with the transport of
+water over an asphalt landscape, without infiltration or transpiration. But, in most cases
+a part of the inflow to the cell will be stored or lost in the cell and only the
+remaining material will be transported out of the cell. A well known
+example for such a transport process is the transport of water over an
+unsaturated soil: only the surplus of the amount of water used for
+saturation of the soil is transported. Several functions can be used to define
+this division in transport and storage. These are implemented in the
+different <a class="link" href="ch06s02.html#groupldd" title="6.2.4. Operations with local drain direction maps">accu... operations</a>.
+ 
+These operations use a <span class="emphasis"><em>transport condition map</em></span>
+  
+<a class="indexterm" name="id2953090"></a>
+, which for each cell contains a
+value related to the transport function. In the example given above it
+may contain the amount of water needed to saturate the soil in a cell.
+
+</p><p>
+
+Now we describe what happens to the cells on the map during transport
+(see also <a class="xref" href="ch04s04.html#fig5.7" title="Figure 4.7. Material transport over a local drain direction network. Bottom: Local drain direction map defining pattern of transport through neighbouring cells. Top: system diagram of an open system representing one cell.">Figure 4.7</a>). Transport starts at the cells at the divide of
+the catchment. For each cell somewhere on the map the total input of
+material consists of the fluxes of material from upstream cells plus the
+amount of material at the start of the operation in the cell itself (i.e. the
+value on the <span class="emphasis"><em>material map</em></span>). This total input is available for transport.
+A part of the material is stored in the map and is saved as a (new)
+<span class="emphasis"><em>result state map</em></span> layer, the remaining material flows out of the map,
+to the downstream cell, and is stored as a (new) <span class="emphasis"><em>result flux map</em></span> layer.
+The decision about the amount of material that is stored and transported
+respectively is defined by the sort of accumulation operation that is
+performed. It is always made on the basis of the cell value of the
+<span class="emphasis"><em>transport condition map</em></span> with respect to the total input to the
+cell.
+
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatneighvi"></a>4.4.6. Neighbourhood operations: visibility analysis</h3></div></div></div><p>
+
+
+The neighbourhood operation for visibility analysis ( <a class="link" href="ch06s02.html#groupvisi" title="6.2.5. Operations for visibility analysis">
+<b>view</b></a> use a map with elevation cell values over which
+the cells having direct line of sight from a given viewpoint or viewpoints
+are determined.
+
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.3. Point operations </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 4.5. Area operations</td></tr></table></div></body></html>

@@ -1,0 +1,27 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>timeplot</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re129.html" title="table"><link rel="next" href="ix01.html" title="Index"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">timeplot</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re129.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="ix01.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="timeplot"></a><div class="titlepage"></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+This page only affects the Windows version of PCRaster.
+</p></div><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Important</h3><p>
+The <code class="filename">timeplot</code> application is deprecated and no longer supported. For visualisation use the <code class="filename">aguila</code> application instead.
+
+For backwards compatibility timeplot is included in the distribution that by default will call <code class="filename">aguila</code>. You need to explictly set an option to continue using the old timeplot applications. Additional options are:</p><pre class="screen">--no-aguila-warning: disables the deprecation warning from now on
+--aguila-default: enables the deprecation warning from now on
+--old-timeplot: do not invoke aguila, but timeplot</pre><p>
+</p></div><div class="refnamediv"><h2>Name</h2><p>timeplot &#8212; 
+Plots timeseries in a x,y lineplot on the computer screen.
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>timeplot</b> [options] <code class="varname">timeseries</code>1 <code class="varname">timeseries</code>2.....<code class="varname">timeseries</code>n</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td valign="top"><code class="varname">timeseries</code>1-n</td><td class="type" valign="top">time series file (s)</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3074464"></a><h2>Operation</h2><p>
+Generates a x,y line plot of the timeseries <code class="varname">timeseries</code>1,
+<code class="varname">timeseries</code>2,...<code class="varname">timeseries</code>n. These files must contain the same
+number of timesteps (i.e. the same number of lines). All data in the
+timeseries are plotted in one graph. The time column of
+the timeseries files is printed on the x axis, the data columns on the y
+axis, using the same scale for all data columns.
+</p><p>
+The contents and <a class="link" href="ch02s05.html#secdatbasetimeintro" title="2.5.1. Introduction">format</a> of a timeseries file must match the dynamic model for which the time series is used.
+</p></div><div class="refsect1" lang="en"><a name="id3074508"></a><h2>See Also</h2><p> 
+</p></div><div class="refsect1" lang="en"><a name="id3074516"></a><h2>Examples</h2><p>
+Plotting one timeseries file:
+<br>
+</p><div class="literallayout"><p><br>
+timeplot rain.tss<br>
+</p></div><p>
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re129.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ix01.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">table </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Index</td></tr></table></div></body></html>

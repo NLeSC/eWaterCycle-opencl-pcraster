@@ -1,0 +1,630 @@
+<glossary>
+<title>Glossary</title>
+
+<glossdiv><title>A</title>
+<glossentry id="angle"><glossterm>angle</glossterm>
+<glossdef>
+	<para>
+Location attribute: the angle is the angle between the horizontal direction
+on the PCRaster map and the x axis of the real world coordinate system.
+	</para>
+	<glossseealso otherterm="locationattributes"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="area"><glossterm>area</glossterm>
+<glossdef>
+	<para>
+A fundamental spatial unit of a PCRaster map consisting of one cell or a
+set of cells.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="areamapsection"><glossterm>areamap section</glossterm>
+<glossdef>
+	<para>
+The section in a dynamic modelling script that defines the location attributes of the maps used in the model. 
+	</para>
+	<glossseealso otherterm="locationattributes"></glossseealso>
+	<glossseealso otherterm="dynamicmodellingscript"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="attribute"><glossterm>attribute</glossterm>
+<glossdef>
+	<para>
+Property of a geographic object or location.
+	</para>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>B</title>
+<glossentry id="booleandatatype"><glossterm>boolean data type</glossterm>
+<glossdef>
+	<para>
+data type for attributes that only may have a value TRUE (cellvalue 1) or FALSE (cell value 0).
+	</para>
+	<glossseealso otherterm="datatype"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+
+<glossdiv><title>C</title>
+<glossentry id="cartographicmodel"><glossterm>Cartographic Model</glossterm>
+<glossdef>
+	<para>
+A model that computes new attribute values from
+those attribute values already present. It represents one static change in the
+property of cells.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="cartographicmodellingscript"><glossterm>cartographic modelling script</glossterm>
+<glossdef>
+	<para>
+A script of a Cartographic Model. 
+	</para>
+<glossseealso otherterm="cartographicmodel"></glossseealso>
+<glossseealso otherterm="script"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="cell"><glossterm>cell</glossterm>
+<glossdef>
+	<para>
+The basic spatial element of a PCRaster map.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="celllength2"><glossterm>cell length</glossterm>
+<glossdef>
+	<para>
+Location attribute. The length of cells on a PCRaster map
+which is the same in horizontal and vertical direction. Measured in the
+distance unit of the real coordinate system.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="cellproperty"><glossterm>cell property</glossterm>
+<glossdef>
+	<para>
+The combined information at one cell location stored in one
+PCRaster map or several PCRaster maps.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="cellrepresentation"><glossterm>cell representation</glossterm>
+<glossdef>
+	<para>
+The method of storage used in the computer for cell values of PCRaster maps. 
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="column"><glossterm>column</glossterm>
+<glossdef>
+	<para>
+A column of cells in vertical direction on a PCRaster map.
+	</para>
+<glossseealso otherterm="numberofcolumns"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>D</title>
+<glossentry id="database"><glossterm>database</glossterm>
+<glossdef>
+	<para>
+A collection of interrelated information, usually stored on a
+harddisk. The PCRaster database includes data stored as binary PCRaster
+maps, and ascii formatted tables, time series and point data column files.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="datatype"><glossterm>data type</glossterm>
+<glossdef>
+	<para>
+Data description attached to a PCRaster map. It defines the scale
+and the domain of the data stored in the map and as result the behaviour
+with respect to operations performed upon the map. 
+	</para>
+<glossseealso otherterm="booleandatatype"></glossseealso>
+<glossseealso otherterm="nominaldatatype"></glossseealso>
+<glossseealso otherterm="ordinaldatatype"></glossseealso>
+<glossseealso otherterm="scalardatatype"></glossseealso>
+<glossseealso otherterm="directionaldatatype"></glossseealso>
+<glossseealso otherterm="ldddatatype"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="DynamicModel"><glossterm>Dynamic Model</glossterm>
+<glossdef>
+	<para>
+A model that computes new attribute values as a function
+of attribute changes over time. It represents a change in the property of
+cells over time.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="directionaldatatype"><glossterm>directional data type</glossterm>
+<glossdef>
+	<para>
+Data type for continuous data with a direction.
+	</para>
+<glossseealso otherterm="datatype"></glossseealso>
+<glossseealso otherterm="scalardatatype"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="dubblereal"><glossterm>dubble real</glossterm>
+<glossdef>
+	<para>
+Optional cell representation for scalar and directional data
+type, cell values stored in computer as REAL8.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="dynamicmodellingscript"><glossterm>dynamic modelling script</glossterm>
+<glossdef>
+	<para>
+Script of a Dynamic Model. 
+	</para>
+<glossseealso otherterm="DynamicModel"></glossseealso>
+<glossseealso otherterm="script"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="dynamicsection"><glossterm>dynamic section</glossterm>
+<glossdef>
+	<para>
+The iterative section in a dynamic modelling script which
+contains <pcr-op>calc</pcr-op> operations that are consecutively performed at
+each timestep. 
+	</para>
+<glossseealso otherterm="iterativesection"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>E</title>
+<glossentry id="expression"><glossterm>expression</glossterm>
+<glossdef>
+	<para>
+A PCRaster map or an operation resulting in a PCRaster map.
+	</para>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>I</title>
+<glossentry id="initialsection"><glossterm>initial section</glossterm>
+<glossdef>
+	<para>
+Cartographic Modelling script; the section containing the
+consecutively performed <pcr-op>calc</pcr-op> operations which describe the
+Cartographic Model. Dynamic Modelling script; the section which defines
+the map values of maps used in the dynamic section at the start of a model
+run. 
+	</para>
+<glossseealso otherterm="dynamicsection"></glossseealso>
+<glossseealso otherterm="section"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="input"><glossterm>input</glossterm>
+<glossdef>
+	<para>
+The set of one or more PCRaster maps, tables, time series or point
+data column files which are used in an operation to generate the result of
+the operation.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="iterativesection"><glossterm>iterative section</glossterm>
+<glossdef>
+	<para>
+iterative section: a section in a dynamic modelling script that describes the
+temporal change in map values. 
+	</para>
+<glossseealso otherterm="dynamicmodellingscript"></glossseealso>
+<glossseealso otherterm="dynamicsection"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>K</title>
+<glossentry id="keyword"><glossterm>keyword</glossterm>
+<glossdef>
+	<para>
+A primitive word used in a script written in the PCRaster
+modelling language. It is a word which has a special meaning in the
+PCRaster modelling language. It is typed in lower case. 
+	</para>
+<glossseealso otherterm="PCRastermodellinglanguage"></glossseealso>
+<glossseealso otherterm="script"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+
+
+
+<glossdiv><title>L</title>
+<glossentry id="largeinteger"><glossterm>larger integer</glossterm>
+<glossdef>
+	<para>
+large integer: Optional cell representation for nominal and ordinal data
+type; cell values are stored in computer as INT4. 
+	</para>
+<glossseealso otherterm="cellrepresentation"></glossseealso>
+<glossseealso otherterm="smallinteger"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="ldddatatype"><glossterm>ldd data type</glossterm>
+<glossdef>
+	<para>
+Data type for maps that represent a local drain direction network. 
+	</para>
+<glossseealso otherterm="datatype"></glossseealso>
+<glossseealso otherterm="localdraindirectionnetwork"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="localdraindirectionnetwork"><glossterm>local drain direction network</glossterm>
+<glossdef>
+	<para>
+PCRaster map representation of flow paths
+in a landscape. Each cell contains a pointer towards its downstream
+neighbour or no pointer in case it is a pit. 
+	</para>
+<glossseealso otherterm="outletpoint"></glossseealso>
+<glossseealso otherterm="pit2"></glossseealso>
+</glossdef>
+</glossentry>
+
+
+<glossentry id="locationattributes"><glossterm>location attributes</glossterm>
+<glossdef>
+	<para>
+The information entities attached to a PCRaster map
+which give together all spatial properties of the map.
+	</para>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+<glossdiv><title>M</title>
+<glossentry id="map"><glossterm>map</glossterm>
+<glossdef>
+	<para>
+The collection of digital information about a part of the earth's
+surface. The kind of maps used in PCRaster is the PCRaster map.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="module"><glossterm>module</glossterm>
+<glossdef>
+	<para>
+A piece of the PCRaster package with a distinct functionality.
+	</para>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>N</title>
+<glossentry id="nominaldatatype"><glossterm>nominal data type</glossterm>
+<glossdef>
+	<para>
+Data type for classified data without order.
+	</para>
+<glossseealso otherterm="datatype"></glossseealso>
+<glossseealso otherterm="ordinaldatatype"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="numberofcolumns"><glossterm>number of columns</glossterm>
+<glossdef>
+	<para>
+Location attribute. The number of columns in a PCRaster map. 
+	</para>
+<glossseealso otherterm="column"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="numberofrows"><glossterm>number of rows</glossterm>
+<glossdef>
+	<para>
+Location attribute. The number of rows in a PCRaster map. 
+	</para>
+<glossseealso otherterm="row"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+
+<glossdiv><title>O</title>
+<glossentry id="operation"><glossterm>operation</glossterm>
+<glossdef>
+	<para>
+One static manipulation of one or more database components
+with one operator or several operators nested in one operation resulting in
+one or more database components (PCRaster map, table, time series, point
+data column file).
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="operator"><glossterm>operator</glossterm>
+<glossdef>
+	<para>
+A primitive PCRaster 'function' of Map Algebra, Cartographic
+Modelling, Dynamic Modelling and GIS. It calculates a result on basis of
+one or more inputs. Both the result and the inputs may be a PCRaster map,
+table, time series or point data column file. 
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="ordinaldatatype"><glossterm>ordinal data type</glossterm>
+<glossdef>
+	<para>
+Data type for classified data with order. 
+	</para>
+<glossseealso otherterm="datatype"></glossseealso>
+<glossseealso otherterm="nominaldatatype"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="outletpoint"><glossterm>outlet point</glossterm>
+<glossdef>
+	<para>
+The pit cell at the end of a downstream path from a cell in a
+local drain direction network. 
+	</para>
+<glossseealso otherterm="localdraindirectionnetwork"></glossseealso>
+<glossseealso otherterm="pit2"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+
+<glossdiv><title>P</title>
+<glossentry id="PCRasterdatabase"><glossterm>PCRaster database</glossterm>
+<glossdef>
+	<para>
+The database of PCRaster; see database.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="PCRastermap"><glossterm>PCRaster map</glossterm>
+<glossdef>
+	<para>
+One of the kind of data in the PCRaster database. Contains
+spatial data of one attribute encoded in the form of a regular grid of cells
+covering an area. Binary format.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="PCRastermodellinglanguage"><glossterm>PCRaster modelling language</glossterm>
+<glossdef>
+	<para>
+The computer language provided by
+PCRaster for building Cartographic or Dynamic Models using a script.
+	</para>
+<glossseealso otherterm="script"></glossseealso>
+<glossseealso otherterm="cartographicmodel"></glossseealso>
+<glossseealso otherterm="DynamicModel"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="pit2"><glossterm>pit</glossterm>
+<glossdef>
+	<para>
+A cell in a local drain direction network that only has neighbours
+pointing towards it and no neighbours at lower or equal elevation that it
+can point to. 
+	</para>
+<glossseealso otherterm="localdraindirectionnetwork"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="pointdatacolumnfile"><glossterm>point data column file</glossterm>
+<glossdef>
+	<para>
+One of the kind of data in the PCRaster database.
+Contains ascii formatted point data (x,y coordinates with attribute
+value(s)).
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="projection"><glossterm>projection</glossterm>
+<glossdef>
+	<para>
+Location attribute. The projection of the real world co-
+ordinate system assigned to the PCRaster map. It is an x,y field (also used
+in basic mathematics). The x coordinates increase from left to right. The
+y coordinates increase from top to bottom or from bottom to top. 
+	</para>
+<glossseealso otherterm="locationattributes"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>R</title>
+<glossentry id="result"><glossterm>result</glossterm>
+<glossdef>
+	<para>
+The set of one or more PCRaster maps, tables, time series or point
+data column files that are generated by an operation.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="row"><glossterm>row</glossterm>
+<glossdef>
+	<para>
+PCRaster map; a series of cells in horizontal direction. 
+	</para>
+<glossseealso otherterm="numberofrows"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+<glossdiv><title>S</title>
+<glossentry id="scalardatatype"><glossterm>scalar data type</glossterm>
+<glossdef>
+	<para>
+data type for continuous data that do not represent a direction. 
+	</para>
+<glossseealso otherterm="datatype"></glossseealso>
+<glossseealso otherterm="directionaldatatype"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="script"><glossterm>script</glossterm>
+<glossdef>
+	<para>
+An ascii formatted computer programme of a Cartographic or
+Dynamic Model written in the PCRaster modelling language. 
+	</para>
+<glossseealso otherterm="PCRastermodellinglanguage"></glossseealso>
+</glossdef>
+</glossentry>
+
+
+<glossentry id="section"><glossterm>section</glossterm>
+<glossdef>
+	<para>
+A separate part of a script identified by a section keyword.
+	</para>
+<glossseealso otherterm="sectionkeyword"></glossseealso>
+<glossseealso otherterm="script"></glossseealso>
+</glossdef>
+</glossentry>
+
+<glossentry id="singlereal"><glossterm>single real</glossterm>
+<glossdef>
+	<para>
+Default cell representation for scalar and directional data type;
+cell values are stored as REAL4 in computer. 
+	</para>
+<glossseealso otherterm="cellrepresentation"></glossseealso>
+<glossseealso otherterm="script"></glossseealso>
+</glossdef>
+</glossentry>
+
+
+<glossentry id="sectionkeyword"><glossterm>section keyword</glossterm>
+<glossdef>
+	<para>
+A keyword that identifies the start of a section. 
+	</para>
+<glossseealso otherterm="keyword"></glossseealso>
+<glossseealso otherterm="section"></glossseealso>
+</glossdef>
+</glossentry>
+
+
+<glossentry id="smallinteger"><glossterm>small integer</glossterm>
+<glossdef>
+	<para>
+Cell representation for boolean and ldd data type, default for
+nominal, ordinal and ldd data type; cell values are stored as UINT1 in the
+computer. 
+	</para>
+<glossseealso otherterm="cellrepresentation"></glossseealso>
+<glossseealso otherterm="largeinteger"></glossseealso>
+</glossdef>
+</glossentry>
+
+
+<glossentry id="statement"><glossterm>statement</glossterm>
+<glossdef>
+	<para>
+One line in a section of a script terminated with a semi colon (;). 
+	</para>
+<glossseealso otherterm="section"></glossseealso>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+
+<glossdiv><title>T</title>
+<glossentry id="table2"><glossterm>table</glossterm>
+<glossdef>
+	<para>
+One of the kind of data in the PCRaster database. Contains relations
+between PCRaster maps. Ascii formatted.
+	</para>
+</glossdef>
+</glossentry>
+
+<glossentry id="timeseries"><glossterm>timeseries</glossterm>
+<glossdef>
+	<para>
+One of the kind of data used in the PCRaster database.
+Contains a time series of (aggregated) cell values. Ascii formatted.
+	</para>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+<glossdiv><title>V</title>
+<glossentry id="variable"><glossterm>variable</glossterm>
+<glossdef>
+	<para>
+A PCRaster map, table, time series or point data column file in
+a Cartographic Model or Dynamic Model. Unlike a keyword its name is
+chosen by the model builder and starts with an upper case.
+	</para>
+</glossdef>
+</glossentry>
+</glossdiv>
+
+
+
+</glossary>

@@ -1,0 +1,378 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>4.7. Command syntax and script files for cartographic modelling</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch04.html" title="Chapter 4. Cartographic Modelling"><link rel="prev" href="ch04s06.html" title="4.6. Map operations"><link rel="next" href="ch05.html" title="Chapter 5. Dynamic modelling"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">4.7. Command syntax and script files for cartographic modelling</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s06.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Cartographic Modelling</th><td width="20%" align="right"> <a accesskey="n" href="ch05.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secstatcom"></a>4.7. Command syntax and script files for cartographic modelling</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatcomintro"></a>4.7.1. Introduction</h3></div></div></div><p>
+
+
+PCRaster distinguishes two kind of operators. The first group of
+operators is meant for data management (including GIS functions); this is
+the group of data management operators in 
+<a class="xref" href="ch06.html" title="Chapter 6. Functional list of PCRaster operators">Chapter 6</a> 
+<a class="link" href="ch06s06.html" title="6.6. Data management">???</a>
+. The second
+group, which is by far the largest, is meant for Map Algebra, Cartographic
+Modelling and Dynamic Modelling. These are the <a class="link" href="ch06.html" title="Chapter 6. Functional list of PCRaster operators">groups of operators</a> for
+point operations, neighbourhood operations, area operations, map operations
+and time operations. 
+Of these, the time operations are only meant for Dynamic
+Modelling, which will be discussed in the next chapter (<a class="xref" href="ch05.html" title="Chapter 5. Dynamic modelling">Chapter 5</a>). All
+the operations of the second group, except the <b>table</b> operator,
+use the keyword <b>pcrcalc</b> in the command line (the next section
+gives the exact syntax). <b>pcrcalc</b> is the program that does these
+operations. This program is not used for the operators for data
+management and the <b>table</b> operator.  
+</p><p>
+
+
+Both operators that use <b>pcrcalc</b> and operators that do not use <b>pcrcalc</b>
+can be invoked from the command line by typing one operation after the
+command prompt. The command syntax of this application of the operator will be explained later in this section (<a class="xref" href="ch04s07.html#secstatcommandsynt" title="4.7.2. Command syntax">Section 4.7.2</a>) 
+</p><p>
+For Cartographic Modelling, the operations are combined in a script file.
+The operations in the script file are executed using the same <b>pcrcalc</b>
+program also used for separate <b>pcrcalc</b> operations. As a result only
+operations that use the <b>pcrcalc</b> program can be combined in a script
+file. Operations that do not use the <b>pcrcalc</b> program (data
+management operations, <b>aguila</b> and the <b>table</b> operator) are not used in a
+script file. <a class="xref" href="ch04s07.html#secstatcommandscript" title="4.7.3. Script files">Section 4.7.3</a> describes how to combine <b>pcrcalc</b>
+operations in a script file.  
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatcommandsynt"></a>4.7.2. Command syntax</h3></div></div></div><p>
+
+
+Both operations that use
+<b>pcrcalc</b> as well as operations that do not use <b>pcrcalc</b> can be invoked from
+the command line, by typing the operation after the command prompt.
+This section first describes the
+operations that do not use calc, second the syntax of the operations that use
+<b>pcrcalc</b> is given.
+</p><p>
+Operations that do not use <b>pcrcalc</b> such as <a class="link" href="ch06s06.html" title="6.6. Data management">data base management operations</a>
+ and the <b>table</b> operation) are performed by typing
+after the prompt:
+</p><p>
+
+</p><div class="informalexample"><div class="literallayout"><p>operator [options] <span class="emphasis"><em>InputFileName(s)</em></span> <span class="emphasis"><em>ResultFileName(s)</em></span></p></div></div><p>
+
+where operator is one of the non <b>pcrcalc</b> operators. Both the
+Inputfilename(s) and the Resultfilename(s) are filenames of one or more
+PCRaster maps, tables or point data column files. The kind of files depends
+of course on the operator, see for a description per operator 
+<a class="xref" href="rn01.html" title="List of PCRaster Operators">List of PCRaster Operators</a>. If more than one option
+is given, the options are separated by a space. For instance:
+
+</p><pre class="programlisting">col2map -S -v 3 colfile.txt sodium.map</pre><p>
+
+Operations that do use <b>pcrcalc</b> are given by typing after the prompt:
+
+</p><p>
+
+
+On MS-Windows:
+
+</p><div class="informalexample"><div class="literallayout"><p><b>pcrcalc</b> [options] <span class="emphasis"><em>Result</em></span> =<br>
+operator(<span class="emphasis"><em>expression</em></span>1,...<span class="emphasis"><em>expression</em></span>n)</p></div></div><p>
+
+In UNIX:
+                    
+</p><div class="informalexample"><div class="literallayout"><p><b>pcrcalc</b> [options] '<span class="emphasis"><em>Result</em></span> = operator(<span class="emphasis"><em>expression</em></span>1,...<span class="emphasis"><em>expression</em></span>n)'</p></div></div><p>
+
+where operator is one of the <b>pcrcalc</b> operators and
+<span class="emphasis"><em>expression</em></span>1,...<span class="emphasis"><em>expression</em></span>n are PCRaster maps or <b>pcrcalc</b>
+operations resulting in a PCRaster map with a data type that applies to the
+operator. In some cases a single number may be filled in for the
+expressions, see below. <span class="emphasis"><em>Result</em></span> is a PCRaster map. Sometimes no
+brackets are used or the syntax is somewhat different. For the syntax per
+operator, see <a class="xref" href="rn01.html" title="List of PCRaster Operators">List of PCRaster Operators</a>.
+Whether quotes are used or not depends on whether the command line
+contains a command shell special symbol   
+<a class="indexterm" name="id2953594"></a>
+. Without
+quotes a special symbol in the command is interpreted as having the
+meaning defined by MS-Windows or UNIX. In UNIX the = sign is a special
+symbol. As a result quotes <span class="emphasis"><em>must</em></span> be used in UNIX for all <b>pcrcalc</b>
+operations. No special symbols of MS-Windows are used in <b>pcrcalc</b> operations
+except the '&lt;' and '&gt;' symbols in a few operations. So in general quotes are
+not needed in MS-Windows. If the command contains a '&lt;' '&gt;' the quotes must be applied
+in the same way as it is (always) done in UNIX. 
+</p><p>
+
+
+The use of <b>pcrcalc</b> operations for <span class="emphasis"><em>expression</em></span>1,...<span class="emphasis"><em>expression</em></span>n
+allows for nested operations   
+<a class="indexterm" name="id2953648"></a>
+
+  
+<a class="indexterm" name="id2953668"></a>
+. The number of operations used to define these
+expressions (so called because these may be expressions that result in a
+PCRaster map) is practically unlimited. For each separate statement,
+<b>pcrcalc</b> is typed only once, at
+the start of the line. For instance:
+
+</p><pre class="programlisting">pcrcalc AspectTr.map = if(VegHeigh.map gt 5 then aspect(Dem.map)) </pre><p>
+
+uses the <b>if then</b>, <b>gt</b> and <b>aspect</b> operators (for a description,
+see <a class="xref" href="rn01.html" title="List of PCRaster Operators">List of PCRaster Operators</a>.
+Remember that the nested operations must result in correct data types
+  
+<a class="indexterm" name="id2953714"></a>
+. For instance, in the operation given above,
+the <b>gt</b> operation results in a map of boolean data type needed for the
+first expression of the <b>if then</b> operator. The second expression
+of the <b>if then</b> operator (typed after <span class="emphasis"><em>then</em></span>) may have any 
+<a class="link" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types">data type</a>, in this case it is directional. 
+
+</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="DataTyToNumb"></a>4.7.2.1. Numbers and data types</h4></div></div></div><p>
+<a class="indexterm" name="id2953760"></a>
+
+Using a plain number (giving no data type specification, for instance the
+'5' in the operation given above) for an <span class="emphasis"><em>expression</em></span> is possible if it is
+taken into account that the number that is filled in must be in
+the domain of the data type that is needed for the <span class="emphasis"><em>expression</em></span> under
+consideration. For instance a value 8.7 cannot be filled in if a nominal
+data type is needed
+. In addition, a plain number may
+not be used if for determination of the data type of <span class="emphasis"><em>Result</em></span> the data
+type of the <span class="emphasis"><em>expression</em></span> for which the number is filled in is
+needed. For instance the following operation is <span class="emphasis"><em>not correct</em></span>:
+
+</p><pre class="programlisting">pcrcalc Friction.map = if(Boolean.map then 1 else 2)</pre><p>
+
+because the data type of Friction.map cannot be determined on basis of '1'
+and '2'. In this kind of cases one of the <a class="link" href="ch06.html#grouptypeconvers" title="6.1.10. Data types: Conversion and assignment">data type 
+assignment operators</a> must be used; the correct
+operation for assigning a scalar data type to Friction.map is:
+
+</p><pre class="programlisting"> pcrcalc Friction.map = if(Boolean.map then scalar(1) else scalar(2)) </pre><p>
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatcommandscript"></a>4.7.3. Script files</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="secstatcommandscriptsimple"></a>4.7.3.1. Simple script files</h4></div></div></div><p>
+
+
+Most geographic analyses contain a number of steps. PCRaster can be
+used to write down these steps in one script file and execute these
+steps sequentially. The thus created scripts are called Cartographic
+Models.  A script contains a list of <b>pcrcalc</b> operations which describe
+the Cartographic Model. During execution of a script these operations
+are performed consecutively, from top to bottom in the script.  Two
+layouts of a script can be used: with or without the <span class="emphasis"><em>binding</em></span>
+section.  First we describe how to use the plain script without the
+binding section. In the second part of this section we describe the
+script with binding section. 
+</p><p>
+
+
+The script without binding has the following layout: 
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+operation of calc; <br><br>
+<br>
+operation of calc; <br><br>
+<br>
+... <br><br>
+<br>
+... <br>
+</p></div></div><p>
+
+The script contains only <b>pcrcalc</b> operations, other operations which do
+not use the <b>pcrcalc</b> program (for instance <b>table</b>) cannot be used in
+a script. Each <b>pcrcalc</b> operation is typed on a separate line, omitting
+the word <b>pcrcalc</b> from the operation and terminated with a semi colon
+(;). On the right side of the = sign, an operation may use a file (a
+PCRaster map or for the <b>lookup</b> operation a table) that is present in
+the database, a file that is defined in the script or a plain number.
+The result (on the left side) of an operation is always a PCRaster map.
+Remark lines are preceded by a # character: everything typed on a line
+after this character is ignored and has no effect on the function of the
+model. An example of a script file is:
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+# this is a cartographic modelling script file<br>
+Friction.map = lookupscalar(Friction.tbl,LandUse.map);<br>
+Friction.map = 2.5 * Friction.map;<br>
+CostDist.map = spread(Start.map,0,Friction.map);<br>
+</p></div></div><p>
+
+The first line is a remark, it is ignored by PCRaster. 
+In the second line the script generates a map Friction.map with the
+<b>lookupscalar</b> operator from the files friction.tbl and LandUse.map,
+which must be present in the database. In the third line the
+Friction.map is multiplied by 2.5. In the fourth line CostDist.map is
+generated from the Friction.map defined in the script and
+Start.map already present in the database. In the fourth line the
+Friction.map is taken resulting from the last operation defining this
+map, i.e. the values resulting from the operation in the third line.
+
+</p><p>
+
+
+Normally   
+<a class="indexterm" name="id2953943"></a>
+, without using <b>report</b> keywords,
+all resulting map values (on the left side of = sign) at the end of
+running a script are stored in the database, saving for each PCRaster map
+the last definition. In the example given above the Friction.map and the
+CostDist.map are stored in the database under these names. The last
+definition of Friction.map is stored, resulting from the third line.
+Alternatively specified results can be stored by typing the <b>report</b>
+keyword before a limited number of operations in the script. In that
+case, only the result of the operations preceded with <b>report</b> are
+stored. A certain resulting map name can be reported only once. For
+instance:
+
+  
+<a class="indexterm" name="id2953981"></a>
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+# example of a script file<br>
+Friction.map = lookupscalar(Friction.tbl,LandUse.map);<br>
+Friction.map = 2.5 * Friction.map; <br>
+report CostDist.map = spread(StartMap,0,Friction.map);<br>
+</p></div></div><p>
+
+This script only stores CostDist.map in the database. If in addition the
+operation in the <span class="emphasis"><em>second</em></span> line was also be preceded with <b>report</b>,
+then the values of the Friction.map resulting from the operation in this
+<span class="emphasis"><em>second</em></span> line would be stored too. If the operation in the third line
+would be preceded with <b>report</b>, the values of the Friction.map
+resulting from the operation in this <span class="emphasis"><em>third</em></span> line would be stored.
+Note that Friction.map may not be reported both in the second and the
+third line: this would result in reporting one map name twice in a
+script, which is not allowed.  
+</p><p>
+
+
+The ascii formatted script can be created with a text editor or with a word
+processing program storing the file as ascii text. A script
+  
+<a class="indexterm" name="id2954044"></a>
+is executed by typing after the command prompt:
+</p><p>
+
+
+</p><div class="informalexample"><div class="literallayout"><p><b>pcrcalc</b> -f <span class="emphasis"><em>ScriptFileName</em></span></p></div></div><p>
+
+where <span class="emphasis"><em>ScriptFileName</em></span> is the name of the ascii formatted script file.                                                                                                
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="secstatcommandscriptbinding"></a>4.7.3.2. Script files with binding section</h4></div></div></div><p>
+
+
+An extension to the plain script is the script with a binding section
+  
+<a class="indexterm" name="id2954100"></a>
+. In a plain script, files (PCRaster maps or
+tables) are directly linked to these in the PCRaster database: the names
+used in the script correspond with these in the database. A script with
+binding definitions allows for different names in the model part of the
+script. The binding binds the names of the files in the script to the
+names of the files in the PCRaster database. Often you may want to run a
+Cartographic Model script a number of times, each time with a different
+set of data files and with a different set of resulting files.  In most
+cases, these data files are used a large number of times throughout the
+program.  Using the binding, you only need to fill in the names of the
+files you want to use as input names and output names for the model run
+in the binding section, without changing all the file names in the rest
+of the script. Both file names used as input files for the model and
+names that are stored in the database during a model run with the
+<b>report</b> keyword may be given in the binding section. 
+
+</p><p>
+
+A script  
+<a class="indexterm" name="id2954153"></a>
+with a binding definition is divided up in
+two sections: the binding section and the initial section. It has a structure
+as follows:
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+<b>binding</b><br>
+ binding statement; <br><br>
+ ... <br>
+ ... <br>
+<br><br>
+<b>initial</b><br>
+<br><br>
+ operation of calc; <br>
+<br><br>
+ operation of calc; <br>
+<br><br>
+ ... <br>
+ ... <br>
+</p></div></div><p>
+
+The binding section starts with the section keyword <b>binding</b>. Each line after
+this keyword contains one binding statement. Each statement gives a
+name for a PCRaster map or table in the script that is different from the
+file name of that variable in the database. Both file names used as input
+files for the model and names that are stored to the database during a
+model run with the <b>report</b> keyword may be given. The name of a file
+in the database is bound to its name in the model with the following
+statement:
+
+</p><pre class="programlisting"> NameInModel = databasefilename;</pre><p>
+
+where databasefilename is the file name under which the variable is
+available in the database or will be stored to the database and
+NameInModel is the name used for the variable throughout the script.
+
+</p><p>
+
+Alternatively, a constant value can also be assigned to a PCRaster map
+variable. This applies only if ModelName is a PCRaster
+map which is an <span class="emphasis"><em>input</em></span> to the model:
+
+</p><pre class="programlisting"> NameInModel = value; </pre><p>
+
+where value is a number; NameInModel has this value throughout the
+Cartographic Model; its value cannot be changed. It has no data type
+attached to it. Attaching a data type to the PCRaster map NameInModel
+with a constant value is done by one of the 
+<a class="link" href="ch06.html#grouptypeconvers" title="6.1.10. Data types: Conversion and assignment">data type assignment operators</a>. 
+We advice to specify the data type always because most operations need to
+know the data type of the maps used. An example that assigns a boolean
+data type to NameInModel is:
+
+</p><pre class="programlisting">NameInModel = boolean(1);</pre><p>
+
+The data type assignment operators are the only <b>pcrcalc</b> operations that
+can be given in the binding section, other operators cannot be used.
+
+</p><p>
+
+Not all variable names need to be defined in the binding section; as
+said above, the filenames of the variables in the database can also be
+used in the script.  
+</p><p>
+
+
+The second section of a script with binding section is the initial
+section. It starts with the <b>initial</b> section keyword. The following
+lines contain the Cartographic Model, formatted in the same way as the
+plain script. Also the use of reports and # characters for remarks
+corresponds with the plain script.  Using a binding, the plain script
+with a <b>report</b> 
+<a class="link" href="ch04s07.html#scriptje">???</a>
+might look like this:
+
+</p><div class="example"><a name="id2954286"></a><p class="title"><b>Example 4.1.  Example of a cartographic modellinge script file</b></p><div class="example-contents"><div class="literallayout"><p><br>
+# Example of a cartographic modelling<br>
+# script file with binding and initial section<br>
+<br>
+binding<br>
+ # this is the binding section<br>
+ FrictionTable = Fr12.tbl;<br>
+ StartMap = Station.map;<br>
+ CostDistanceMap = CostRun1.map;<br>
+<br>
+initial<br>
+ # this is the initial section<br>
+ FrictionMap = lookup(FrictionTable,LandUse);<br>
+ FrictionMap = 2.5 * FrictionMap;<br>
+ report CostDistanceMap = spread(StartMap,0,FrictionMap);<br>
+</p></div></div></div><p><br class="example-break">
+
+The initial section has not been changed. The binding section binds the
+Station.map, already present in the database, to the name in the model
+StartMap. The table Fr12.tbl in the database is used as FrictionTable.
+LandUse is not bound in the binding section; as a result it must be present
+in the database as a map with name LandUse. The report
+CostDistanceMap is stored in the database under the name CostRun1.map.
+</p><p>
+A script with binding section is also ascii formatted text. It is executed in
+the same way as the plain script.
+</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.6. Map operations </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 5. Dynamic modelling</td></tr></table></div></body></html>

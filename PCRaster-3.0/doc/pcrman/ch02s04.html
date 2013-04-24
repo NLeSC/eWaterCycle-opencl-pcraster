@@ -1,0 +1,120 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.4. Tables</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch02.html" title="Chapter 2. The Database"><link rel="prev" href="ch02s03.html" title="2.3. PCRaster maps"><link rel="next" href="ch02s05.html" title="2.5. Time series"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.4. Tables</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03.html">Prev</a> </td><th width="60%" align="center">Chapter 2. The Database</th><td width="20%" align="right"> <a accesskey="n" href="ch02s05.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secdatbaselook"></a>2.4. Tables</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbaselookintro"></a>2.4.1. Introduction</h3></div></div></div><a class="indexterm" name="id2944014"></a><p>
+The concept of tables specifying relations between PCRaster maps
+was discussed earlier in this chapter (<a class="xref" href="ch02s02.html" title="2.2. Concepts, kinds of data used in the database">Section 2.2</a>). The following section (<a class="xref" href="ch02s04.html#secdatbaselookform" title="2.4.2. Format">Section 2.4.2</a>) describes the format used for tables. For creating and editing a table see <a class="xref" href="ch03s03.html" title="3.3. Tables: database management">Section 3.3</a>.
+
+</p><div class="table"><a name="tcolumtable"></a><p class="title"><b>Table 2.2. 
+Example of a column table. The first, second and third column give the values of expression1, expression2 and expression3 respectively; the fourth column contains the value fields.  
+</b></p><div class="table-contents"><table summary="
+Example of a column table. The first, second and third column give the values of expression1, expression2 and expression3 respectively; the fourth column contains the value fields.  
+" width="100%" border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td align="center"><p>&lt;2,&gt;</p></td><td align="center"><p>3</p></td><td align="center"><p>&lt;,12&gt;</p></td><td align="center"><p>1</p></td></tr><tr><td align="center"><p>&lt;,2]</p></td><td align="center"><p>3</p></td><td align="center"><p>&lt;,12&gt;</p></td><td align="center"><p>3</p></td></tr><tr><td align="center"><p>&lt;2,&gt;</p></td><td align="center"><p>14</p></td><td align="center"><p>&lt;,12&gt;</p></td><td align="center"><p>7</p></td></tr><tr><td align="center"><p>&lt;,2]</p></td><td align="center"><p>14</p></td><td align="center"><p>&lt;,12&gt;</p></td><td align="center"><p>9</p></td></tr><tr><td align="center"><p>&lt;2,&gt;</p></td><td align="center"><p>14</p></td><td align="center"><p>8</p></td><td align="center"><p>4</p></td></tr><tr><td align="center"><p>&lt;,2]</p></td><td align="center"><p>14</p></td><td align="center"><p>8</p></td><td align="center"><p>8</p></td></tr></tbody></table></div></div><p><br class="table-break">
+</p><p>
+
+</p><div class="table"><a name="tmatrixtable"></a><p class="title"><b>Table 2.3. 
+Example of a matrix table. The fields in the first row contain values of expression1; the fields in the first column contain values of expression2. The field in the top left corner is a dummy field. The remaining fields are value fields.
+</b></p><div class="table-contents"><table summary="
+Example of a matrix table. The fields in the first row contain values of expression1; the fields in the first column contain values of expression2. The field in the top left corner is a dummy field. The remaining fields are value fields.
+" width="100%" border="1"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td align="center"><p>-99</p></td><td align="center"><p>1</p></td><td align="center"><p>2</p></td><td align="center"><p>3</p></td><td align="center"><p>4</p></td></tr><tr><td align="center"><p>12</p></td><td align="center"><p>6.5</p></td><td align="center"><p>6.5</p></td><td align="center"><p>6</p></td><td align="center"><p>6</p></td></tr><tr><td align="center"><p>14</p></td><td align="center"><p>-4</p></td><td align="center"><p>-4</p></td><td align="center"><p>-4</p></td><td align="center"><p>-4</p></td></tr><tr><td align="center"><p>16</p></td><td align="center"><p>-13</p></td><td align="center"><p>-13</p></td><td align="center"><p>-12</p></td><td align="center"><p>-12</p></td></tr></tbody></table></div></div><p><br class="table-break">
+
+
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbaselookform"></a>2.4.2. Format</h3></div></div></div><p>
+Two formats for tables are used, a <span class="emphasis"><em>column table</em></span>
+and a <span class="emphasis"><em>matrix table</em></span>. By default, PCRaster uses
+column tables. If you want to specify relations between only two maps
+it is sometimes better to use matrices instead. This is done by setting
+the global option --matrixtable (for global options,
+see <a class="xref" href="ch03s06.html" title="3.6. Global options and local options">Section 3.6</a>). The formats of tables are:
+</p><p>
+1) <span class="emphasis"><em>column table</em></span>   
+ 
+<a class="indexterm" name="id2944521"></a>
+In the column table relations between the values
+of several maps <span class="emphasis"><em>expression</em></span>1,
+<span class="emphasis"><em>expession</em></span>2,...<span class="emphasis"><em>expression</em></span>n
+are given, where an <span class="emphasis"><em>expression</em></span> can be a PCRaster
+map or a computation with PCRaster operators resulting in a PCRaster
+map. For each combination of values of <span class="emphasis"><em>expression</em></span>1,
+<span class="emphasis"><em>expression</em></span>2,...<span class="emphasis"><em>expression</em></span>n
+a new value can be specified. Table <a class="xref" href="ch02s04.html#tmatrixtable" title="Table 2.3.  Example of a matrix table. The fields in the first row contain values of expression1; the fields in the first column contain values of expression2. The field in the top left corner is a dummy field. The remaining fields are value fields.">Table 2.3</a> gives an
+example of a column table.
+</p><p>
+ 
+<a class="indexterm" name="id2944576"></a>
+The column table is an ascii file that consists of a number of
+<span class="emphasis"><em>n</em></span>+1 columns.  The first <span class="emphasis"><em>n</em></span>
+columns are key columns, where <span class="emphasis"><em>n</em></span> is the number
+of maps.
+
+The key columns consist of key fields;
+ 
+<a class="indexterm" name="id2944608"></a>
+each key field is one value or a range of values. The key
+fields in the first column are linked to cell values of
+<span class="emphasis"><em>expression</em></span>1, the key fields in the second column
+to values on <span class="emphasis"><em>expression</em></span>2, and so on, where the
+key fields in the <span class="emphasis"><em>n</em></span>th column are linked to values
+on <span class="emphasis"><em>expression</em></span>n.  The last column (column number
+<span class="emphasis"><em>n</em></span>+1) contains so-called value fields;
+ 
+<a class="indexterm" name="id2944650"></a>
+these are new values that may be assigned to a new PCRaster
+map. Sometimes, if the <b>table</b> operator is used these
+will contain the number of cells (score) that match the key. Each row
+in the column table is called a tuple.
+ 
+<a class="indexterm" name="id2944674"></a>
+Of course, it consists of <span class="emphasis"><em>n</em></span> key fields and one
+value field.
+</p><p>
+The fields are separated by one or more spaces or tabs. The number of
+spaces or tabs does not matter. A value field is one single value. A key
+field is a single value, or a range of values, where a range of values
+is typed as: '[' or '&lt;' symbol, minimum value, comma (, character),
+maximum value, ']' or '&gt;' symbol. The minimum and maximum values are
+included in the range if square brackets ('[' and ']') are used, they
+are not included if point brackets ('&lt;' or '&gt;') are used. Omitting
+a value in the range definition means infinity. Ranges can be used for
+nominal, ordinal, scalar and directional data types. Values in keys
+are typed as an ordinary number (for instance 24.453) or by using
+<span class="emphasis"><em>base</em></span>  <sub>10</sub>  exponentials
+(for instance 32.45e3 means 32450). Column tables may consist of as
+many tuples as needed. Remember that when linking maps with the operator
+<a class="link" href="rn01re61.html" title="lookup"><b>lookup</b></a> , for each cell
+the value field is assigned of the <span class="emphasis"><em>first</em></span> tuple (from
+top to bottom) that matches the set of <span class="emphasis"><em>expression</em></span>1,
+<span class="emphasis"><em>expression</em></span>2,...<span class="emphasis"><em>expression</em></span>n
+values of the cell.
+</p><p>
+
+
+2) <span class="emphasis"><em>matrix table</em></span>
+ 
+<a class="indexterm" name="id2944758"></a>
+
+A 2D matrix table contains the relations between two expressions
+<span class="emphasis"><em>expression</em></span>1, <span class="emphasis"><em>expression</em></span>2, where
+an <span class="emphasis"><em>expression</em></span> is a PCRaster map or a computation
+with PCRaster operators resulting in a PCRaster map.  Table <a class="xref" href="ch02s04.html#tmatrixtable" title="Table 2.3.  Example of a matrix table. The fields in the first row contain values of expression1; the fields in the first column contain values of expression2. The field in the top left corner is a dummy field. The remaining fields are value fields.">Table 2.3</a> gives an example of a matrix table.
+</p><p>
+The matrix table is an ascii table with the following format. The first
+field in the top left corner of the matrix is not considered during
+PCRaster operations but is necessary to align the matrix; it is a dummy
+field and may have any value. The first row consists of this dummy field
+and the key fields
+ 
+<a class="indexterm" name="id2944800"></a>
+which are
+linked to <span class="emphasis"><em>expression</em></span>1. The first column
+consists of the dummy field and the key fields which are linked to
+<span class="emphasis"><em>expression</em></span>2. The key fields may be one single value
+or a range of values, where a range is specified in the same way as it
+is done in a column table (see above). The remaining fields in the table
+are value fields
+ 
+<a class="indexterm" name="id2944832"></a>
+and consist of the values which will be
+assigned to a new map. Or, if the <b>table</b> operator is used
+these will contain the number of cells (score) that match the key. In
+horizontal direction, fields must be separated by one or more spaces or
+tabs. All fields must be filled in.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.3. PCRaster maps </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 2.5. Time series</td></tr></table></div></body></html>

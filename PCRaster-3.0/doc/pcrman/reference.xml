@@ -1,0 +1,156 @@
+<bibliography>
+<title>Reference Pages</title>
+
+
+<!--
+# tags must start with authors name, complete all lowercase
+# year and teh a,b,c, etc.
+# list is alphabetically sorted
+# when putting books please add comments for
+# ISBN
+# bottom of this file are examples from lout documentation
+# please look and steal 
+-->
+
+
+<biblioentry id='berry87b'>
+<author><firstname>J.K.</firstname><surname>Berry</surname></author>
+<copyright>
+ <year>1987</year>
+</copyright>
+<title>Beyond Mapping: Concepts, Algorithms, and Issues in GIS</title>
+<publisher>
+ <publishername>World Books, GIS World Inc. Fort Collins, Colorada, USA</publishername>
+</publisher>
+<pagenums>246pp</pagenums>
+</biblioentry>
+
+
+<biblioentry id='chow88'>
+<authorgroup>
+ <author><firstname>V.T.</firstname><surname>Chow</surname></author>
+ <author><firstname>D.R.</firstname><surname>Maidment</surname></author>
+ <author><firstname>L.W.</firstname><surname>Mays</surname></author>
+</authorgroup>
+<copyright>
+ <year>1988</year>
+</copyright>
+<title>Applied Hydrology</title>
+<publisher>
+ <publishername>McGraw-Hill</publishername>
+</publisher>
+<isbn>0-07-100174-3</isbn>
+</biblioentry>
+
+
+<biblioentry id='horn81'>
+<biblioset relation='article'>
+<author><firstname>B.K.P.</firstname><surname>Horn</surname></author>
+ <copyright><year>1981</year></copyright>
+<title role='article'>Hill shading and the reflectance map</title>
+</biblioset>
+<biblioset relation='journal'>
+ <title>Proceedings of the I.E.E.E.</title>
+ <volumenum>69</volumenum>
+ <pagenums>14</pagenums>
+</biblioset>
+</biblioentry>
+
+
+<biblioentry id='mardia72'>
+<author><firstname>K.V.</firstname><surname>Mardia</surname></author>
+<copyright>
+ <year>1972</year>
+</copyright>
+<title>Statistics of Directional Data</title>
+<publisher>
+ <publishername>London: Academic Press</publishername>
+</publisher>
+</biblioentry>
+
+
+<biblioentry id='skidmore89'>
+<biblioset relation='article'>
+<author><firstname>A.K.</firstname><surname>Skidmore</surname></author>
+ <copyright><year>1989</year></copyright>
+<title role='article'>A Comparison of Techniques for Calculating Gradient and 
+ Aspect from a Gridded Digital Elevation Model.</title>
+</biblioset>
+<biblioset relation='journal'>
+ <title>International Journal of Geographical Information Systems</title>
+ <volumenum>3</volumenum>
+ <pagenums>323-334</pagenums>
+</biblioset>
+</biblioentry>
+
+
+<biblioentry id='strahler64'>
+<author><firstname>A.N.</firstname><surname>Strahler</surname></author>
+<copyright>
+ <year>1964</year>
+</copyright>
+<title>
+Quantitative geomorphology of drainage basins and channel networks, section 4-II. In: Handbook of Applied Hydrology (V.T. Chow, et al. (1988)).
+</title>
+<publisher>
+ <publishername>McGraw-Hill, New York USA</publishername>
+</publisher>
+<pagenums>4-39 4-76</pagenums>
+</biblioentry>
+
+
+<biblioentry id='tomlin80'>
+<author><firstname>C.D.</firstname><surname>Tomlin</surname></author>
+<copyright>
+ <year>1980</year>
+</copyright>
+<title>The Map Analysis Package (draft manual)</title>
+<publisher>
+ <publishername>Yale School of Forestry and Environmental Studies, New Haven, Connecticut</publishername>
+</publisher>
+</biblioentry>
+
+
+<biblioentry id='tomlin90'>
+<author><firstname>C.D.</firstname><surname>Tomlin</surname></author>
+<copyright>
+ <year>1990</year>
+</copyright>
+<title>Geographic Information Systems and Cartographic Modelling</title>
+<publisher>
+ <publishername>Prentice-Hall, Englewood Cliffs, New Jersey</publishername>
+</publisher>
+<isbn>0-13-350927-3</isbn>
+</biblioentry>
+
+
+
+<biblioentry id='wesseling93'>
+<author><firstname>C.G.</firstname><surname>Wesseling</surname></author>
+<copyright>
+ <year>1993</year>
+</copyright>
+<title>ADAM, an Error Propagation Tool for Geographical Information Systems</title>
+</biblioentry>
+
+
+
+<biblioentry id='zevenbergen87'>
+<biblioset relation='article'>
+<authorgroup>
+ <author><firstname>L.W.</firstname><surname>Zevenbergen</surname></author>
+ <author><firstname>C.R.</firstname><surname>Thorne</surname></author>
+</authorgroup>
+ <copyright><year>1981</year></copyright>
+<title role='article'>Quantitative analysis of land surface topography</title>
+ </biblioset>
+<biblioset relation='journal'>
+ <title>Earth Surface Processes and Landforms</title>
+ <volumenum>12</volumenum>
+ <pagenums>47-56</pagenums>
+</biblioset>
+</biblioentry>
+
+
+
+</bibliography>

@@ -1,0 +1,81 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>slopelength</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re90.html" title="slope"><link rel="next" href="rn01re92.html" title="spread"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">slopelength</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re90.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re92.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="slopelength"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>slopelength &#8212; 
+Accumulative-friction-distance of the longest accumulative-friction-path upstream over the local drain direction network cells against waterbasin divides
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>slopelength</b>( <code class="varname">ldd</code>, <code class="varname">friction</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">ldd</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">friction</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3031306"></a><h2>Options</h2><p class="option">
+--unittrue or --unitcell:</p><div class="variablelist"><dl><dt><span class="term">--unittrue</span></dt><dd><p> distance is measured in true distance (default)
+</p></dd><dt><span class="term">--unitcell</span></dt><dd><p> distance is measured in number of cell lengths
+</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id3031359"></a><h2>Operation</h2><p>
+
+For a cell on a local drain direction network its catchment is made up of
+the cell itself (the outflow cell) and all cells that drain to the cell. The
+catchment is circumscribed by the divide. Call the cells in the catchment
+against this divide the divide cells of the catchment: neighbouring cells of
+the divide cells are cells downstream of the divide cell in the same
+catchment as the divide cell or cells on the other side of the divide. As a
+result there are no cells that drain to a divide cell. For each divide cell a
+downstream path can be defined which begins at the centre of the divide
+cell, follows the local drain directions in downstream direction and stops
+at the centre of the outflow cell of the catchment.
+
+
+</p><p>
+
+For all cells the following procedure is performed: using the local drain
+direction network on <code class="varname">ldd</code> the divide cells of the cell its catchment are
+determined, where the cell itself is the outflow cell of the catchment. Now,
+for each divide cell the accumalative-friction distance over its downstream
+path to the outflow cell is calculated as follows: an amount of friction
+moves through the consecutively neighbouring downstream cells, following
+the downstream path of the divide cell, until it reaches the centre of the
+outflow cell under consideration. It accumulates each time it travels from
+one cell to its downstream next starting with an amount of 0 at the divide
+cell. The amount of friction which accumulates per unit distance when
+moving from one cell to the next is specified by the cell values on
+<code class="varname">friction</code>. Using the values on this expression, accumulation of
+friction when travelling from one cell to its first downstream cell is
+calculated as follows: Let <code class="varname">friction</code>(sourcecell) and
+<code class="varname">friction</code>(destinationcell) be the <code class="varname">friction</code> values at the
+cell where friction is transported from and at its downstream cell where
+friction is transported to, respectively. While moving from the source cell
+to the destination cell the amount of accumulated friction is incremented
+with:
+
+
+</p><p>
+
+distance x
+{(<code class="varname">friction</code>(sourcecell)+<code class="varname">friction</code>(destinationcell)}/2
+
+
+</p><p>
+
+where distance is the distance between the sourcecell and the destination
+cell. This distance equals the cell length if the source cell and the
+destination cell are neighbours in horizontal or vertical directions; it equals
+sqrt(2) multiplied with the cell length if the cells are neighbours in
+diagonal directions.
+
+
+</p><p>
+
+For all divide cells the accumulated-friction-distance of the downstream
+path to the outflow cell is determined. The accumulated-friction-distance
+of the downstream path resulting in the greatest accumulated-friction-
+distance is assigned to the outflow cell on <code class="varname">Result</code>. This procedure is
+performed for each cell, where each cell is regarded as a outflow cell of
+an catchment with one or several divide cells.  
+
+</p></div><div class="refsect1" lang="en"><a name="id3031457"></a><h2>Notes</h2><p>
+
+The values on <code class="varname">friction</code> must be larger than zero.
+A cell with a missing value on <code class="varname">ldd</code> is assigned a missing value on
+<code class="varname">Result</code>.
+A cell with missing value on <code class="varname">friction</code> is assigned a missing
+value on <code class="varname">Result</code>; all cells which are on the downstream path of the
+missing value are also assigned a missing value on <code class="varname">Result</code>, unless they
+also make part of another downstream path. 
+
+</p></div><div class="refsect1" lang="en"><a name="id3031494"></a><h2>Group</h2><p>This operation belongs to the group of  Neighbourhood operators; local drain directions </p></div><div class="refsect1" lang="en"><a name="id3031503"></a><h2>See Also</h2><p><a class="xref" href="ch04s04.html#secstatneighfr" title="4.4.4. Friction paths">Section 4.4.4</a> 
+<a class="xref" href="rn01re55.html" title="ldddist"><span class="refentrytitle">ldddist</span></a> 
+<a class="xref" href="ch06s02.html#groupspread" title="6.2.3. Spread operations">Section 6.2.3</a> 
+<a class="xref" href="rn01re56.html" title="lddmask"><span class="refentrytitle">lddmask</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3031533"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result1.map = slopelength(Ldd2.map,1)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/slopelength.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd2.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd2.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result2.map = slopelength(Ldd2.map,FrictMat.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/slopelength.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd2.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">FrictMat.map</code></td></tr><tr><td><div><img src="examples/slopelength.FrictMat.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re90.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re92.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">slope </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> spread</td></tr></table></div></body></html>

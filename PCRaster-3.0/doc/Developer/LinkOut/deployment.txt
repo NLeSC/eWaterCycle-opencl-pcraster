@@ -1,0 +1,33 @@
+Deployment info for library:
+  libPCRasterModelEngine.so
+
+PCRaster specific libraries provided:(1):
+  libPCRasterDal.so
+
+Libraries required on OS (actual paths may differ)(26):
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/qt-4.7.1/lib/libQtXml.so.4.7.1
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/boost-1.46.0/lib/libboost_system.so.1.46.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/boost-1.46.0/lib/libboost_filesystem.so.1.46.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/xerces-3.1.1/lib/libxerces-c-3.1.so
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/gdal-1.8.0/lib/libgdal.so.1.8.0
+  /lib/libdl-2.11.1.so
+  /lib/libpthread-2.11.1.so
+  /usr/lib/libstdc++.so.6.0.13
+  /lib/libgcc_s.so.1
+  /lib/libm-2.11.1.so
+  /lib/libc-2.11.1.so
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/geos-3.1.1/lib/libgeos-3.1.1.so
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/geos-3.1.1/lib/libgeos_c.so.1.6.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/qt-4.7.1/lib/libQtSql.so.4.7.1
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/qt-4.7.1/lib/libQtCore.so.4.7.1
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/boost-1.46.0/lib/libboost_date_time.so.1.46.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/boost-1.46.0/lib/libboost_regex.so.1.46.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/icu-4.4.2/lib/libicuuc.so.44.2
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/icu-4.4.2/lib/libicudata.so.44.2
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/icu-4.4.2/lib/libicui18n.so.44.2
+  /lib/librt-2.11.1.so
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/sqlite-3.7.5/lib/libsqlite3.so.0.8.6
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/unixodbc-2.3.0/lib/libodbc.so.1.0.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/unixodbc-2.3.0/lib/libodbcinst.so.1.0.0
+  /mnt/PcrTeamExtern/lsbcc-3.2_x86-64/expat-2.0.1/lib/libexpat.so.1.5.2
+  /lib/libz.so.1.2.3.3

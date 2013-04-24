@@ -1,0 +1,28 @@
+Issues
+Eerste twee genereren een hoop hand edits
+
+1) emphasis sub, sup and literal gaan niet altijd goed.
+ zie in _build/html
+  grep :sub *html
+  grep :emp *html
+
+b.v.
+secdatbase
+  in scalar data type section: sup
+clump
+ example 2  literal
+
+2) regels worden met n ertussen samengeplakt
+b.v.
+secdatabase
+
+coordinatesnof
+           ^
+anglennot
+     ^
+90ndegrees
+  ^
+
+3) anchor en/of indexterm element generen lege regel.
+b.v secdatabase bij de text
+this dummy field and the key fields

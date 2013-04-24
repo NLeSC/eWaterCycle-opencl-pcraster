@@ -1,0 +1,29 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.2. Introduction</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Python"><link rel="up" href="ch02.html" title="Chapter 2. PCRaster Python"><link rel="prev" href="ch02.html" title="Chapter 2. PCRaster Python"><link rel="next" href="ch02s03.html" title="2.3. Operators"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.2. Introduction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02.html">Prev</a> </td><th width="60%" align="center">Chapter 2. PCRaster Python</th><td width="20%" align="right"> <a accesskey="n" href="ch02s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id322972"></a>2.2. Introduction</h2></div></div></div><p>You can start using PCRaster Python by importing the main module in your Python script:</p><pre class="programlisting"># Python
+import PCRaster
+</pre><p>This will put all PCRaster functions into the pcraster namespace. Here is an example of how you can use the <code class="function">slope</code> function to calculate the slope of a digital elevation model:</p><pre class="programlisting"># Python
+import PCRaster
+
+gradient = PCRaster.slope("dem.map")
+PCRaster.report(gradient, "gradient.map")
+</pre><p>This is equivalent to the PCRcalc script</p><pre class="programlisting"># PCRcalc
+report gradient.map = slope(dem.map);
+</pre><p>After importing the pcraster module the <code class="function">slope</code> function is called with a filename as its argument. The function will open the raster file, read its values and calculate the slope. The resulting raster is returned and assigned to the variable <code class="varname">gradient</code>. 
+</p><p>
+Both, PCRcalc and PCRaster Python operations use exactly the same algorithm.
+If you compare the Python and the PCRcalc code you will see a minimal difference.
+For information about <code class="function">slope</code> function or any of the other functions of PCRaster you can look them up in the PCRaster reference manual.
+
+
+</p><p>The resulting gradient calculated above can be used as input to another function like this:</p><pre class="programlisting"># Python script
+import PCRaster
+
+gradient = PCRaster.slope("dem.map")
+smoothGradient = PCRaster.windowaverage(gradient, 3)
+PCRaster.report(smoothGradient, "smoothGradient.map")
+</pre><p>By combining functions like this environmental models can be created.</p><p>In the examples given so far we had to explicitly state the module which the PCRaster functions are part of (PCRaster). We can do better by importing all symbols from the pcraster module into the current scope. This way our script will become shorter and easier to read:</p><pre class="programlisting"># Python script
+from PCRaster import *
+
+gradient = slope("dem.map")
+smoothGradient = windowaverage(gradient, 3)
+report(smoothGradient, "smoothGradient.map")
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>From now on the <code class="function">import</code> statement will be discarded from the examples.</p></div><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>By importing all symbols from a module there is an increasing chance that symbols with the same name end op in the same namespace. Keep this in mind when, for example, the abs function seems to work but gives an unexpected result: which function got called, math.abs() or PCRaster.abs()?</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. PCRaster Python </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 2.3. Operators</td></tr></table></div></body></html>

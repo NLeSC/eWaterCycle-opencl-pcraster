@@ -1,0 +1,233 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>resample</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re127.html" title="mapattr"><link rel="next" href="rn02re129.html" title="table"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">resample</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re127.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re129.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="resample"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>resample &#8212; 
+Cuts one map or joins together several maps by resampling
+to the cells of the result map.
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>resample</b> [options] <code class="varname">Map</code>1 <code class="varname">Map</code>2....<code class="varname">PCRmap</code>n <code class="varname">Result</code></pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">Map</code>1-n</td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional (must have the same data type)</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">data type of <code class="varname">Map</code>1, <code class="varname">Map</code>2,...<code class="varname">Map</code>n</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3068483"></a><h2>Options</h2><p>
+general options (additional options for specifying the location attributes of
+<code class="varname">Result</code> are given in the description section):
+</p><p class="option">
+cell value assignment
+</p><div class="variablelist"><dl><dt><span class="term">-m</span></dt><dd><p> 
+for each cell on <code class="varname">Result</code>, the maximum value of the
+<code class="varname">Map</code>1, <code class="varname">Map</code>2,...<code class="varname">Map</code>n cells that cover
+the <code class="varname">Result</code> cell is taken (see also description). 
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+subpixellength
+</p><div class="variablelist"><dl><dt><span class="term">-e</span></dt><dd><p> 
+<span class="italic">subpixellength</span>: <span class="italic">subpixellength</span> must be a number equal to or
+between 0 and 2.5 (default 2.5). This options gives the subpixel length as
+percentage of the cell length on <code class="varname">Result</code>. Subpixels are used for
+calculating the percentage of a <code class="varname">Result</code> cell that is covered by a
+<code class="varname">Map</code>1, <code class="varname">Map</code>2,...<code class="varname">Map</code>n cell (see also description). If -e 0 is set,
+the highest accuracy possible (smallest subpixel length) is taken.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+missing value assignment
+</p><div class="variablelist"><dl><dt><span class="term">-p</span></dt><dd><p> 
+<span class="italic">percentmv</span>: <span class="italic">percentmv</span> must be a number
+equal to or between 0 and 100, default is 0. This option
+specifies the assignment of missing values. For each cell on
+<code class="varname">Result</code>, if the percentage of the cell that
+is covered by non missing value cells on <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n is less than <span class="italic">percentmv</span>, a missing value is assigned to the
+corresponding cell on <code class="varname">Result</code>.
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3068661"></a><h2>Operation</h2><p>
+With the <b>resample</b> operator
+one or more input maps <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n are pasted in a new
+map <code class="varname">Result</code>. The location attributes will be changed
+to the location attributes of <code class="varname">Result</code>. The way this is
+done depends on some options: you can specify the location attributes
+of <code class="varname">Result</code> with a clone map and paste in that map,
+or determine the location attributes of <code class="varname">Result</code> on
+basis of the input expressions (cookie cutter or cell size modifier);
+these options will be described below.
+</p><p>
+If several maps <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n are specified they
+must have the same data type and projection. The location attributes
+x<sub>UL</sub>,y<sub>UL</sub> coordinate, number of rows and columns and cell
+length may be different.  The angles of <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n may
+be different only if you use <b>resample</b>
+for pasting in a clone map, else these must be the
+same. If you specify more than one <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n, these maps may
+have any spatial location with respect to each other: they may overlap,
+may be adjoining or they may be separated in space.
+</p><p>
+Almost in any case, the separate cells on <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n will not exactly
+overlap the separate cells on <code class="varname">Result</code>. So
+the raster data on <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n must be
+resampled to the raster of <code class="varname">Result</code>. For
+each cell on <code class="varname">Result</code> this is done
+as follows: for each cell on <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n which is
+partly or entirely in the cell on <code class="varname">Result</code>
+the area of the <code class="varname">Result</code> cell covered by that
+cell is calculated. This is done by laying down a fine raster of
+subpixels over the <code class="varname">Result</code> cell (default 40 x
+40 subpixels per <code class="varname">Result</code> cell), and counting
+the number of subpixels covered by each <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n cell. These
+areas are used for assignment of the <code class="varname">Result</code>
+cell value: if the data type of <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n is scalar or
+directional an area weighted average of the <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n cell values
+is taken, where the weights are the numbers of subpixels
+covered by the cells. If the data type is boolean, nominal
+or ordinal the value is taken of the <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n cell which covers
+the largest area in the <code class="varname">Result</code> cell. If two or more
+cells both cover the same largest area, the maximum value of these cells
+is assigned. The maximum value is chosen in any case, if the option -m
+is set: the areas covered will be totally ignored.
+</p><p>
+The subpixel length is specified by the option -e <span class="italic">subpixellength</span>, with
+a default length of 2.5 % of the <code class="varname">Result</code> cell length,
+which results in 40 x 40 subpixels per <code class="varname">Result</code> cell:
+smaller subpixels will reduce the error made in the computation of the
+areas, but the time needed to perform the operation will increase.
+</p><p>
+As above said, the location attributes of the <code class="varname">Result</code> map can be specified in three ways:
+</p><p class="operation">
+with a clone map
+</p><div class="variablelist"><dl><dt><span class="term">
+specifying clonemap
+</span></dt><dd><p> 
+--clone <span class="italic">Clonemap</span>: <span class="italic">Clonemap</span> is taken as clone. If a global clonemap is set as a <a class="link" href="ch03s06.html#GOClone">global option </a>, the option can be omitted, the global clone map is taken as clone map. If the clone map is not set as a global option or if you want to use a different clone map than the global clone, you must specify the clone map in the command line with the option.
+</p></dd></dl></div><p class="operation">
+</p><p>
+This functionality of <b>resample</b> is performed if
+no other options are used than the general options described
+at the start of the <b>resample</b> text. The clone
+map must be given as described above. <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n will be pasted
+in <code class="varname">Result</code> which has the location attributes of
+the clone map. The clone map and each map <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n must have the same
+projection. The other location attributes may be different.
+</p><p class="operation">
+on basis of <code class="varname">Map</code>1, <code class="varname">Map</code>2,...<code class="varname">Map</code>n (cookie cutter)
+</p><div class="variablelist"><dl><dt><span class="term">
+specifying border around map(s)
+</span></dt><dd><p> 
+-b <span class="italic">borderwidth</span>: The smallest
+rectangle around cells (including missing value cells) is
+determined. <code class="varname">Result</code> will cover an area of this size
+plus borders or minus borders around this rectangle, where <span class="italic">borderwidth</span> is the width of the border. A
+positive <span class="italic">borderwidth</span> results in a
+larger map than the rectangle, a negative value in a smaller map. If
+-b 0 is specified <code class="varname">Result</code> will have (approximately)
+the size of the rectangle.
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+-c <span class="italic">borderwidth</span>: idem, the smallest rectangle around non missing value cells is determined.
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+map expansion or contraction
+</span></dt><dd><p> 
+-x: if the area covered as defined by -b <span class="italic">borderwidth</span> or -c
+<span class="italic">borderwidth</span> contains a fractional number of rows and columns of cells on <code class="varname">Result</code> the number of rows and columns is rounded off upwards: the map is expanded (default).
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+-a: if the area covered as defined by -b <span class="italic">borderwidth</span> or -c
+<span class="italic">borderwidth</span> contains a fractional number of rows and columns of cells on <code class="varname">Result</code> the number of rows and columns is rounded off downwards: the map is contracted.
+</p></dd></dl></div><p class="operation">
+</p><p>
+This functionality of <b>resample</b> (cookie
+cutter) generates a <code class="varname">Result</code> with location
+attributes determined on basis of <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n. One of the
+options -b <span class="italic">borderwidth</span> or -c
+<span class="italic">borderwidth</span> must be specified and
+additionally -x or -a and the general options (described at the start
+of the <b>resample</b> text) may be given (optional).
+</p><p>
+If more than one input map <code class="varname">Map</code>1,
+<code class="varname">Map</code>2,...<code class="varname">Map</code>n is given, these must
+have the same projection and angle; the remaining location attributes
+may be different. <code class="varname">Result</code> will have the same projection
+and angle as the input maps; the cell size is taken from the first input
+map (<code class="varname">Map</code>1). The x<sub>UL</sub>,y<sub>UL</sub> coordinates and the number of
+rows and columns are calculated as follows: first the operations related
+to the options -b <span class="italic">bordersize</span> or -c
+<span class="italic">bordersize</span> are performed: the smallest
+rectangle around the edges of the input maps is determined, including or
+excluding missing values. The rectangle is enlarged or reduced by adding
+or removing a border at all sides of the map. This new rectangle is the
+approximate size of the <code class="varname">Result</code>, its top left vertex is
+the x<sub>UL</sub>,y<sub>UL</sub> coordinate of <code class="varname">Result</code>. Rows and columns of
+cells are laid down in the rectangle, starting at x<sub>UL</sub>, y<sub>UL</sub>. If the number
+of columns or rows needed to fill up the rectangle is a fractional number
+the rectangle is somewhat (always less than one cel length) expanded or
+contracted at the right and bottom sides until a whole number of rows and
+columns of cells fits into the rectangle. This number of rows and columns
+is assigned to <code class="varname">Result</code>.  Expansion or contraction is
+specified with -x (default) or -a, respectively.
+</p><p class="operation">
+to modify cell length
+</p><div class="variablelist"><dl><dt><span class="term">
+celllength
+</span></dt><dd><p> 
+ -r <span class="italic">celllength</span>: <span class="italic">celllength</span> is the cell length which is assigned to <code class="varname">Result</code>
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+--unittrue or --unitcell
+</span></dt><dd><p> 
+--unittrue: <span class="italic">cellength</span> in the option -r is real distance (default)
+</p></dd><dt><span class="term">
+</span></dt><dd><p> 
+--unitcell: <span class="italic">cellength</span> in the option -r is distance in unit cell lengths
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+map expansion or contraction
+</p><div class="variablelist"><dl><dt><span class="term">
+-x: if the area covered by the smallest rectangle around the input maps
+contains a fractional number of rows and columns of <code class="varname">Result</code> cells the
+number of rows and columns is rounded off upwards: the map is expanded
+(default).
+</span></dt><dd><p> 
+</p></dd><dt><span class="term">
+</span></dt><dd><p> 
+-a: if the area covered by the smallest rectangle around the input maps
+contains a fractional number of rows and columns of <code class="varname">Result</code> cells the
+number of rows and columns is rounded off upwards: the map is
+contracted.
+</p></dd></dl></div><p class="operation">
+</p><p>
+This functionality of <b>resample</b> is meant for changing the cell size of
+the first input map. No clone map must be given. The option -r
+<span class="italic">cellength</span> must be set, additionally you can specify --unittrue or 
+--unitcell, -x or -a or the general options described at the top of the
+<b>resample</b> text.
+</p><p>
+It is quite unlikely that you want to specify more than one map, so
+first the operation with one map is explained. <code class="varname">Result</code> will have the
+projection, angle, x<sub>UL</sub>, y<sub>UL</sub> coordinate of the input map
+<code class="varname">Map</code>1. The cell length of the input map is changed according to the
+option -r <span class="italic">cellength</span> and this length is assigned to <code class="varname">Result</code>. The
+area covered by the input map is filled up with cells of the new cell
+size, starting at x<sub>UL</sub>,y<sub>UL</sub>. If this results in a fractional
+number of rows and columns the map is somewhat (less than one new cell
+length) expanded (default) or contracted until a whole number of columns
+and rows is reached. This number of rows and collumns is assigned to
+<code class="varname">Result</code>.
+</p><p>
+If more than one input map is given the operation performed corresponds
+with the operation as a cookie cutter (described above), but you can
+<span class="italic">not</span> use the options -b and -c: no borders can be specified.
+<code class="varname">Result</code> will approximately have the size of the smallest rectangle
+around cells (including missing value cells) on the input maps, x<sub>UL</sub>,y<sub>UL</sub> will be the top left vertex of the rectangle.
+</p></div><div class="refsect1" lang="en"><a name="id3069549"></a><h2>See Also</h2><p><a class="link" href="ch03s02.html#secimportmaptype" title="3.2.3. Cutting or joining maps; changing geographical location attributes or data types">Import map types</a> 
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re127.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re129.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">mapattr </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> table</td></tr></table></div></body></html>

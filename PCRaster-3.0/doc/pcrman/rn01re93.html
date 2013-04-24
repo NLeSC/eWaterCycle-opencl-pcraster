@@ -1,0 +1,69 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>spreadldd</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re92.html" title="spread"><link rel="next" href="rn01re94.html" title="spreadlddzone"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">spreadldd</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re92.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re94.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="spreadldd"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>spreadldd &#8212; 
+Total friction of the shortest accumulated friction downstream path over map with 
+friction values from an source cell to cell under consideration
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>spreadldd</b>( <code class="varname">ldd</code>, <code class="varname">points</code>, <code class="varname">initialfrictiondist</code>, <code class="varname">friction</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">ldd</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">points</code></td><td class="type" valign="top">boolean, nominal, ordinal</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">initialfrictiondist</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">friction</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3033577"></a><h2>Options</h2><p class="option">
+--unittrue or --unitcell</p><div class="variablelist"><dl><dt><span class="term">--unittrue</span></dt><dd><p> distance is measured in true distance (default)
+</p></dd><dt><span class="term">--unitcell</span></dt><dd><p> distance is measured in number of cell lengths</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id3033629"></a><h2>Operation</h2><p>
+
+The expression <code class="varname">points</code> identifies those cells from which the shortest
+friction-distance to every cell centre is calculated. The spreading for
+determination of these friction-distances starts at the centre of cells which
+have a non zero value on <code class="varname">points</code>. The initial friction distance (at the
+start of the spreading) is taken from the values at these point cells on
+<code class="varname">initialfrictiondist</code>. During spreading a path is followed over the consecutive
+neighbouring cells. While following this path the friction-distance
+increases. The increase of friction-distance per unit distance is specified
+by the cell values on <code class="varname">friction</code>. Using these values, increase
+when travelling from one cell to its neighbouring cell is calculated as
+follows: Let <code class="varname">friction</code>(sourcecell) and
+<code class="varname">friction</code>(destinationcell) be the <code class="varname">friction</code> values at the
+cell where is moved from and where is moved to, respectively. While
+moving from the source cell to the destination cell the increase of friction-
+distance is:
+
+
+</p><p>
+
+distance x
+{(<code class="varname">friction</code>(sourcecell)+<code class="varname">friction</code>(destinationcell)}/2
+
+
+</p><p>
+
+where distance is the distance between the sourcecell and the destination
+cell. This distance equals the cell length if the source cell and the
+destination cell are neighbours in horizontal or vertical directions; it equals
+sqrt(2) multiplied by the cell length if the cells are neighbours in
+diagonal directions.
+
+
+</p><p>
+
+During operation of the command, the spreading is executed from all non
+zero cells on <code class="varname">points</code>, over all possible paths. For determination of the
+friction-distance cell values on <code class="varname">Result</code>, for each cell the path from a
+non zero cell on <code class="varname">points</code> is chosen with the shortest friction-distance.
+So during the execution of the <b>spreadldd</b> operation, for each cell, the
+friction-distance for each possible path from the non zero cells on <code class="varname">points</code>
+to the cell under consideration is calculated and then the path with the
+shortest friction-distance is chosen. On <code class="varname">Result</code> each cell has a value
+which is the friction-distance covered when moving over this shortest path
+from a non zero cell on <code class="varname">points</code>.
+
+</p></div><div class="refsect1" lang="en"><a name="id3033738"></a><h2>Notes</h2><p>
+
+The values on <code class="varname">friction</code> must be larger than zero. 
+</p><p>
+
+Missing value cells on <code class="varname">points</code>, <code class="varname">initialfrictiondist</code> and <code class="varname">friction</code> are
+assigned a missing value on <code class="varname">Result</code>. Additionally, potential shortest paths
+that cross missing value cells are ignored. 
+</p><p>
+
+If a cell has no source cell (i.e. a non zero cell value on <code class="varname">points</code>) on its
+upstream path or paths it is assigned a missing value.
+
+</p></div><div class="refsect1" lang="en"><a name="id3033783"></a><h2>Group</h2><p>This operation belongs to the group of  Neighbourhood operators; spread operators </p></div><div class="refsect1" lang="en"><a name="id3033791"></a><h2>See Also</h2><p><a class="xref" href="ch04s04.html#secstatneighfr" title="4.4.4. Friction paths">Section 4.4.4</a> 
+<a class="xref" href="rn01re55.html" title="ldddist"><span class="refentrytitle">ldddist</span></a> 
+<a class="xref" href="rn01re91.html" title="slopelength"><span class="refentrytitle">slopelength</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3033815"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result1.map = spreadldd(Ldd2.map, Points1.map,0,1)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/spreadldd.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd2.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Points1.map</code></td></tr><tr><td><div><img src="examples/spreadldd.Points1.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result2.map = spreadldd(Ldd2.map, Points2.map,Initial.map,FrictMat.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/spreadldd.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd2.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Points2.map</code></td></tr><tr><td><div><img src="examples/spreadldd.Points2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Initial.map</code></td></tr><tr><td><div><img src="examples/spreadldd.Initial.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">FrictMat.map</code></td></tr><tr><td><div><img src="examples/spreadldd.FrictMat.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re92.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re94.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">spread </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> spreadlddzone</td></tr></table></div></body></html>

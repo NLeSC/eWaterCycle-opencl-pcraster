@@ -1,0 +1,174 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>asc2map</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02.html" title="PCRaster applications"><link rel="next" href="rn02re123.html" title="col2map"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">asc2map</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re123.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="asc2map"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>asc2map &#8212; 
+Converts from ascii file format to PCRaster map format
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>asc2map</b> [options] <code class="varname">asciifile</code> <code class="varname">PCRresult</code></pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td valign="top"><code class="varname">asciifile</code></td><td class="type" valign="top">asciifile</td></tr><tr><td rowspan="2" valign="top"><code class="varname">PCRresult</code></td><td class="type" valign="top">specified by data type option; if data type option is not set: data type of <span class="italic">PCRclone</span></td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3055568"></a><h2>Options</h2><p>
+Options can be given related to the layout of <code class="varname">asciifile</code> and the way <code class="varname">asciifile</code> must be read. These options are described in the operation section. Other options are:
+</p><p class="option">
+--clone <span class="italic">PCRclone</span></p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+<span class="italic">PCRclone</span> is taken as clonemap. If you have set a global clonemap as <a class="link" href="ch03s06.html#GOClone">global option</a>, you don't need to set <b>clone</b> in the command line: the clonemap you have set as global option is taken as clonemap. If you have not set a global clonemap or if you want to use a different clonemap than the global clonemap, you must specify the clonemap in the command line with the <b>clone</b> option.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-B, -N, -O, -S, -D and -L</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+This data type option specifies the data type which is assigned to <code class="varname">PCRresult</code> (respectively boolean, nominal, ordinal, scalar, directional, ldd). If the option is not set, <code class="varname">PCRresult</code> is assigned the data type of <span class="italic">PCRclone</span> or the global clone. The data in <code class="varname">asciifile</code> must be in the domain of the data type which is assigned to <code class="varname">PCRresult</code>. For description of these domains see the description of the different<a class="link" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types"> data types</a>
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+--single or --double and --small or --large</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p>
+In most case, the default cell representation will be sufficient. If you want, you can specify the cell representations:<br>
+Scalar and directional data types
+</p></dd><dt><span class="term">--single</span></dt><dd><p>
+cell values are represented by single real cell representations (default, single, precision)
+</p></dd><dt><span class="term">--double</span></dt><dd><p>
+cell values are represented by double real cell presentations (double precision)
+</p></dd><dt><span class="term"></span></dt><dd><p>
+Nominal and ordinal data types
+</p></dd><dt><span class="term">--small</span></dt><dd><p> 
+cell values are represented by small integer cell representaiton (default)
+</p></dd><dt><span class="term">--large</span></dt><dd><p> 
+cell values are represented by large integer cell representation
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+if option -D is set; --degrees of --radians</p><div class="variablelist"><dl><dt><span class="term">--degrees</span></dt><dd><p> 
+values on <code class="varname">asciifile</code> are interpreted as degrees (default)
+</p></dd><dt><span class="term">--radians</span></dt><dd><p> 
+values on <code class="varname">asciifile</code> are interpreted as radians 
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-m <span class="italic">nodatavalue</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+<span class="italic">nodatavalue</span> is the value in <span class="italic">columnfile</span> which is converted to a missing value on <code class="varname">PCRresult</code>. It can be one ascii character (letters, figures, symbols) or a string of ascii charaters. For instance: -m -99 -98. or -m j83s0w. Default, if this option is not set, 1e31 is recognized as a missing value.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-s <span class="italic">separator</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+By default, whitespace (one or more tabs, spaces) is recognized as separator between the values of a row in the <code class="varname">asciifile</code>. If the values are separated by a different separator, you can specify it with the option. The <span class="italic">separator</span> can be one of the ascii characters (always one). In that case, <b>asc2map</b> recognizes the specified separator with or without whitespace as separator. For instance, if the values in <code class="varname">asciifile</code> are separated by a ; character followed by 5 spaces, specify -s ; in the command line (you do not need to specify the whitespace characters).
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3055950"></a><h2>Operation</h2><p>
+
+The <span class="italic">asciifile</span> is converted to
+<code class="varname">PCRresult</code>, which is an expression in PCRaster map
+format. <code class="varname">PCRresult</code> is assigned the location attributes
+of <span class="italic">PCRclone</span> (number of rows and columns, cell size,
+x and y coordinates), or if the option --clone is not
+set in the command line the location attributes of the 
+<a class="link" href="ch03s06.html#GOClone">global clone</a>. The
+<code class="varname">asciifile</code> must contain data values separated by one or
+more spaces or tabs.  Values may contain the characters: -eE.0123456789.
+Valid values are for instance:
+</p><div class="informalexample"><div class="literallayout"><p><br>
+-3324.4E-12 for -3324.4 x 10<sup>-12</sup> <br>
+.22 for 0.22<br>
+</p></div></div><p>
+</p><p>
+
+<span class="italic"> simple conversion</span><br>
+The most simple conversion is a conversion ignoring the layout of your
+data on the <code class="varname">asciifile</code> (ordering of data by rows, row
+definitions or headers for instance). This simple conversion is performed
+default. All the characters on your <code class="varname">asciifile</code> will be
+interpreted as data. The operator scans the <code class="varname">asciifile</code>
+starting at the top line from left to right, than the second line from
+left to right etc. Each time a value is scanned it is assigned to a cell
+on <code class="varname">PCRresult</code> until <code class="varname">PCRresult</code> is
+totally filled with cell values. If the <code class="varname">asciifile</code>
+contains a larger number of values than the number of cells on
+<code class="varname">PCRresult</code>, the remaining values are simply ignored. The
+values are assigned to <code class="varname">PCRresult</code> starting with the
+top row on the map and ending with the bottom row. The first value which
+is filled in is the first value in the <code class="varname">asciifile</code>, the
+second value is the second value in the <code class="varname">asciifile</code> etc..
+
+<br>
+
+This conversion imposes almost no restriction on the layout
+of the <code class="varname">asciifile</code>: if your data <span class="italic">are</span> ordered in a number of rows and
+columns which corresponds with the number of rows and columns on
+<code class="varname">PCRresult</code> it will result in a correct conversion,
+but if they are not ordered this way (for instance they are on one line
+in the <code class="varname">asciifile</code>) a conversion is also possible.
+</p><p>
+<span class="italic">conversion from ARC/INFO ascii files</span>
+<br>
+In ARC/INFO, grid maps can be converted to an formatted ascii file using
+the ARC/INFO gridascii command. These output files from ARC/INFO
+are converted to the PCRaster map format with <b>asc2map</b>
+using the option -a without setting the options -s, -m, -h and -r. These
+latter options
+ will be totally ignored if you set them in combination with -a.
+The output <code class="varname">asciifile</code> from ARC/INFO will contain
+a header.  The number of rows and columns of the original ARC/INFO map
+given in the header must correspond with the number of rows and columns
+of <span class="italic">PCRclone</span>. The remaining location
+attributes in the header are ignored during conversion since they are
+taken from <span class="italic">PCRclone</span> (cell size and
+x,y coordinates).  If the header contains a no_data_value, each value in
+the <code class="varname">asciifile</code> which corresponds with the no_data_value
+is assigned a missing value on <code class="varname">PCRresult</code>.  If the
+header does not contain a no_data_value the value -9999 is recognized
+as a missing value.
+</p><p>
+
+<span class="italic">conversion from Genamap ascii files</span>
+<br>
+In Genamap, grid maps can be converted to an formatted <code class="varname">asciifile</code>
+using the Genamap audit command. These output files from Genamap are
+converted to the PCRaster map format with <b>asc2map</b> using the option
+-g. The number of rows and columns of the original Genamap map, given
+in the header of the output file from Genamap must correspond with the
+number of rows and columns of <span class="italic">PCRclone</span>. Assignment of missing
+values can be specified by the option -m. Do not use the options -s, -h and -r
+in addition to -g. If you do set them, they will be totally ignored.
+</p><p>
+<span class="italic">conversion from asciifiles with an exotic format</span>
+<br>
+Two options can be used to impose the command to take into account the
+layout of your <code class="varname">asciifile</code>. They can not be used in combination with the
+options -a and -g.
+<br>
+-h <span class="italic">asciilinesheader</span>
+<br>
+This is used if the <code class="varname">asciifile</code> contains a header with
+information which must be ignored during scanning. The option -h must
+be followed by <span class="italic">linesheader</span> which
+must be whole number larger than 0. This is the number of lines which
+will be skipped at the top of the <code class="varname">asciifile</code>. The
+<code class="varname">asciifile</code> is scanned starting at line <span class="italic">linesheader</span>.
+
+<br>
+-r <span class="italic">asciilinesbeforemaprow</span>
+<br>
+The option -r results in skipping of data in <code class="varname">asciifile</code>
+each time before <b>asc2map</b> starts with
+filling a new row on <code class="varname">PCRresult</code>. Rows
+on <code class="varname">PCRresult</code> are filled in as follows:
+<br> First a number of lines on <code class="varname">asciifile</code>
+is skipped. The number of lines which is skipped is given by
+<span class="italic">asciilinesbeforemaprow</span>, it must
+be a whole value equal to or larger than 0. Then, the asciifile
+is scanned until the first row on <code class="varname">PCRresult</code> is
+filled with data.  At that point, the remaining data on the line in
+<code class="varname">asciifile</code> are skipped plus data on the next <span class="italic">asciilinesbeforemaprow</span> number of lines. Then,
+the next row on <code class="varname">PCRresult</code> is filled with the data
+read from the row on <code class="varname">asciifile</code> after the skipped rows.
+</p></div><div class="refsect1" lang="en"><a name="id3056309"></a><h2>Notes</h2><p>
+Using <b>asc2map</b> for generating a <code class="varname">PCRresult</code> of data type ldd is
+quite risky: probably it will result in a ldd which is <a class="link" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types"> unsound</a>. 
+If you do want to create a <code class="varname">PCRresult</code> of data type ldd use the operator
+<b>lddrepair</b> afterwards. This operator will modify the ldd in such a way
+that it will be sound.
+</p></div><div class="refsect1" lang="en"><a name="id3056356"></a><h2>Group</h2><p>This operation belongs to the group of  Creation of PCRaster maps</p></div><div class="refsect1" lang="en"><a name="id3056355"></a><h2>See Also</h2><p><a class="xref" href="rn02re123.html" title="col2map"><span class="refentrytitle">col2map</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3056368"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">asc2map --clone mapclone.map -S -m mv -v 4 AscFile1.txt Result1.map</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/asc2map.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">AscFile1.txt</code></pre></td></tr><tr><td><pre class="programlisting">210    2.5 3    8
+2.7   -0.5 0    4
+MV     3.2 0.01 2 
+
+        </pre></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">mapclone.map</code></td></tr><tr><td><div><img src="examples/mapclone.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">asc2map --clone mapclone.map -D -a AscFile2.txt Result2.map</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/asc2map.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">AscFile2.txt</code></pre></td></tr><tr><td><pre class="programlisting">NCOLS 4
+NROWS 3
+XLLCENTER 120
+YLLCENTER 120
+CELLSIZE 15
+NODATA_VALUE -9999
+-9999  0      2.3   8.9
+ 0.8   351   -9   360
+45    -9999 370    10 
+
+        </pre></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">mapclone.map</code></td></tr><tr><td><div><img src="examples/mapclone.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re123.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">PCRaster applications </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> col2map</td></tr></table></div></body></html>

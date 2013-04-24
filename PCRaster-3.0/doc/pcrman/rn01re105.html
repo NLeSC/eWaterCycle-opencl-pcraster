@@ -1,0 +1,65 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>timeinput</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re104.html" title="timeinput..."><link rel="next" href="rn01re106.html" title="timeoutput"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">timeinput</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re104.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re106.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="timeinput"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>timeinput &#8212; 
+Set of output maps per timestep with an extension that refers to the time at the timestep
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinput</b>( <code class="varname">prefixOfMap</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">prefixOfMap</code></td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional, ldd</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">type of <code class="varname">prefixOfMap</code></td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3042410"></a><h2>Operation</h2><p>
+
+This operation is used in the iterative sections (dynamic, storage and
+transport sections) of a dynamic model script only. For each timestep
+<b>timeinput</b> assigns to <code class="varname">Result</code> one map of a set of sequential maps
+given by <code class="varname">prefixOfMap</code>.
+
+</p><p>
+
+<code class="varname">prefixOfMap</code> refers to a set of maps that all have a filename starting with
+the prefix <code class="varname">prefixOfMap</code>. Additionally these maps contain a unique time
+extension Ext in their file name, directly after <code class="varname">prefixOfMap</code>. For each
+map, this time extension refers to the time at a timestep in a model run:
+each timestep, <code class="varname">Result</code> is assigned the <code class="varname">prefixOfMap</code>Ext with the time
+extension Ext that corresponds with the time <span class="italic">t</span>(<span class="italic">i</span>) at the timestep
+<span class="italic">i</span> under consideration.
+
+</p><p>
+
+For each timestep <span class="italic">i</span> a <code class="varname">prefixOfMap</code>Ext must be available in the
+PCRaster database with a time extension Ext corresponding with the time
+<span class="italic">t</span>(<span class="italic">i</span>) at the timestep under consideration. These maps referred to
+as <code class="varname">prefixOfMap</code> must have the following filenames. The filenames consist
+of 8 characters, a dot and 3 characters. This is in accordance with the
+ordinary rules for filenames in DOS. Each filename starts with the name
+of the prefix <code class="varname">prefixOfMap</code>. This prefix name may be maximal 8 characters
+long. All the remaining character positions must be used for the time
+extension, which is unique and different for each map. The time extension
+must be a whole value; the map will be assigned to <code class="varname">Result</code> at timestep
+<span class="italic">i</span> with time <span class="italic">t</span>(<span class="italic">i</span>) = Ext.
+
+</p><p>
+
+Two examples are given to illustrate the use of the operator. Imagine a
+model with startime = 4, endtime 10 and a timeslice of 2. As a result, this
+model consists of 4 timesteps at time 4, 6, 8, 10. During a model run, the
+operation <b>timeinput</b>(Rain) queries for maps in the PCRaster database
+with filenames: Rain0000.004, Rain0000.006, Rain0000.008 and
+Rain0000.010. These maps are assigned to <code class="varname">Result</code> at the sequential
+timesteps at time 4, 6, 8, 10.
+
+</p><p>
+
+In a model with starttime 990, endtime 1010 and a timeslice of 10, the
+operation <b>timeinput</b>(Water) will query for Water000.990,
+Water001.000 and Water001.010.
+
+</p></div><div class="refsect1" lang="en"><a name="id3042568"></a><h2>Notes</h2><p>
+
+Maps that are reported in a model with the <a class="link" href="ch05.html#secseqinreport" title="5.1.3.3. report keyword; and the timeoutput operator">report</a> keyword
+are stored in the
+database with a filename format that corresponds with the format needed
+for the <b>timeinput</b> operation. So, one model may be used to generate a
+set of prefix maps; these maps can be used in another model as input
+maps to a <b>timeinput</b> operation. 
+</p><p>
+
+A stack of maps generated and stored in the database during a model run
+by the report keyword cannot be imported during the same model run with
+the <b>timeinput</b> operator.
+
+
+</p></div><div class="refsect1" lang="en"><a name="id3042608"></a><h2>Group</h2><p>This operation belongs to the group of  Time operators </p></div><div class="refsect1" lang="en"><a name="id3042616"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result = timeinput(mapstack)</pre></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re104.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re106.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">timeinput... </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> timeoutput</td></tr></table></div></body></html>

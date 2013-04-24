@@ -1,0 +1,506 @@
+<chapter id="secfunclist">
+<title>Functional list of PCRaster operators</title>
+<section id="secpointop">
+<title>Point operators</title>
+<section id="groupbool">
+<title>Boolean operators</title>
+<para>
+<pcr-op>and</pcr-op><br/>
+Performs a Boolean-AND operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>not</pcr-op><br/>
+Performs a Boolean-NOT operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>or</pcr-op><br/>
+Performs a Boolean-OR operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>xor</pcr-op><br/>
+Performs a Boolean-XOR operation on two expressions, on a cell-by-cell basis.<br/>
+</para>
+</section>
+
+
+<section id="groupcomp">
+<title>Comparison operators</title>
+<para>
+<pcr-op>eq or ==</pcr-op><br/>
+Performs a relational-equal-to operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>ge or >=</pcr-op><br/>
+Performs a relational-greater-than-or-equal-to operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>gt or ></pcr-op><br/>
+Performs a relational-greater-than operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>le or &lt;=</pcr-op><br/>
+Performs a relational-less-than-or-equal-to operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>lt or &lt;</pcr-op><br/>
+Performs a relational-less-than operation on two expressions, on a cell-by-cell basis.<br/>
+<pcr-op>ne or !=</pcr-op><br/>
+Performs a relational-not-equal-to operation on two expressions, on a cell-by-cell basis.<br/>
+</para>
+</section>
+
+
+<section id="groupcond">
+<title>Conditional statements</title>
+<para>
+<pcr-op>if then</pcr-op><br/>
+For each cell a Boolean expression determines whether the value of an expression or a missing value is assigned to the result<br/>
+<pcr-op>if then else</pcr-op><br/>
+For each cell a Boolean expression determines whether the value of the first expression or the value of a second expression is assigned to the result<br/>
+</para>
+</section>
+
+
+<section id="groupmissvalue">
+<title>Missing value creation, detection, alteration</title>
+<para>
+<pcr-op>cover</pcr-op><br/>
+Substitutes missing values on an expression for values selected from one or more different expression(s), on a cell-by-cell basis.<br/>
+<pcr-op>defined</pcr-op><br/>
+Assigns a Boolean TRUE for non missing values on the input expression and FALSE for missing values, on a cell-by-cell basis.<br/>
+<pcr-op>lddmask</pcr-op><br/>
+Cuts a local drain direction map resulting in a (smaller) sound local drain direction map.<br/>
+<pcr-op>nodirection</pcr-op><br/>
+For an expression of directional data type, returns TRUE for cells without a direction and FALSE otherwise for cells with a direction.<br/>
+<pcr-op>if then</pcr-op><br/>
+For each cell a Boolean expression determines whether the value of an expression or a missing value is assigned to the result<br/>
+</para>
+</section>
+
+
+<section id="groupreltab">
+<title>Relations in tables</title>
+<para>
+<pcr-op>lookup...</pcr-op><br/>
+For each cell, compares the cell value(s) of one or more expression(s) with the search key in a table and assigns a new value linked to that record in the key which matches the value(s) of the input expression<br/>
+<pcr-op>table</pcr-op><br/>
+Creates on basis of one or more maps a table with a score for each key in the table. The score is the total area of the cells that match the key in the table.<br/>
+</para>
+</section>
+
+
+<section id="grouporder">
+<title>Order</title>
+<para>
+<pcr-op>order</pcr-op><br/>
+Returns ordinal numbers to cells in ascending order.<br/>
+<pcr-op>areaorder</pcr-op><br/>
+Within each area ordinal numbers to cells in ascending order.<br/>
+<pcr-op>argorder,argorderwithid</pcr-op><br/>
+identify highest value by argument order<br/>
+<pcr-op>argorderarealimited,argorderwithidarealimited</pcr-op><br/>
+identify highest value by argument order with a limit per argument<br/>
+<pcr-op>pred</pcr-op><br/>
+For each cell returns an ordinal number which is the ordinal number of the next lower ordinal class (predecessor) on the expression.<br/>
+<pcr-op>succ</pcr-op><br/>
+For each cell returns an ordinal number which is the ordinal number of the next higher ordinal class (predecessor) on the expression.<br/>
+</para>
+</section>
+
+
+<section id="groupmaxmin">
+<title>Maximize, minimize</title>
+<para>
+<pcr-op>maximize</pcr-op><br/>
+For each cell, determines the maximum value of multiple expressions and assigns it to the corresponding cell for the result.<br/>
+<pcr-op>minimize</pcr-op><br/>
+For each cell, determines the minimum value of multiple expressions and assigns it to the corresponding cell for the result.<br/>
+</para>
+</section>
+
+
+
+<section id="groupmath">
+<title>Arithmic operators, trigonometric, exponential, logarithmic functions</title>
+<para>
+<pcr-op>*</pcr-op><br/>
+Multiplies the values of two expressions and sends this product to the result, on a cel-by-cell basis.<br/>
+<pcr-op>**</pcr-op><br/>
+Calculates the <emphasis role='italic'>n</emphasis>th power of the first expression, where <emphasis role='italic'>n</emphasis> is the value on a second expression and sends it to the result, on a cell-by-cell basis.<br/>
+<pcr-op>-</pcr-op><br/>
+Subtracts the value of the second expression from the value of the first expression and assigns it to the result, on a cell-by-cell basis.
+<br/>
+<pcr-op>+</pcr-op><br/>
+Adds the values of two expressions and assigns this sum to the result, on a cell-by-cell basis.<br/>
+<pcr-op>/ of div</pcr-op><br/>
+Divides the value of a first expressions by the value of a second expression and assigns this quotient to the result, on a cell-by-cell basis.<br/>
+<pcr-op>abs</pcr-op><br/>
+Calculates the absolute value of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>acos</pcr-op><br/>
+Calculates the inverse cosine value of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>asin</pcr-op><br/>
+Calculates the inverse sine value of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>atan</pcr-op><br/>
+Calculates the inverse tangent value of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>cos</pcr-op><br/>
+Calculates the cosine of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>exp</pcr-op><br/>
+Calculates the <emphasis role='italic'>base<subscript>e</subscript></emphasis> exponential of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>idiv</pcr-op><br/>
+Divides (integer division) the values on a first expression by the values on a second expression and assigns this quotient to the result, on a cell-by-cell basis.<br/>
+<pcr-op>ln</pcr-op><br/>
+Calculates the natural logarithm (<emphasis role='italic'>base<subscript>e</subscript></emphasis>) exponential of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>log10</pcr-op><br/>
+Calculates the (<emphasis role='italic'>base<subscript>e</subscript></emphasis>) logarithm of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>mod</pcr-op><br/>
+Divides (integer division) the values on a first expression by the values on a second expression and assigns the remainder to the result, on a cell-by-cell basis.<br/>
+<pcr-op>sin</pcr-op><br/>
+Calculates the sine of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>sqr</pcr-op><br/>
+Calculates the square of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>sqrt</pcr-op><br/>
+Calculates the square root of an expression, on a cell-by-cell basis.<br/>
+<pcr-op>tan</pcr-op><br/>
+Calculates the tangent of an expression, on a cell-by-cell basis.<br/>
+</para>
+</section>
+
+
+
+<section id="groupround">
+<title>Rounding</title>
+<para>
+<pcr-op>roundup</pcr-op><br/>
+For each cell, the value of an expression is rounded upwards. Values of the results will be whole numbers.<br/>
+<pcr-op>rounddown</pcr-op><br/>
+For each cell, the value of an expression is rounded downwards. Values of the results will be whole numbers.<br/>
+<pcr-op>roundoff</pcr-op><br/>
+For each cell, the value of an expression is rounded off. Values of the results will be whole numbers.<br/>
+</para>
+</section>
+
+
+<section id="grouptypeconvers">
+<title>Data types: Conversion and assignment</title>
+<para>
+<pcr-op>boolean</pcr-op><br/>
+Converts from nominal, ordinal, scalar, directional or ldd data type to a boolean data type or generates a map of boolean data type with one constant value.<br/>
+<pcr-op>directional</pcr-op><br/>
+Converts from boolean, nominal, ordinal, scalar or ldd data type to a directional data type or generates a map of directional data type with one constant value.<br/>
+<pcr-op>ldd</pcr-op><br/>
+Converts from boolean, nominal, ordinal, scalar or directional data type to a ldd data type or generates a map of ldd data type with one constant value.<br/>
+<pcr-op>nominal</pcr-op><br/>
+Converts from boolean, ordinal, scalar, directional or ldd data type to a nominal data type or generates a map of nominal data type with one constant value.<br/>
+<pcr-op>ordinal</pcr-op><br/>
+Converts from boolean, nominal, scalar, directional or ldd data type to a ordinal data type or generates a map of ordinal data type with one constant value.<br/>
+<pcr-op>scalar</pcr-op><br/>
+Converts from boolean, nominal, ordinal, directional or ldd data type to a scalar data type or generates a map of scalar data type with one constant value.<br/>
+</para>
+</section>
+
+
+<section id="grouppointfield">
+<title>Random number generation - cells</title>
+<para>
+<pcr-op>normal</pcr-op><br/>
+For each cell that is TRUE on a Boolean expression, assigns a value taken from a normal distribution with mean 0 and standard deviation 1.<br/>
+<pcr-op>uniform</pcr-op><br/>
+For each cell that is TRUE on a Boolean expression, assigns a value taken from a uniform distribution between 0 and 1.<br/>
+</para>
+</section>
+
+
+<section id="groupcoord">
+<title>Coordinates, unique ID's</title>
+<para>
+<pcr-op>uniqueid</pcr-op><br/>
+For each cell that is TRUE on a Boolean expression, assigns a unique whole value<br/>
+<pcr-op>xcoordinate</pcr-op><br/>
+For each cell that is TRUE on a Boolean expression, assigns the xcoordinate of the cell<br/>
+<pcr-op>ycoordinate</pcr-op><br/>
+For each cell that is TRUE on a Boolean expression, assigns the ycoordinate of the cell<br/>
+</para>
+</section>
+</section>
+
+
+
+
+
+<section id="secneighop">
+<title>Neighbourhood operators</title>
+<section id="groupwind">
+<title>Windows operations</title>
+<para>
+<pcr-op>windowaverage</pcr-op><br/>
+For each cell, finds the average of cell values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br/>
+<pcr-op>windowdiversity</pcr-op><br/>
+For each cell, finds the number of unique values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br/>
+<pcr-op>windowhighpass</pcr-op><br/>
+Increases spatial frequency within a specified square neighbourhood. For each cell, it calculates the sum of cell values of an expression in a specified surrounding neighbourhood; this is subtracted from the cell values itself multiplied by twice the number of cells in the surrounding neighbourhood. The result of this calculation is assigned to the corresponding cell for the result.<br/>
+<pcr-op>windowmajority</pcr-op><br/>
+For each cell, finds the most often occurring cell values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br/>
+<pcr-op>windowmaximum</pcr-op><br/>
+For each cell, finds the maximum cell value within a specified square neighbourhood and assigns it to the corresponding cell for the result<br/>
+<pcr-op>windowminimum</pcr-op><br/>
+For each cell, finds the minimum cell value within a specified square neighbourhood and assigns it to the corresponding cell for the result<br/>
+<pcr-op>windowtotal</pcr-op><br/>
+For each cell, finds the sum of cell values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br/>
+</para>
+</section>
+
+
+
+<section id="groupderelev">
+<title>Derivatives of elevation maps</title>
+<para>
+<pcr-op>lddcreate</pcr-op><br/>
+Creates a local drain direction map expression using the 8 points pour algorithm with flow directions from each cell to its steepest downslope neighbour. Pits can be removed with pit removing threshold map(s).<br/>
+<pcr-op>lddcreatedem</pcr-op><br/>
+Creates a modified digital elevation model which fits the local drain direction map generated on the basis of the original digital elevation model (the elevation model is the input of the operation).<br/>
+<pcr-op>aspect</pcr-op><br/>
+For each cell, calculates the aspect using elevations from a digital elevation model.<br/>
+<pcr-op>plancurv</pcr-op><br/>
+For each cell, calculates the planform curvature (i.e. curvature transverse to the slope) using elevations from a digital elevation model.<br/>
+<pcr-op>profcurv</pcr-op><br/>
+For each cell, calculates the profile curvature (i.e. curvature in the direction of the slope) using elevations from a digital elevation model.<br/>
+<pcr-op>slope</pcr-op><br/>
+For each cell, calculates the slope using elevations from a digital elevation model.<br/>
+</para>
+</section>
+
+
+
+<section id="groupspread">
+<title>Spread operations</title>
+<para>
+<pcr-op>spread</pcr-op><br/>
+For each cell, calculates the friction-distance of the shortest material-distance path over a map with friction material from an identified source cell or cells to the cell under consideration.<br/>
+<pcr-op>spreadldd</pcr-op><br/>
+For each cell, calculates the friction-distance of the shortest material-distance path over a map with friction material from an identified source cell or cells to the cell under consideration, where only paths are considered in downstream direction from the source cells.<br/>
+<pcr-op>spreadlddzone</pcr-op><br/>
+For each cell, determines the shortest friction-distance path over a map with friction from an identified source cell or cells to the cell under consideration, where only paths are considered in downstream direction from the source cells. The value of the source cell at the start of this shortest material-distance path is assigned to the cell under consideration.<br/>
+<pcr-op>spreadzone</pcr-op><br/>
+Determines for each cell the shortest friction-distance path over a map with friction material from an identified source cell or cells to the cell under consideration. The value of the source cell at the start of this shortest friction-distance is assigned to the cell under consideration.<br/>
+</para>
+</section>
+
+
+
+<section id="groupldd">
+<title>Operations with local drain direction maps</title>
+<para>
+<pcr-op>ldddist</pcr-op><br/>
+Calculates for each cell the material-distance of the path over a map with friction from the cell under consideration to the downstream nearest TRUE cell.<br/>
+<pcr-op>slopelength</pcr-op><br/>
+For each cell assigns the accumulative-material-distance of the longest accumulative-material-path upstream over the local drain direction network to one of the cells against the divide of its catchment.<br/>
+</para>
+
+<para>
+<emphasis role='italic'>transport of material:</emphasis><br/>
+<pcr-op>accuflux</pcr-op><br/>
+For each cell calculates the accumulated amount of material that flows out of the cell into its neighbouring downstream cell. This accumulated amount is the amount of material in the cell itself plus the amount of material in upstream cells of the cell.<br/>
+<pcr-op>accucapacityflux and accucapacitystate</pcr-op><br/>
+Transport input of material downstream over a local drain direction network; material is transported from one cell to its downstream cell when the transport capacity is exceeded, the remaining material is stored.<br/>
+<pcr-op>accufractionflux and accufractionstate</pcr-op><br/>
+Transport input of material downstream over a local drain direction network; a fraction of the material is transported to its downstream cell, the remaining material is stored.<br/>
+<pcr-op>accuthresholdflux and accuthresholdstate</pcr-op><br/>
+Transport input of material downstream over a local drain direction network; transport from one cell to its downstream cell only takes place if the amount of the material input to the cell exceeds the transport trigger of the cell: if the trigger is exceeded, all material is transported, else all material is stored.<br/>
+<pcr-op>accutriggerflux and accutriggerstate</pcr-op><br/>
+</para>
+
+<para>
+<emphasis role='italic'>miscellaneous operations:</emphasis><br/>
+<pcr-op>catchment</pcr-op><br/>
+Determines the catchment(s) (watershed, basin) of each one or more specified cells, subcatchments are not identified.<br/>
+<pcr-op>downstream</pcr-op><br/>
+Returns the value of the neighbouring downstream cell.<br/>
+<pcr-op>downstreamdist</pcr-op><br/>
+Returns the distance to the first cell downstream.<br/>
+<pcr-op>path</pcr-op><br/>
+Determines for each TRUE cell on a Boolean input expression the path over the local drain direction network downstream to its pit; on the result, each cell which is on a path is assigned a TRUE.<br/>
+<pcr-op>pit</pcr-op><br/>
+Assigns a Boolean TRUE to all pit cells on a local drain direction network.<br/>
+<pcr-op>streamorder</pcr-op><br/>
+Assigns the stream order index to all cells on a local drain direction network.<br/>
+<pcr-op>subcatchment</pcr-op><br/>
+Determines the (sub-)catchment(s) (watershed, basin) of each one or more specified cells, subcatchments are identified.<br/>
+<pcr-op>lddrepair</pcr-op><br/>
+Repairs an unsound local drain direction map.<br/>
+<pcr-op>upstream</pcr-op><br/>
+For each cell, assigns the sum of the cell values of its upstream cell(s).<br/>
+</para>
+</section>
+
+
+<section id="groupvisi">
+<title>Operations for visibility analysis</title>
+<para>
+<pcr-op>extentofview</pcr-op><br/>
+Determines the total length of the lines in a number of directions from the cell under consideration to the first cell with a different value.<br/>
+<pcr-op>view</pcr-op><br/>
+Assigns a TRUE or FALSE value for each cell on the result according to the visibility of that cell from one or more viewpoint cells in a 3D landscape defined by a digital elevation model.<br/>
+</para>
+</section>
+</section>
+
+
+
+<section id="secareaop">
+<title>Area operations</title>
+<section id="grouparea">
+<title>Operations over areas</title>
+<para>
+<pcr-op>areaarea</pcr-op><br/>
+For each cell, assigns the area of the area to which the cell belongs. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>areaaverage</pcr-op><br/>
+For each cell, assigns the average value of the cells that belong to the same area to the cell itself. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>areadiversity</pcr-op><br/>
+For each cell, assigns the number of unique cell values that belong to the same area to the cell itself. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>areamajority</pcr-op><br/>
+For each cell, assigns the most often occurring cell value of cells that belong to the same area to the cell itself. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>areamaximum</pcr-op><br/>
+For each cell, assigns the maximum value of the cells that belong to the same area to the cell itself. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>areaminimum</pcr-op><br/>
+For each cell, assigns the minimum value of the cells that belong to the same area to the cell itself. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>areatotal</pcr-op><br/>
+For each cell, assigns the sum of cells of cells that belong to the same area to the cell itself. Areas are identified by cell values on a expression with classes.<br/>
+<pcr-op>clump</pcr-op><br/>
+Identifies all continuous groups of with the same value ('clumps'); cells belonging to one clump are assigned the same new unique value.  <br/>
+</para>
+</section>
+
+
+
+<section id="groupareafield">
+<title>Random number generation - areas</title>
+<para>
+<pcr-op>areanormal</pcr-op><br/>
+Assigns to each area one value taken from a normal distribution with a mean 0 and a standard deviation 1.<br/>
+<pcr-op>areauniform</pcr-op><br/>
+Assigns to each area one value taken from a uniform distribution with a mean 0 and a standard deviation 1.<br/>
+</para>
+</section>
+</section>
+
+
+<section id="secmapop">
+<title>Map operations</title>
+<section id="groupmap">
+<title>Operations over maps</title>
+<para>
+<pcr-op>mapmaximum</pcr-op><br/>
+Determines the maximum cell value of all cells values.<br/>
+<pcr-op>mapminimum</pcr-op><br/>
+Determines the minimum cell value of all cells values.<br/>
+<pcr-op>maptotal</pcr-op><br/>
+Sums all cell values<br/>
+<pcr-op>maparea</pcr-op><br/>
+Calculates the total area represented by the non missing value cells.<br/>
+<pcr-op>cellarea</pcr-op><br/>
+Assigns the area of one cell.<br/>
+<pcr-op>celllength</pcr-op><br/>
+Assigns the length which is identical in vertical and horizontal direction of one cell.<br/>
+</para>
+</section>
+
+
+
+<section id="groupmapfield">
+<title>Random number generation - map</title>
+<para>
+<pcr-op>areanormal</pcr-op><br/>
+Assigns to all cells one non spatial value taken from a normal distribution with a mean 0 and a standard deviation 1.<br/>
+<pcr-op>areauniform</pcr-op><br/>
+Assigns to all cells one non spatial value taken from a uniform distribution with a mean 0 and a standard deviation 1.<br/>
+</para>
+</section>
+</section>
+
+
+
+<section id="sectimeop">
+<title>Time operations</title>
+<section id="grouptime">
+<title>Time operations</title>
+<para>
+<pcr-op>time</pcr-op><br/>
+Assigns for each time step the time at that time step.<br/>
+<pcr-op>summary</pcr-op><br/>
+<emphasis role='italic'>not yet included in the software</emphasis><br/>
+For each stime step, writes the values of a given set of non spatial expressions to a time series.<br/>
+<pcr-op>timeinput</pcr-op><br/>
+Assigns for each time step one of a set of maps in the database. Each time step, the map is taken with the extension that refers to the time at the time step.<br/>
+<pcr-op>timeinput...</pcr-op><br/>
+For each time step assigns cell values read from a time series that is linked to a map with unique identifiers. Per time step, the time series gives for each unique identifier a cell value that is assigned to cells on the map with a corresponding unique identifier.<br/>
+<pcr-op>timeoutput</pcr-op><br/>
+For each cell writes the expression value of an uniquely identified cell or cells to a time series. After a model run, the time series contains for each identified cell a list of expression cell values per time step.<br/>
+<pcr-op>timeslice</pcr-op><br/>
+Assigns the timeslice.<br/>
+</para>
+</section>
+</section>
+
+
+
+<section id="secdatamanop">
+<title>Data management</title>
+<section id="groupcreaclone">
+<title>Random number generation - areas</title>
+<para>
+<pcr-op>mapattr</pcr-op><br/>
+Generates a new PCRaster map with attributes specified by the user or changes location attributes of an existing PCRaster map.<br/>
+</para>
+</section>
+
+
+
+<section id="groupconvdata">
+<title>Conversion of data</title>
+<para>
+<pcr-op>asc2map</pcr-op><br/>
+Converts from ascii file format (including ARC/INFO and GENAMAP ascii output) to PCRaster map format.<br/>
+<pcr-op>col2map</pcr-op><br/>
+Converts from column file format (including simplified Geo-EAS format used in the GSTAT module of PCRaster) to PCRaster map format.<br/>
+<pcr-op>map2asc</pcr-op><br/>
+Converts from PCRaster map format to ascii file format (including ascii input format for ARC/INFO.<br/>
+<pcr-op>map2col</pcr-op><br/>
+Converts from PCRaster map format to column file format (including simplified Geo-EAS format also used in the GSTAT module of PCRaster).<br/>
+</para>
+</section>
+
+
+
+<section id="groupcutjoin">
+<title>Cutting and joining together PCRaster maps</title>
+<para>
+<pcr-op>resample</pcr-op><br/>
+Cuts one PCRaster map or joins several PCRaster maps by resampling to the cells of the resulting PCRaster map.<br/>
+</para>
+</section>
+
+
+
+<section id="groupleg">
+<title>Generation of legends</title>
+<para>
+<pcr-op>legend</pcr-op><br/>
+Attaches a legend to or changes the legend of one or more maps.<br/>
+</para>
+</section>
+
+
+
+<section id="groupscreen">
+<title>Screen output</title>
+<para>
+Visualisation of maps and timeseries can be done with
+<pcr-op>aguila</pcr-op><br/>
+</para>
+</section>
+
+
+<!--
+<section id="grouphardcop">
+<title>Hard copy output</title>
+<para>
+<pcr-op>mapprint</pcr-op><br/>
+<emphasis role='italic'>not yet included in software</emphasis><br/>
+</para>
+</section>
+-->
+
+
+</section>
+ </chapter> 
+ <!-- 
+	  Local Variables:
+	   mode: sgml
+	   End
+	   -->

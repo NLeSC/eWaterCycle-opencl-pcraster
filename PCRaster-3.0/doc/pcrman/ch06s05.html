@@ -1,0 +1,15 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>6.5. Time operations</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch06.html" title="Chapter 6. Functional list of PCRaster operators"><link rel="prev" href="ch06s04.html" title="6.4. Map operations"><link rel="next" href="ch06s06.html" title="6.6. Data management"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6.5. Time operations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06s04.html">Prev</a> </td><th width="60%" align="center">Chapter 6. Functional list of PCRaster operators</th><td width="20%" align="right"> <a accesskey="n" href="ch06s06.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sectimeop"></a>6.5. Time operations</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="grouptime"></a>6.5.1. Time operations</h3></div></div></div><p>
+<b>time</b><br>
+Assigns for each time step the time at that time step.<br>
+<b>summary</b><br>
+<span class="italic">not yet included in the software</span><br>
+For each stime step, writes the values of a given set of non spatial expressions to a time series.<br>
+<b>timeinput</b><br>
+Assigns for each time step one of a set of maps in the database. Each time step, the map is taken with the extension that refers to the time at the time step.<br>
+<b>timeinput...</b><br>
+For each time step assigns cell values read from a time series that is linked to a map with unique identifiers. Per time step, the time series gives for each unique identifier a cell value that is assigned to cells on the map with a corresponding unique identifier.<br>
+<b>timeoutput</b><br>
+For each cell writes the expression value of an uniquely identified cell or cells to a time series. After a model run, the time series contains for each identified cell a list of expression cell values per time step.<br>
+<b>timeslice</b><br>
+Assigns the timeslice.<br>
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch06s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.4. Map operations </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 6.6. Data management</td></tr></table></div></body></html>

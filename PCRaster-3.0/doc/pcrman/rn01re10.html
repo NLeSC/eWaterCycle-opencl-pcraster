@@ -1,0 +1,80 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>accuthresholdflux, accuthresholdstate</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re09.html" title="accufractionflux, accufractionstate"><link rel="next" href="rn01re11.html" title="accutriggerflux, accutriggerstate"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">accuthresholdflux, accuthresholdstate</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re09.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re11.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="accuthreshold"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>accuthresholdflux, accuthresholdstate &#8212; 
+Input of material downstream over a local drain direction network when transport threshold is exceeded
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Resultflux</code> = <b>accuthresholdflux</b> ( <code class="varname">ldd</code>, <code class="varname">material</code>, <code class="varname">transportthreshold</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Resultstate</code> = <b>accuthresholdstate</b>( <code class="varname">ldd</code>, <code class="varname">material</code>, <code class="varname">transportthreshold</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Resultflux</code>, <code class="varname">Resultstate</code> = <b>accuthresholdflux</b>, <b>accuthresholdstate</b>( <code class="varname">ldd</code>, <code class="varname">material</code>, <code class="varname">transportthreshold</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">ldd</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">material</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">transportthreshold</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Resultflux</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Resultstate</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id2974853"></a><h2>Operation</h2><p>
+
+
+
+These operations describe accumulation of material in a drainage network
+with transport limited by a threshold: transport will only occur if a certain
+threshold of losses has been reached. Material less than the threshold is
+stored. This is the case for overland flow which will only develop once a
+certain loss has occurred, saturating the soil. The mechanism can also be
+used to describe phenomena such as losses from the streamflow due to
+infiltration of river water through the riverbed. </p><p>
+For each cell, <b>accuthresholdflux</b> assigns the amount of material 
+which is transported out of the cell, <b>accuthresholdstate</b> assigns 
+the amount which is stored in the cell. Both operators perform the
+same function of accumulation of material with a transport threshold, the
+only difference between the operators is the sort of result that is saved:
+<b>accuthresholdstate</b> yields storages of material in cells,
+<b>accuthresholdflux</b> yields fluxes of material out of cells.
+</p><p>
+
+For each cell, the amount of material input, for instance the amount of
+rain, is given by <code class="varname">material</code>. This is transported in downstream direction
+through the consecutively neighbouring downstream cells, following the
+local drain directions on <code class="varname">ldd</code>. Each time material moves through a cell
+an certain amount is stored in the cell. These storages are saved as
+<code class="varname">Resultstate</code>, if the <b>accuthresholdstate</b> operator is used. The
+remaining material is transported out of the cell, these amounts of outflow
+from each cell into its neighbouring downstream cell are the result of the
+<b>accuthresholdflux</b> operator, they are saved as <code class="varname">Resultflux</code>.
+
+
+</p><p>
+
+The function can be described by flow of material through a set of linked
+systems, where a cell represents a system. The flow starts at the
+cells/systems at the watershed boundaries (defined by <code class="varname">ldd</code>) and ends at
+a pit cell. The systems are linked by the local drain directions on <code class="varname">ldd</code>,
+these define the path of flow through the set of cells/systems. Each time
+a system is passed, the amount of flow changes.
+
+
+</p><p>
+
+For a cell/system somewhere on the map, the flow of material is described
+by a system. The inflow of the cell is the
+sum of the outflow amounts of its upstream neighbours. This inflow
+amount is added to the <code class="varname">material</code> value in the cell itself. This amount of
+material is potentially available for transport out of the cell. If it is less
+than or equal to the <code class="varname">transportthreshold</code> value of the cell all material is
+stored. If it is more than the <code class="varname">transportthreshold</code> the amount transported
+is the amount potentially available for transport minus the
+<code class="varname">transportthreshold</code> value. The remaining material is stored. 
+
+
+</p><p>
+
+For each cell, the amount of material which is transported to its
+downstream neighbour (or out of the map if the cell is a pit cell) is saved
+as <code class="varname">Resultflux</code> (use the operator <b>accuthresholdflux</b>); the amount of
+material which is stored to the cell is saved as <code class="varname">Resultstate</code> (use
+<b>accuthresholdstate</b>)
+
+</p></div><div class="refsect1" lang="en"><a name="id2974996"></a><h2>Notes</h2><p>
+
+The values on <code class="varname">material</code> and <code class="varname">transportthreshold</code> must be equal to or
+larger than zero. 
+</p><p>
+
+A cell with missing value on <code class="varname">material</code> and/or <code class="varname">transportthreshold</code> is
+assigned a missing value on <code class="varname">Resultflux</code> or <code class="varname">Resultstate</code>. Additionally,
+all its downstream cells are assigned a missing value. 
+</p><p>
+
+The local drain direction network on <code class="varname">ldd</code> must be <a class="link" href="ch02s03.html#SoundLDD">sound</a>.
+
+</p></div><div class="refsect1" lang="en"><a name="id2975050"></a><h2>Group</h2><p>This operation belongs to the group of  Neighbourhood operators; local drain directions </p></div><div class="refsect1" lang="en"><a name="id2975058"></a><h2>See Also</h2><p><a class="xref" href="ch04s04.html#secstatneightr" title="4.4.5. Transport of material over a ldd">Section 4.4.5</a> 
+<a class="xref" href="rn01re56.html" title="lddmask"><span class="refentrytitle">lddmask</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id2975077"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Flux1.map, State1.map = accuthresholdflux, accuthresholdstate(Ldd.map, Material.map, 1.5)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Flux1.map</code></td></tr><tr><td><div><img src="examples/accuthreshold.Flux1.gif"></div></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">State1.map</code></td></tr><tr><td><div><img src="examples/accuthreshold.State1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Material.map</code></td></tr><tr><td><div><img src="examples/accu.Material.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  Flux2.map, State2.map = accuthresholdflux, accuthresholdstate(Ldd.map, Material.map, TransTH.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Flux2.map</code></td></tr><tr><td><div><img src="examples/accuthreshold.Flux2.gif"></div></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">State2.map</code></td></tr><tr><td><div><img src="examples/accuthreshold.State2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Material.map</code></td></tr><tr><td><div><img src="examples/accufraction.Material.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">TransTH.map</code></td></tr><tr><td><div><img src="examples/accuthreshold.TransTH.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re09.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re11.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">accufractionflux, accufractionstate </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> accutriggerflux, accutriggerstate</td></tr></table></div></body></html>

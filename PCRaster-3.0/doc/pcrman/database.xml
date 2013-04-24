@@ -1,0 +1,1235 @@
+<chapter id="secdatbase">
+<title>The Database</title>
+<section id="secdatbaseintro">
+<title>Introduction</title>
+<para>
+This chapter describes the database of the PCRaster package. After a general introduction with the concepts behind the structure and the components of the database 
+(<xref linkend="secdatbaseconc"/>), the components of the database wll be described in further detail, with emphasis on the practical on the practical aspects (formats, data types for instance. First the structure of PCRaster maps, like location attributes, missing values and data types will be described (<xref linkend="secdatbasemap"/>) after which the different types of formats of tables, time series and point data column files will be explained (<xref linkend="secdatbaselook"/>, <xref linkend="secdatbasetime"/> and <xref linkend="secdatbasepoint"/>). 
+
+Of these sections,
+you will need the time series part (<xref linkend="secdatbasetime"/>)
+only if you want to use the module for Dynamic Modelling (see 
+<xref linkend="secdyn"/>). How to manage the database
+(data import, export, conversions etc.) and how to perform other GIS
+functions is described in <xref linkend="secimport"/>.
+</para>
+</section>
+
+
+<section id="secdatbaseconc">
+<title>Concepts, kinds of data used in the database</title>
+<para>
+Four kinds of data are used in the PCRaster database.  Data from
+2D areas are represented by raster maps. These PCRaster maps have a
+special PCRaster format that enables simple and structured manipulation
+of spatial data in the package. It is the most important kind of data
+in the database: almost any PCRaster operation uses and/or generates a
+PCRaster map. For analysis of PCRaster maps with other software packages,
+conversion to ascii format is needed. The remaining three kinds of
+data (tables, time series and point data column files) represent
+relations between PCRaster maps, temporal data and data from points
+respectively. These kinds of data are in ascii format; as a result these
+can also be analysed with other software packages, without conversion.
+</para>
+
+<para>
+<anchor id="PCRasterMapConc" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>map, PCRaster - </primary>
+  <secondary>concept of</secondary>
+</indexterm>
+
+In PCRaster a stack of <emphasis>PCRaster map</emphasis> layers represents
+the landscape, where each map layer represents one attribute, see <xref
+linkend="fig3.1"/>. The discretization of the spatial domain results
+in cells. At each cell location, the total information for that cell
+is represented by the values of the different layers at that cell. The
+representation described here is sometimes referred to as 2.5 D: the
+lateral directions are represented in real, while a certain kind of
+vertical dimension is implemented using several layers.
+
+<figure id="fig3.1"><!--float="1"-->
+<title>A stack of PCRaster maps resulting in a 2.5 D representation
+of the landscape. One cell is shown; its property is defined by the attribute
+values stored in map layers Map1, Map2, Map3,...</title>
+<graphic fileref="figures/stack.png" format="PNG" />
+</figure>
+
+
+The spatial characteristics of a PCRaster map are defined by its
+geographical <emphasis>location attributes</emphasis>  <anchor id="LocAtCon" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>concept of</secondary>
+</indexterm>
+. These define the
+shape and the area covered by the map and the size of the cells. 
+</para>
+
+<para>
+<anchor id="DatTypeCo" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>data type</primary>
+  <secondary>concept of</secondary>
+</indexterm>
+
+The kind of attribute represented by the layers controls the type of
+operations that can be done with the data stored in the layer. This
+knowledge is implemented in the PCRaster package by the idea of 
+data types: each PCRaster map layer has a <emphasis>data
+type</emphasis> attached to it. Six data types are recognized. Data types for
+data in classes  
+<anchor id="classdatInt" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>classified data, data types for</primary>
+</indexterm>
+are the boolean, nominal and ordinal data types. The boolean data type
+is meant for data that may only have two values: TRUE or FALSE. Boolean
+logic can be applied to maps of this data type. The nominal data type
+represents data with an unlimited number of classes, for instance soil
+groups. The ordinal data type also represents data in classes; unlike
+the nominal data type it includes the concept of order between the
+classes, for instance classes that represent income groups. The scalar
+and directional data type represent continuous data
+<anchor id="contidatInt" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>continuous data, data types for</primary>
+</indexterm>
+; the scalar data type for data on a linear scale, for instance elevation,
+the directional data type for data on a circular scale, for instance
+aspect in the terrain. The ldd data type represents a map with a local
+drain direction network. For each cell, a local drain direction map
+contains a pointer to the neighbouring cell to which material (for
+instance water) will flow to.  The direction of these pointers is
+represented by ldd codes.
+</para>
+
+<para>
+<xref linkend="secdatbasemap"/> describes
+the format of maps, including the location attributes, data types and
+legends in detail.  
+</para>
+
+<para>
+Relations between PCRaster maps can be defined by
+<emphasis>tables</emphasis>, which is the second kind of data used in
+PCRaster, see <xref linkend="fig3.2"/>. In a table, map layers are
+combined by specifying keys. Each key
+<anchor id="keyconc" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>key</primary>
+  <secondary>concept</secondary>
+</indexterm>
+gives a certain combination of cell values of the map layers 1,2,3,... A key
+may be for instance: the cell of map 1 must have a value 6, the cell
+of map 2 a value larger than 200 and the cell of map 3 must contain
+a negative value.  Using the keys in a table a new map layer can be
+generated which contains information taken from several layers. For
+instance a soil map, vegetation map and a slope map can be combined using
+keys in a table containing the classes of these maps, generating a new
+map with landscape classes.  Also a table can be used for determining
+the number of cells that match the conditions given in the keys. <xref
+linkend="secdatbaselook"/> describes the format of tables.
+
+<figure id="fig3.2">   <!--float="1"-->
+  <title>A table defining relations between
+PCRaster map layers; using these conditions a NewMap is generated,
+on a cell by cell basis </title> 
+<graphic fileref="figures/stackrel.png" format="PNG" />
+</figure>
+</para>
+
+<para>
+<anchor id="TimeSerConc" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>time series</primary>
+  <secondary>concept of</secondary>
+</indexterm>
+The third kind of data used in PCRaster is the <emphasis>time
+series</emphasis>. In Dynamic Modelling, time series are linked to a
+PCRaster map to control spatial data that vary over time and space:
+for each time step, a different spatial data set that represents a
+certain variable used in the model can be imported or stored. For
+instance when simulating evapotranspiration of water in a catchment,
+for each time step the amount and the spatial distribution of rain water
+can be given in a time series; the amount of water that evaporates from
+a certain part of the map can be stored in a different time series. The
+time series is a table that crosses the unique identifier values on a
+PCRaster map with the numbers of the successive time steps used in the
+model. During a model run, it is read from top to bottom. If the time
+series is used for data input to the model, each unique identifier value
+on the PCRaster map is assigned the value linked to that unique identifier
+in the time series. This is done for each time step.  If the time series
+is used to store data, for each time step the model results for certain
+areas specified on the PCRaster map can be assigned to the time series.
+<xref linkend="secdatbasetime"/> describes the format of time series.
+</para>
+
+<para>
+<anchor id="PointDatCol" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>point data column files</primary>
+  <secondary>concept of</secondary>
+</indexterm>
+In addition to spatial data in raster format, point data are used in the
+PCRaster package, stored as <emphasis>point data column files</emphasis>,
+the fourth sort of data used. Point data consist of a x,y coordinate
+and one or more attribute values. Quite often data will be available
+in this format, especially if they are gathered through field study. In
+the gstat module point data column files
+can be used for analysis of spatial structures with the variogram tools
+and for interpolation to a raster (in PCRaster map format) of estimated
+values using (block) kriging.  <xref linkend="secdatbasepoint"/> describes
+the format of point data column files.
+</para>
+</section>
+
+<section id="secdatbasemap">
+<title>PCRaster maps</title>
+<section id="secdatbasemapintro">
+<title>Introduction </title>
+
+<para>
+<anchor id="mapconi" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>map, PCRaster - </primary>
+  <secondary>format of</secondary>
+</indexterm>
+This section describes the format of the main sort
+of data used in the PCRaster package: the PCRaster map, which contains
+spatial data in raster format. A header is attached to each PCRaster map;
+it contains both the location attributes and the data type of the map. 
+The location attributes define the position of the map with respect to a real world coordinate system, the size and shape of the map and its resolution (cell size). The
+sort of attribute stored in the map is given by the data type of the map. The data type determines the PCRaster operations that can be performed on the map. Data typing used
+in PCRaster helps to structure your data.
+</para>
+
+<para>
+If you start a project, and want to import data to the PCRaster package
+in PCRaster map format it is wise first to make a map containing the
+header with the correct location attributes and the data type of the
+first data set you want to import. How this is done is described in
+<xref linkend="secimportmap"/>.  This section also
+describes other aspects of database management with a map.  
+</para>
+</section>
+
+
+<section id="secdatbasemaphead">
+<title>Location attributes, missing values </title>
+<para>
+<anchor id="LocAtDes" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>description of</secondary>
+</indexterm>
+This section gives an overview of the geographical location attributes 
+linked to a PCRaster map.
+</para>
+
+<para>
+The location attributes <emphasis>projection</emphasis>,
+&pcr-xul;,&pcr-yul;, <emphasis>cell length</emphasis>, <emphasis>number
+of rows</emphasis>, <emphasis>number of columns</emphasis> and
+<emphasis>angle</emphasis> are used to define the position of the map with
+respect to a real world coordinate system and the shape and resolution
+of the map. <xref linkend="fig3.5"/> shows schematically a PCRaster map
+of a study area and the location attributes used. As shown, the location
+attributes define the map with respect to the real world coordinate system
+(an ordinary x,y coordinate system).
+
+<figure id="fig3.5"> <!--float="1"-->
+  <title>Location attributes used
+to define the spatial characteristics of a PCRaster map. For
+explanation, see text.</title> 
+<graphic fileref="figures/locattr.png" format="PNG" />
+</figure>
+</para>
+
+<para>
+<anchor id="missingvaluemaps" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>missing value</primary>
+  <secondary>in maps, explained</secondary>
+</indexterm>
+The choice of the location attributes must be based upon the shape of
+the study area and the data set you want to store in the map. PCRaster
+maps always have a rectangular shape, but the shape and size of the
+map does not need to correspond exactly with the shape of the area
+studied, as shown in <xref linkend="fig3.5"/>: during data import to the
+PCRaster map the cells in the map outside the study area are assigned
+<emphasis>missing values</emphasis>.
+A missing valued cell is a cell which contains no attribute
+value. Missing valued cells are considered not to be included in the
+study area: PCRaster GIS and Cartographic or Dynamic Modelling operators
+ignore the missing valued cells. In general, cells that have a missing
+value on an input map of an operation are assigned a missing value on
+the resulting output map(s) also.
+</para>
+
+<para>
+For a complete description of the choice of the location attributes
+related to the data set that will be stored in the map, see <xref
+linkend="secimportmapcrea"/>.
+</para>
+
+<para>
+The location attributes have the following meaning; see also 
+<xref linkend="fig3.5"/>:
+
+<variablelist>
+<varlistentry><term><emphasis>projection</emphasis>   
+<anchor id="ProjectionDes" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>projection</primary>
+</indexterm>
+</term>
+<listitem>
+
+<para>
+The projection of the real coordinate system which will also be assigned
+to the PCRaster map, is assumed to be a simple x,y field (also used in
+basic mathematics). The x coordinates increase from left to right. The y
+coordinates increase from top to bottom or from bottom to top. This can
+be chosen; from top to bottom is default.
+</para>
+</listitem>
+</varlistentry><varlistentry><term>&pcr-xul;,&pcr-yul;   
+<anchor id="xUL" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>xUL</secondary>
+</indexterm>
+  <anchor id="yUL" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>yUL</secondary>
+</indexterm>
+ </term>
+<listitem>
+<para>
+The &pcr-xul;, &pcr-yul; are the real world coordinates
+of the upper left corner  <anchor id="UpperLeftCorner" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>upper left corner</secondary>
+</indexterm>
+ of the PCRaster
+map. The location of the PCRaster map with respect to the real world coordinate
+system is given by this corner: if a rotated map is used (an angle
+not equal to zero), it is rotated around this point (so rotation over 90
+degrees will result in a &pcr-xul;, &pcr-yul; that is at
+the bottom left side in <xref linkend="fig3.5"/>). Other PCRaster map
+corners are &pcr-xll;,  &pcr-yll; ; &pcr-xur;,
+&pcr-yur; ; &pcr-xlr; , &pcr-ylr; .
+
+</para></listitem>
+</varlistentry><varlistentry><term><emphasis>cell length</emphasis>   <anchor id="CelllengthLocAtt" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>cell</primary>
+  <secondary>length</secondary>
+</indexterm>
+</term>
+<listitem>
+<para>
+The cell length is the length of the cells in horizontal and vertical direction.
+This implies that cells in a PCRaster map are all of the same size and
+always square. The cell length is measured in the distance unit of the real
+world coordinate system.
+</para></listitem>
+</varlistentry><varlistentry><term><emphasis>number of rows</emphasis>, <emphasis>number of columns</emphasis>   <anchor id="NumbOfRowsLocAt" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>column</primary>
+  <secondary>number of</secondary>
+</indexterm>
+</term>
+<listitem>
+<para>
+The number of rows and the number of columns are the number of rows and
+columns of the PCRaster map respectively. The cell length multiplied by
+the number of rows and number of columns is the height and width of the
+PCRaster map, respectively (in distance units of the real world
+coordinate system).
+</para></listitem>
+</varlistentry><varlistentry><term><emphasis>angle</emphasis>  <anchor id="AngleLocAt" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>angle</primary>
+</indexterm>
+</term>
+<listitem>
+<para>
+The angle is the angle between the horizontal direction on the PCRaster
+map and the x axis of the real world coordinate system. It must be
+between -90 and 90 degrees; a map with a positive angle has been rotated
+counter clockwise with respect to the real coordinate system, a map with
+a negative angle has been rotated clockwise. In most cases an unrotated
+map will be sufficient (angle = 0 degrees), see also <xref linkend="secimportmapcrea"/>.
+</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</section>
+
+
+<section id="secdatbasemaptype">
+<title>Data types</title>
+<section id="datTYPDes">
+<title>Introduction</title>
+
+<para>
+<anchor id="DomOfMap" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>data type</primary>
+  <secondary>domain defined by</secondary>
+</indexterm>
+Data stored in PCRaster maps can be grouped according to the sort of
+attribute they represent. For instance, a distinction is often made between
+attributes that are stored in maps as classified data (for instance soil
+classes) or continuous data (for instance elevation). In PCRaster, attribute
+information is linked to each map by specifying one of six data types. Each
+<emphasis>data type</emphasis> imposes a distinct domain of values   
+that may occur on a map (whole values or fractional values, range of
+possible values) and whether some kind of order/scale is represented by the
+data (with or without order; linear or directional scale). If a legend is
+attached to a map, the map is subtyped  
+<anchor id="SUBtypeIntro" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>data type</primary>
+  <secondary>subtype</secondary>
+</indexterm>
+by its
+legend: the attribute stored in the map is not only specified by the data
+type of the map, but also by the legend. Also the domain of a subtyped
+map is determined by the legend: it consists only of the map values linked
+to the classes given in the legend. As a result, PCRaster prevents some
+operations that otherwise would combine maps with different legends. For
+instance a landuse map and a soil map cannot be joined laterally together.
+The legend of a map and the resulting <emphasis>subtype</emphasis> is described in
+<xref linkend="secdatabaseleg"/>.
+</para>
+
+<para>
+<anchor id="DatREAS" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>data type</primary>
+  <secondary>concept of</secondary>
+</indexterm>
+The data type mechanism used in PCRaster will help you understand and
+organize your ideas about the attributes stored in your database or used
+in some kind of spatial model. The data types will prevent you from doing
+operations that are nonsense: each time a operation is done, the system
+checks the data type of the input maps and if the operations would result
+in nonsense an error message is given. Also, for some PCRaster operators
+the system adapts the way the operation is done to the data type of the
+input maps (this is called polymorphic behaviour
+<anchor id="polymorBEH" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>polymorphic behaviour</primary>
+</indexterm>
+of GIS operators). Additionally, the map
+resulting from an operation is given the data type that fits the sort of data
+that result from the operation.
+</para>
+
+<para>
+<anchor id="CelREPDE" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>cell</primary>
+  <secondary>representation</secondary>
+</indexterm>
+Most data types have a distinct <emphasis>cell
+representation</emphasis> . The cell representation is not related to
+the <emphasis>concept</emphasis> of data type checking in the GIS, and
+for ordinary use it is of little importance: it only determines the way
+the values of the cells are stored and processed in the computer. The
+cell representations used in PCRaster are <emphasis>single real</emphasis>
+
+<anchor id="SingREALCELL" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>REAL4</primary>
+</indexterm>
+or <emphasis>double real</emphasis>
+<anchor id="DuobleREALCELL" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>double real cell representation</primary>
+</indexterm>
+for scalar and directional data and <emphasis>small
+integer</emphasis> 
+<anchor id="SmallInteg" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>small integer cell representation</primary>
+</indexterm>
+or <emphasis>large integer</emphasis>  
+<anchor id="LargeIn" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>INT4</primary>
+</indexterm>
+
+for nominal and ordinal data. These are represented in the computer by
+REAL4 (single real), REAL8 (double real), UINT1 (small integer) and INT4
+(large integer). UINT1, REAL4, REAL8, UINT1 and INT4 are also applied
+in other software, see for an exact description a standard book about
+computers in your library. By default, PCRaster automatically chooses the
+cell representation for each data type, so for ordinary use you do not
+need to take care of the cell representation. In some cases, especially if
+you want to store extremely large or small data values at a high precision
+<anchor id="PrecVALU" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>precision of cell values</primary>
+</indexterm>
+you may want to choose a cell
+representation another than the default. This can be done
+with <link linkend="GOrepres">global options for defining cell representations</link>.  The cell representations for each data
+type are given in the next sections.
+</para>
+
+<para>
+The data types are described in <xref linkend="formboolean"/>
+up to and including <xref linkend="formldd"/>; a short overview of
+the types is given in Table <xref linkend="tdatatype"/>. Operators
+for creating and conversion between data types are listed in <xref
+linkend="secimportmaptype"/>.
+
+<table id="tdatatype" frame="all" pgwide="1">
+<title>
+List of data types, domaines for default cell representation, without legends
+</title>
+<tgroup cols="4">
+<colspec colnum="1" colname="c1"/>
+<colspec colnum="2" colname="c2"/>
+<colspec colnum="3" colname="c3"/>
+<colspec colnum="4" colname="c4"/>
+<thead>
+<row>
+<entry><para>data type</para></entry>
+<entry><para>description attributes</para></entry>
+<entry><para>domain</para></entry>
+ <entry><para>example</para></entry>
+ </row>
+ </thead>
+ <tbody>
+ <row>
+ <entry><para>boolean</para></entry>
+ <entry><para>boolean</para></entry>
+ <entry><para>0 (false), 1 (true)</para></entry>
+ <entry><para>suitable/unsuitable, visible/non visible</para></entry>
+ </row>
+ <row>
+ <entry><para>nominal</para></entry>
+ <entry><para>classified, no order</para></entry>
+ <entry><para>0...255, whole values</para></entry>
+ <entry><para>soil classes, administrative regions</para></entry>
+ </row>
+ <row>
+ <entry><para>ordinal</para></entry>
+ <entry><para>classified, order</para></entry>
+ <entry><para>0...255, whole values</para></entry>
+ <entry><para>succession stages, income groups</para></entry>
+ </row>
+ <row>
+ <entry><para>scalar</para></entry>
+<entry><para>continuous, lineair</para></entry>
+ <entry><para>- 10exp(37)...10exp(37), real values</para></entry>
+ <entry><para>elevation, temperature</para></entry>
+ </row>
+ <row>
+ <entry><para>directional</para></entry>
+ <entry><para>continuous, directional</para></entry>
+ <entry><para>0 to 2 pi (radians), or to 360 (degrees), and -1 (no direction), real values</para></entry>
+ <entry><para>aspect</para></entry>
+ </row>
+ <row>
+ <entry><para>ldd</para></entry>
+ <entry><para>local drain direction to neighbour cell</para></entry>
+ <entry><para>1...9 (codes of drain directions)</para></entry>
+ <entry><para>drainage networks, wind directions</para></entry>
+ </row>
+ </tbody>
+ </tgroup>
+ </table>
+</para>
+
+</section>
+
+
+<section id="formboolean">
+<title>Boolean data type</title>
+<para>
+The domain of the Boolean data type is 1 (Boolean TRUE) and 0 (Boolean
+FALSE). It is used for all attributes that only may have a value TRUE or
+FALSE, for instance 'suitable or unsuitable for maize', or to specify
+cells that come into a class or do not come into a class, for instance
+cells with a watch-tower or cells without a watch-tower.  A legend can
+be made for a map of data type Boolean; it has no effect on the domain
+of the map.
+</para>
+</section>
+
+
+<section id="formnominal">
+<title>Nominal data type</title>
+<para>
+The nominal data type is used for classified data without order. It
+represents attributes described by classes, for instance a map with soil
+classes. If the default cell representation is used (small integer),
+the domain consists of whole values equal to or between 0 and 255,
+so 256 different classes can be distinguished. Of course any number in
+the domain can be chosen to represent a class, but normally for each
+class a number is chosen starting with 1, and a value of 0 is chosen
+for cells that do not belong to a class. If the cell representation
+large integer is chosen (optional) the domain consists of all whole
+values between <emphasis>-2</emphasis><superscript>31</superscript>
+and <emphasis>2</emphasis><superscript>31</superscript> and many more
+classes can be stored in the map.
+</para>
+
+<para>
+A legend can be attached to a map of nominal data type, see 
+<xref linkend="secdatabaseleg"/>. This results
+in subtyping of the map.
+</para>
+</section>
+
+
+<section id="formordinal">
+<title>Ordinal data type</title>
+<para>
+The ordinal data type is used for classified data that represent some
+kind of order. For instance stages of succession or soil texture
+measured at an ordinal scale (silt, sand, gravel for instance). If
+the default cell representation is used (small integer), the domain
+consists of whole values equal to or between 0 and 255, so 256
+ordinal classes can be distinguished.  Of course any number in the
+domain can be chosen to represent an ordinal class, but normally
+for the first class an ordinal value of one is chosen and for the
+next classes the values 1, 2, 3,.. etc.; a value of 0 is chosen
+for cells that do not come into a class. If the cell representation
+large integer is chosen (optional) the domain consists of all whole
+values between <emphasis>-2</emphasis><superscript>31</superscript>
+and <emphasis>2</emphasis><superscript>31</superscript> and much more
+ordinal classes can be distinguished.
+</para>
+
+<para>
+A legend can be attached to a map of ordinal data type, see 
+<xref linkend="secdatabaseleg"/>. This results
+in subtyping of the map.
+</para>
+</section>
+
+
+<section id="formscalar">
+<title>Scalar data type</title>
+<para>
+The scalar data type is used for continuous data that do not represent a
+direction, for instance number of inhabitants, air particle concentration,
+amount of rain, elevation, or wind speed. The default cell representation
+is single real, which allows for storing and processing real values of
+data between <emphasis>-1</emphasis>*10<superscript>37</superscript>
+and <emphasis>1</emphasis>*10 <superscript>37</superscript>, using a
+maximum of six decimals. Optionally the cell representation double
+real can be used, it allows for storing and processing real values
+between <emphasis>-2</emphasis>*10<superscript>308</superscript> and
+<emphasis>2</emphasis>*10<superscript>308</superscript> with a maximal
+number of fifteen decimals.
+</para>
+</section>
+
+
+<section id="formdirectional">
+<title>Directional data type</title>
+<para>
+The directional data type is used for continuous data that represent a
+direction. The domain depends on the sort of directional data that is
+used: if the global option <pcr-go>degrees</pcr-go> is set (for global
+options see <xref linkend="secimportopt"/>), the domain consists of real
+values equal to 0 or between 0 and 360 degrees and the number -1 for
+cells without a direction (-1 and [0,360> which means that 360 is not
+in the domain). If the global option <pcr-go>radians</pcr-go> is set the
+direction is given in radians, the domain is [0,<emphasis>2pi</emphasis>
+> and the number -1 for cells without a direction. The value -1 is not
+a missing value: it represents a cell for which no direction can be
+given. For instance a cell in a flat terrain does not have an aspect;
+as a result it has the value -1 on a map with aspects. The direction
+in the map of a directional value 0 depends on the location attribute
+angle of the map, see <xref linkend="secdatbasemaphead"/> : a cell
+value of 0 points to the North of the map (the y direction of the real
+world coordinate system), the remaining values increase in clock wise
+direction. In most cases the top of the map will be the North (location
+attribute angle = 0 degrees). In these cases a directional value 0 is
+to the top of the map and 90 degrees (East) corresponds with a direction
+to the right side of the PCRaster map.
+</para>
+
+<para>
+The directional data type can be used for all attributes that have
+a circular scale, for instance orientation or a year scale. Default
+the cell representation is single real; double real can be chosen
+for a higher precision, but in almost any case single real will give
+satisfying results.  Note that statistics of directional data, like
+mean and variance, are computed in a different way than for scalar data
+(see also <xref linkend="mardia72" role="bibRef"  />).  So always use the
+directional data type for directional data: PCRaster will automatically
+apply statistics for directional data to the map values.
+</para>
+</section>
+
+
+<section id="formldd">
+<title>Ldd data type</title>
+<para>
+<anchor id="LocDrDirNWDescr" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>local drain direction network</primary>
+</indexterm>
+The ldd data type is used for maps that represent a local drain direction
+network . A local drain direction network is made up of a network of
+cells; each cell has a whole value from 1 to 9.  These codes identify
+the neighbour of the cell to which material flows. The values have the
+meaning shown in <xref linkend="figfildd"/>; note that the values are chosen
+to resemble the numeric key pad of your computer.
+
+<figure id="figfildd" ><!--float="1"-->
+<title>Directions of ldd codes. A value 5 (not shown) defines a cell
+without local drain direction (a pit).</title>
+<graphic fileref="figures/lddcode.png" format="PNG" />
+</figure>
+
+For instance, during transport of material, a cell with value 3 designates
+flow to the bottom right neighbouring cell. The value 5 represents a
+<pcr-op>pit</pcr-op>
+<anchor id="pitref" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>pit</primary>
+</indexterm>
+: this is a cell without drainage to one of its
+neighbours.
+</para>
+
+<para>
+<anchor id="SoundLDD" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>ldd data type</primary>
+  <secondary>sound/unsound ldd</secondary>
+</indexterm>
+Since the local drain direction network on a map of ldd data type
+defines a relationship between cells, a map of this data type must
+meet some requirements to safeguard these relationships. If a map
+meets these requirements it contains a so called <emphasis>sound ldd
+network</emphasis>. A ldd map is sound if it is a map containing only
+whole values from 1 to 9 or missing values. Additionally the values on the
+map must be ordered in such a way that each downstream path starting at
+a non-missing value cell ends in a pit cell. A downstream path consists
+of the consecutively neighbouring downstream cells; the pit cell at the
+end of the path is called the <emphasis>outlet point</emphasis>  
+<anchor id="OulLetP" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>outlet point</primary> 
+</indexterm>
+of the cell where the path started.
+</para>
+
+<para>
+  <anchor id="unsoundLdd" role="indexterm-concept"/> 
+  <indexterm role="concept">
+  <primary>unsound ldd</primary>
+  </indexterm>
+Here is a (non exhaustive) list of situations which cause a ldd to be
+<emphasis>unsound</emphasis>:
+  <itemizedlist>
+    <listitem>
+      <para>
+a cell on the border of the map has a local drain direction to the
+outside of the map. For example, a ldd code 7, 8 or 9 on the first (top)
+row of cells or a value 7, 4 or 1 on the first (left) column of cells
+of the map.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+a cell with a local drain direction to a cell with a missing value. For
+example a cell with a value 3 while its bottom right neighbour is a
+missing value.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+the ldd contains a cycle.
+        <anchor id="CycleDe" role="indexterm-concept"/>
+        <indexterm role="concept">
+          <primary>cycle in an ldd</primary>
+        </indexterm>
+A cycle is a set of cells that do not drain to a pit because they drain to
+each other in a closed cycle.  The smallest cycle consists of two cells
+with local drain directions to each other; larger cycles may consist of
+several cells.
+      </para>
+    </listitem>
+  </itemizedlist>
+</para>
+
+<para>
+A ldd that is not sound cannot be used for PCRaster operations. So
+you must always prevent operations that may generate an unsound ldd.
+Normally, a ldd network is made from an elevation map using the
+operator <pcr-op>lddcreate</pcr-op>. This will always result in a ldd
+that is sound. Other operations that can be used to generate a map
+of ldd data type will almost always result in a ldd that is unsound;
+examples are <pcr-op>asc2map</pcr-op>, <pcr-op>col2map</pcr-op>,
+<pcr-op>cover</pcr-op>, <pcr-op>lookup</pcr-op>. Some operations
+for making changes in a ldd must be done with care: editing using
+<pcr-op>aguila</pcr-op> and also cutting in a ldd map: always use the
+operator <pcr-op>lddmask</pcr-op> for cutting instead of for instance
+<pcr-op>if then</pcr-op>, <pcr-op>if then else</pcr-op>.  A ldd that is
+not sound can be made sound using the operator <pcr-op>lddrepair</pcr-op>.
+Always use this operator if you are not sure whether your ldd is sound;
+it will be repaired if it is unsound.
+</para>
+</section>
+</section>
+
+
+<section id="secdatabaseleg">
+<title>Legends</title>
+
+<para>
+Legend labels can be attached to boolean, nominal and ordinal maps with
+the operator <pcr-op>legend</pcr-op>.
+</para>
+</section>
+</section>
+
+
+<section id="secdatbaselook">
+<title>Tables</title>
+<section id="secdatbaselookintro">
+<title>Introduction</title>
+<anchor id="tableCon" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>table</primary>
+  <secondary>concept of</secondary>
+</indexterm>
+<para>
+The concept of tables specifying relations between PCRaster maps
+was discussed earlier in this chapter (<xref linkend="secdatbaseconc"/>). The following section (<xref linkend="secdatbaselookform"/>) describes the format used for tables. For creating and editing a table see <xref linkend="secimportlook"/>.
+
+<table id="tcolumtable" frame="sides" pgwide="1">
+<title>
+Example of a column table. The first, second and third column give the values of expression1, expression2 and expression3 respectively; the fourth column contains the value fields.  
+</title>
+<tgroup cols="4">
+<colspec colnum="1"  colname="c1" colwidth="3*"/>
+<colspec colnum="2"  colname="c2" colwidth="3*"/>
+<colspec colnum="3"  colname="c3" colwidth="3*"/>
+<colspec colnum="4"  colname="c4" colwidth="3*"/>
+<tbody>
+<row>
+<entry align="center"><para>&lt;2,></para></entry>
+<entry align="center"><para>3</para></entry>
+<entry align="center"><para>&lt;,12></para></entry>
+<entry align="center"><para>1</para></entry>
+</row>
+<row>
+<entry align="center"><para>&lt;,2]</para></entry>
+<entry align="center"><para>3</para></entry>
+<entry align="center"><para>&lt;,12></para></entry>
+<entry align="center"><para>3</para></entry>
+</row>
+<row>
+<entry align="center"><para>&lt;2,></para></entry>
+<entry align="center"><para>14</para></entry>
+<entry align="center"><para>&lt;,12></para></entry>
+<entry align="center"><para>7</para></entry>
+</row>
+<row>
+<entry align="center"><para>&lt;,2]</para></entry>
+<entry align="center"><para>14</para></entry>
+<entry align="center"><para>&lt;,12></para></entry>
+<entry align="center"><para>9</para></entry>
+</row>
+<row>
+<entry align="center"><para>&lt;2,></para></entry>
+<entry align="center"><para>14</para></entry>
+<entry align="center"><para>8</para></entry>
+<entry align="center"><para>4</para></entry>
+</row>
+<row>
+<entry align="center"><para>&lt;,2]</para></entry>
+<entry align="center"><para>14</para></entry>
+<entry align="center"><para>8</para></entry>
+<entry align="center"><para>8</para></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+
+<para>
+
+<table id="tmatrixtable" frame="sides" pgwide="1">
+<title>
+Example of a matrix table. The fields in the first row contain values of expression1; the fields in the first column contain values of expression2. The field in the top left corner is a dummy field. The remaining fields are value fields.
+</title>
+<tgroup cols="5">
+<colspec colnum="1"  colname="c1" colwidth="3*"/>
+<colspec colnum="2"  colname="c2" colwidth="3*"/>
+<colspec colnum="3"  colname="c3" colwidth="3*"/>
+<colspec colnum="4"  colname="c4" colwidth="3*"/>
+<colspec colnum="5"  colname="c5" colwidth="3*"/>
+<tbody>
+<row>
+<entry align="center"><para>-99</para></entry>
+<entry align="center"><para>1</para></entry>
+<entry align="center"><para>2</para></entry>
+<entry align="center"><para>3</para></entry>
+<entry align="center"><para>4</para></entry>
+</row>
+<row>
+<entry align="center"><para>12</para></entry>
+<entry align="center"><para>6.5</para></entry>
+<entry align="center"><para>6.5</para></entry>
+<entry align="center"><para>6</para></entry>
+<entry align="center"><para>6</para></entry>
+</row>
+<row>
+<entry align="center"><para>14</para></entry>
+<entry align="center"><para>-4</para></entry>
+<entry align="center"><para>-4</para></entry>
+<entry align="center"><para>-4</para></entry>
+<entry align="center"><para>-4</para></entry>
+</row>
+<row>
+<entry align="center"><para>16</para></entry>
+<entry align="center"><para>-13</para></entry>
+<entry align="center"><para>-13</para></entry>
+<entry align="center"><para>-12</para></entry>
+<entry align="center"><para>-12</para></entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+
+
+</para>
+
+</section>
+
+<section id="secdatbaselookform">
+<title>Format</title>
+<para>
+Two formats for tables are used, a <emphasis>column table</emphasis>
+and a <emphasis>matrix table</emphasis>. By default, PCRaster uses
+column tables. If you want to specify relations between only two maps
+it is sometimes better to use matrices instead. This is done by setting
+the global option <pcr-go>matrixtable</pcr-go> (for global options,
+see <xref linkend="secimportopt"/>). The formats of tables are:
+</para>
+
+<para>
+1) <emphasis>column table</emphasis>   
+<anchor id="ColTabForm" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>column</primary>
+  <secondary>table</secondary>
+</indexterm>
+In the column table relations between the values
+of several maps <emphasis>expression</emphasis>1,
+<emphasis>expession</emphasis>2,...<emphasis>expression</emphasis>n
+are given, where an <emphasis>expression</emphasis> can be a PCRaster
+map or a computation with PCRaster operators resulting in a PCRaster
+map. For each combination of values of <emphasis>expression</emphasis>1,
+<emphasis>expression</emphasis>2,...<emphasis>expression</emphasis>n
+a new value can be specified. Table <xref linkend="tmatrixtable"/> gives an
+example of a column table.
+</para>
+
+<para>
+<anchor id="KeyColFor" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>key</primary>
+  <secondary>column</secondary>
+</indexterm>
+The column table is an ascii file that consists of a number of
+<emphasis>n</emphasis>+1 columns.  The first <emphasis>n</emphasis>
+columns are key columns, where <emphasis>n</emphasis> is the number
+of maps.
+
+The key columns consist of key fields;
+<anchor id="KeyFIELD" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>key</primary>
+  <secondary>field</secondary>
+</indexterm>
+each key field is one value or a range of values. The key
+fields in the first column are linked to cell values of
+<emphasis>expression</emphasis>1, the key fields in the second column
+to values on <emphasis>expression</emphasis>2, and so on, where the
+key fields in the <emphasis>n</emphasis>th column are linked to values
+on <emphasis>expression</emphasis>n.  The last column (column number
+<emphasis>n</emphasis>+1) contains so-called value fields;
+<anchor id="ValFiel" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>value field</primary>
+</indexterm>
+these are new values that may be assigned to a new PCRaster
+map. Sometimes, if the <pcr-op>table</pcr-op> operator is used these
+will contain the number of cells (score) that match the key. Each row
+in the column table is called a tuple.
+<anchor id="Tuple" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>tuple</primary>
+</indexterm>
+Of course, it consists of <emphasis>n</emphasis> key fields and one
+value field.
+</para>
+
+<para>
+The fields are separated by one or more spaces or tabs. The number of
+spaces or tabs does not matter. A value field is one single value. A key
+field is a single value, or a range of values, where a range of values
+is typed as: '[' or '&lt;' symbol, minimum value, comma (, character),
+maximum value, ']' or '>' symbol. The minimum and maximum values are
+included in the range if square brackets ('[' and ']') are used, they
+are not included if point brackets ('&lt;' or '>') are used. Omitting
+a value in the range definition means infinity. Ranges can be used for
+nominal, ordinal, scalar and directional data types. Values in keys
+are typed as an ordinary number (for instance 24.453) or by using
+<emphasis>base</emphasis>  <subscript>10</subscript>  exponentials
+(for instance 32.45e3 means 32450). Column tables may consist of as
+many tuples as needed. Remember that when linking maps with the operator
+<link linkend="lookup"><pcr-op>lookup</pcr-op></link> , for each cell
+the value field is assigned of the <emphasis>first</emphasis> tuple (from
+top to bottom) that matches the set of <emphasis>expression</emphasis>1,
+<emphasis>expression</emphasis>2,...<emphasis>expression</emphasis>n
+values of the cell.
+</para>
+
+<para>
+
+
+2) <emphasis>matrix table</emphasis>
+<anchor id="MatrTabForm" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>matrix table</primary>
+</indexterm>
+
+A 2D matrix table contains the relations between two expressions
+<emphasis>expression</emphasis>1, <emphasis>expression</emphasis>2, where
+an <emphasis>expression</emphasis> is a PCRaster map or a computation
+with PCRaster operators resulting in a PCRaster map.  Table <xref
+linkend="tmatrixtable"/> gives an example of a matrix table.
+</para>
+
+<para>
+The matrix table is an ascii table with the following format. The first
+field in the top left corner of the matrix is not considered during
+PCRaster operations but is necessary to align the matrix; it is a dummy
+field and may have any value. The first row consists of this dummy field
+and the key fields
+<anchor id="KeyFieldMatTab" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>key</primary>
+  <secondary>field</secondary>
+</indexterm>
+which are
+linked to <emphasis>expression</emphasis>1. The first column
+consists of the dummy field and the key fields which are linked to
+<emphasis>expression</emphasis>2. The key fields may be one single value
+or a range of values, where a range is specified in the same way as it
+is done in a column table (see above). The remaining fields in the table
+are value fields
+<anchor id="ValFielMatTab" role="indexterm-concept"  /> 
+<indexterm role="concept">
+<primary>value field</primary>
+</indexterm>
+and consist of the values which will be
+assigned to a new map. Or, if the <pcr-op>table</pcr-op> operator is used
+these will contain the number of cells (score) that match the key. In
+horizontal direction, fields must be separated by one or more spaces or
+tabs. All fields must be filled in.
+</para>
+</section>
+</section>
+
+
+<section id="secdatbasetime">
+<title>Time series</title>
+<section id="secdatbasetimeintro">
+<title>Introduction </title>
+<para>
+The concept of time series was discussed earlier in this chapter (<xref linkend="secdatbaseconc"/>). The following section (<xref linkend="secdatbasetimeform"/>) gives the format used
+for time series.  Creating and editing a time series will be discussed later on (<xref linkend="secimporttimecrea"/>, as will the use of timeseries in dynamic
+modelling (<xref linkend="secdyn"/>).
+</para>
+</section>
+
+
+<section id="secdatbasetimeform">
+<title>Format</title>
+<para>
+The contents and the format (number of rows) of a time series must match
+the dynamic model for which the time series is used, especially the time
+dimension of the model. For a description of the time dimension and the
+terms used, see <xref linkend="secseqscrtime"/>. Two types of format for a
+time series are used: the <emphasis>time series with a header</emphasis>
+and a <emphasis>plain time series</emphasis> without header. Both are
+ascii formatted text.
+
+1) <emphasis>time series with a header</emphasis>
+
+An example of this sort of time series is below. It has the following format:<br/>
+line 1: header, description<br/>
+line 2: header, number of columns in the file<br/>
+line 3: header, time column description<br/>
+
+line 4 up to and including line <emphasis>n</emphasis> + 3: header,
+the names of the <emphasis>n</emphasis> identifiers to which the second
+and following columns in the time series are linked.<br/>
+
+subsequent lines: data formatted in rows and columns, where columns are
+separated by one or more spaces or tabs. Each row represents one timestep
+<emphasis>i</emphasis> at time t(<emphasis>i</emphasis>) in the model for
+which the time series is used or from which the time series is a report;
+the first row contains data for timestep <emphasis>i</emphasis> = 1, the
+second row for timestep <emphasis>i</emphasis> =2, etc. The first column
+contains the time t at the timesteps. At the first row which contains
+data for the first time step (<emphasis>i</emphasis> = 1) it is always
+the starttime t(1). For the following consecutive rows, the time in the
+first column increments each row with the timeslice dt of the model:
+in the <emphasis>i</emphasis>th row (<emphasis>i</emphasis>th timestep)
+the time is t(1) + (<emphasis>i</emphasis>-1) x dt. The remaining columns
+(column number 2 up to and including number <emphasis>n</emphasis>+1)
+contain values related to the <emphasis>n</emphasis> identifiers, where
+column number <emphasis>i</emphasis> is linked to the unique identifier
+value <emphasis>i</emphasis>-1. So, the second column contains values
+related to a unique identifier of 1, the third column contains values
+related to a unique identifier of 2 etc.<br/>
+
+<example>
+<title>
+Example of a time series file with a header. It gives the temperature
+at three weather stations, meant for input or the output of a model with
+starttime 1, endtime 8 and timeslice 1.
+</title>
+<literallayout>
+Temp., three stations
+4
+time
+1
+2
+3
+1  23.6  28  23.9
+2  23.7  22  24.8
+3  23.7  22  25.8
+4  21.0  24  21.1
+5  19.0  24  17.2
+6  18.9  22  17.9
+7  16.2  22  15.9
+8  16.8  24  14.9
+</literallayout>
+</example>
+</para>
+
+
+
+<para>
+
+2) <emphasis>plain time series</emphasis> 
+
+This is a file formatted like the time series file with header, but without the header lines.
+</para>
+
+
+</section>
+</section>
+
+
+<section id="secdatbasepoint">
+<title>Point data column files</title>
+<section id="secdatbasepointintro">
+<title>Introduction</title>
+<para>
+The concept of point data was discussied in a previous section of this chapter (<xref linkend="secdatbaseconc"/>). The next section (<xref linkend="secdatbasepointform"/>) gives the format used
+for point data column files. The creation of a point data column file and the
+conversion between point data column files and PCRaster maps will be discussed in the next chapter (<xref linkend="secimportpoint"/>).
+</para>
+</section>
+
+
+<section id="secdatbasepointform">
+<title>Format</title>
+<para>
+Ascii formatted column files are used for representation of point data in
+PCRaster. A column file consists of two columns containing the x and y
+coordinates respectively and one or more columns containing data values.
+Two types of column files can be used in PCRaster: a <emphasis>column file in
+simplified Geo-EAS format</emphasis>  
+<anchor id="ColumnFIGeoEASFOR" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>column</primary>
+  <secondary>file in simplified Geo-EAS format</secondary>
+</indexterm>
+
+ or a <emphasis>plain column file</emphasis>  <anchor id="PlainColFile"
+role="indexterm-concept"  /> <indexterm role="concept"> <primary>plain
+column file</primary> </indexterm>. These have the following format:
+
+
+
+1) <emphasis>column file in simplified Geo-EAS format</emphasis>:
+
+line 1: header, description
+
+line 2: header, number (<emphasis>n</emphasis>) of columns in the file
+
+line 3 up to and including line <emphasis>n</emphasis> + 2: header, the names of the
+<emphasis>n</emphasis> variables 
+
+subsequent lines: data which are formatted in at least
+three columns containing the x coordinates, y coordinates and values,
+respectively. Each line contains a record. The separator between the
+columns may be one or more whitespace character(s) (spaces, tabs) or
+ascii character(s). 
+
+2) <emphasis>plain column file</emphasis>:
+
+This is a file formatted like the simplified Geo-EAS format, but without
+header lines. The column separator may be chosen by the user. Fields
+with the x coordinates, y coordinates and values in the columnfile may
+contain the characters: -eE.0123456789. Fields may not be empty, valid
+fields are for instance: 25.11, -3324.4E-12 (which represents -3324.4 x
+10-12), .22 (which represents 0.22).
+</para>
+
+<para>
+The Table below gives an example of a column file in simplified Geo-EAS format.
+
+
+<example>
+<title>
+Example of a point data column file in simplified Geo-EAS format.
+</title>
+<literallayout>
+pH data January 17
+4
+xcoor
+ycoor
+pHfield
+pHlab
+349.34  105.03  3.4  4.1
+349.36  102.51  3.4  4.1
+348.89  104.00  3.6  4.1
+348.44  102.68  3.5  4.1
+349.89  104.72  3.8  4.1
+</literallayout>
+</example>
+</para>
+</section>
+</section>
+</chapter> 
+ <!-- 
+	  Local Variables:
+	   mode: sgml
+	   End
+	   -->

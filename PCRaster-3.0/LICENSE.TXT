@@ -1,0 +1,42 @@
+              **** End-User License Agreement ****
+
+This End-User License Agreement is a legal contract between you, as either an
+individual or a single business entity, and PCRaster Environmental Software
+(PES Consultancy BV).
+
+1. Use of the software implies that you have read this license agreement
+   and agree fully with what is stated in this agreement.
+2. If you obtained the free Microsoft Windows version of PCRaster, for each
+   personal registration you are licensed to use the software on one computer.
+   For any other use of PCRaster you have purchased the correct license from
+   PCRaster Environmental Software.
+3. Any unauthorized duplication of PCRaster or its accompanying documentation
+   is prohibited.
+4. The software package PCRaster is developed by and copyright (c) since 1987
+   by PCRaster Environmental Software and the Faculty of Geographical Sciences
+   of Utrecht University.
+5. Use of the software is permitted under the following conditions:
+   a. Not to sell or give away the software or any products which incorporate
+      parts of or the total PCRaster package.
+   b. Not to use the software or the practical exercises to give courses to
+      third parties without prior approval of the owners of PCRaster.
+   c. Not to develop any product which incorporate PCRaster or can be
+      considered a shell executing PCRaster commands.
+   d. Not to change the software, alter the software, decompile or use
+      'reverse engineering' or disassembly techniques, develop products based
+      on the software or to create 'look and feel' products derived from the
+      software.
+   e. To accept the program as is, with no obligation on the part of the
+      developers to provide corrections or assistance, beyond the support
+      contract offered to you.
+6. NO LIABILITY FOR CONSEQUENTIAL DAMAGES. In no event will the author be
+   liable to you for any additional damages, including any lost profits, lost
+   savings, or other incidental or consequential damages arising from the use
+   of, or inability to use, this software and its accompanying documentation,
+   even if the author has been advised of the possibility of such damages.
+7. The authors of PCRaster make no warranty of any kind, expressed or implied,
+   including without limitation any warranties of merchantability and/or
+   fitness for a particular purpose. The authors do not assume any liability
+   for the use of PCRaster beyond the original purchase price of this software.
+
+              **** End Of End-User License Agreement ****

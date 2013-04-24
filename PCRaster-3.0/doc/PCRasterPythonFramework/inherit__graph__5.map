@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" href="$class_assimilation_framework_1_1particle_filter_framework_1_1_particle_filter_framework.html" title="Framework for particle filter runs." alt="" coords="5,32,445,61"/>
+<area shape="rect" href="$class_assimilation_framework_1_1particle_filter_framework_1_1_residual_resampling_framework.html" title="Residual resampling algorithm." alt="" coords="532,5,1017,35"/>
+<area shape="rect" href="$class_assimilation_framework_1_1particle_filter_framework_1_1_sequential_importance_resampling_framework.html" title="Sequential importance resampling algorithm." alt="" coords="493,59,1056,88"/>
+</map>

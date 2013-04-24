@@ -1,0 +1,102 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>legend</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re123.html" title="col2map"><link rel="next" href="rn02re125.html" title="map2asc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">legend</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re123.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re125.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="legend"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>legend &#8212; 
+Attaches a legend to or changes the legend of one or more maps. 
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>legend</b> [options] <code class="varname">PCRmap</code>1 <code class="varname">PCRmap</code>2.....<code class="varname">PCRmap</code>n</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">PCRmap1-n</code></td><td class="type" valign="top">boolean, nominal, ordinal; they must have the same data type</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3060382"></a><h2>Options</h2><p>
+By default, <b>legend</b> starts a menu. Options that apply to this default
+menu mode are -l and -h.
+</p><p class="option">
+enter also labels for cell values with a smaller value than which occurs on <code class="varname">PCRmap1</code>1....<code class="varname">PCRmap</code>n </p><div class="variablelist"><dl><dt><span class="term">-l <span class="italic">minvalues</span></span></dt><dd><p> 
+the menu will allow you to fill in labels for whole
+cell values equal to or between the (whole) value <span class="italic">minvalue</span> and
+the maximum value on the <code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+enter also labels for cell values with a higher value than which occurs on <code class="varname">PCRmap1</code>1....<code class="varname">PCRmap</code>n </p><div class="variablelist"><dl><dt><span class="term">-h <span class="italic">maxvalues</span></span></dt><dd><p> 
+the menu will allow you to fill in labels for whole
+cell values equal to or between the minimum value on the
+<code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n and the (whole) number <span class="italic">maxvalue</span>.
+</p></dd></dl></div><p class="option">
+</p><p>
+The operator can also be used in a mode without the menu. The options
+that invoke this mode are described in the second part of the operation
+section. 
+</p></div><div class="refsect1" lang="en"><a name="id3060514"></a><h2>Operation</h2><p>
+The one or more maps <code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n must have
+the same data type (boolean,nominal or ordinal), the location attributes
+do not need to correspond. The <code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n
+may have (corresponding or different) legends attached or may not have
+legends attached. The <b>legend</b> operator will overwrite or assign in
+both cases the same legend to all <code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. 
+</p><p>
+<span class="italic">Operation with the menu</span>
+<br>
+This is the default action when no options or the options -l or -h are
+set. The operator invokes a menu which is used to change or enter the
+legend labels for the cell values that are found on one or more
+<code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. In addition the title of the
+legend can be assigned. The keys that are supported by the menu are
+given at the bottom of the menu.  
+</p><p>
+<span class="italic">Operation without the menu</span>
+<br>
+The operator can also be used without the menu. This is done
+by setting one of the following options.
+</p><p class="option">
+copy the legend of the first map to the other maps
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+-c: More than one <code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n are specified.
+The legend of the first map <code class="varname">PCRmap</code>1 is copied to the other maps
+<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+store the legend labels in an ascii formatted legend file
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+-w <span class="italic">outputlegendfile</span>: One or more
+<code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n may be specifed. The cell values
+of these maps with the labels are stored in the ascii formatted
+<span class="italic">outputlegendfile</span>. For each cell value, the label is stored of the
+<code class="varname">PCRmap</code>i (<span class="italic">i</span> is 1...<span class="italic">n</span>) with the lowest <span class="italic">i</span> that contains the
+cell value under consideration. The layout of the legend file
+<span class="italic">outputlegendfile</span> is given below.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+read the legend labels for the maps from an ascii formatted legend file
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+-f <span class="italic">inputlegendfile</span>: One or more
+<code class="varname">PCRmap</code>1,<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n
+may be specified. The labels given in the <span class="italic">inputlegendfile</span> are assigned to the
+legend of these maps. A cell value on an input map that does not
+occur in the <span class="italic">inputlegendfile</span>
+is assigned a label. The layout of the legend file <span class="italic">inputlegendfile</span> is given below.
+</p></dd></dl></div><p class="option">
+</p><p>
+The general layout of a legend file is as follows. The ascii formatted
+file constists of two columns, separated by one or more whitespace
+characters (space(s), tab(s)). The cell values are in the first column,
+the labels are in the second column. The first row contains in the first
+column the field -0 and in the second column the title of the legend.
+The following rows contain in the first column the cell value and in the
+second column the label for that cell value. 
+</p><p>
+When the legend file is the output from the <b>legend</b> operator, the
+title row (if a title occurs in one or more of the input maps) is the
+first row. The cell values with the labels are written in rising order
+from top to bottom, starting with row two. 
+</p><p>
+When the legend file is used as input file, the row with the title may
+be omitted. If it is given it <span class="italic">must</span> be the first row of the file. The
+following rows contain the cell values with the labels. The order of
+these rows does not matter. 
+</p><p>
+An example of an input legend file is: 
+
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+-0  landuse <br>
+4  arable land<br>
+1  woodland<br>
+3  buildings<br>
+2  lake<br>
+2  river<br>
+</p></div></div><p>
+</p></div><div class="refsect1" lang="en"><a name="id3060841"></a><h2>See Also</h2><p> 
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re123.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re125.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">col2map </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> map2asc</td></tr></table></div></body></html>

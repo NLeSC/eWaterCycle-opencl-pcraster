@@ -1,0 +1,38 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>aspect</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re27.html" title="asin"><link rel="next" href="rn01re29.html" title="atan"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">aspect</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re27.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re29.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="aspect"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>aspect &#8212; 
+Aspects of a map using a digital elevation model
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>aspect</b>( <code class="varname">dem</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">dem</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">directional</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id2987316"></a><h2>Operation</h2><p>
+
+For each cell, calculates the direction of maximum rate of change in
+elevation (aspect) on basis of the elevation of its 8 neighbours in a 3
+x 3 cells window. The third-order finite difference method is used,
+proposed by <a class="xref" href="bi01.html#horn81" title="???TITLE???">[3]</a>, also used by <a class="xref" href="bi01.html#skidmore89" title="???TITLE???">[5]</a>. <code class="varname">Result</code> is of a
+directional data type, with aspect values assigned clockwise; aspect to
+the top of the map is taken as zero aspect. When using <b>aguila</b> the aspect
+will be expressed in degrees or radians (depending on the global setting
+--degrees (default) or --radians).
+
+</p></div><div class="refsect1" lang="en"><a name="id2988020"></a><h2>Notes</h2><p>
+
+If a cell has a missing value on <code class="varname">dem</code>, a missing value is assigned to
+<code class="varname">Result</code>, in any case.
+
+
+</p><p>
+
+
+For each cell, the aspect is calculated using its 8 neighbours in a 3 x 3 cells
+window. Elevation in all these cells must be known, else the finite
+difference method can not be performed. It may occur that one of these
+values is unknown: this is the case if a surrounding cell is a missing value
+or if the centre cell is at the edge of the map resulting in the absence of
+some surrounding cells. If this occurs the <b>aspect</b> operator uses a built
+in neighbourhood interpolator to fill these missing values or absent cells
+in; this will make calculation of the slope for the centre cell still possible.
+For each missing value cell or absent cell, the elevation is determined by
+taking the average elevation of non missing value cells in a 3 x 3 cell
+window, with the missing value cell or absent cell in the centre of the
+window. 
+
+
+</p></div><div class="refsect1" lang="en"><a name="id2988069"></a><h2>Group</h2><p>This operation belongs to the group of  Derivatives of elevation maps </p></div><div class="refsect1" lang="en"><a name="id2988068"></a><h2>See Also</h2><p><a class="xref" href="rn01re73.html" title="nodirection"><span class="refentrytitle">nodirection</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id2988082"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result.map = aspect(Dem.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result.map</code></td></tr><tr><td><div><img src="examples/aspect.Result.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Dem.map</code></td></tr><tr><td><div><img src="examples/slope.Dem.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re27.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re29.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">asin </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> atan</td></tr></table></div></body></html>

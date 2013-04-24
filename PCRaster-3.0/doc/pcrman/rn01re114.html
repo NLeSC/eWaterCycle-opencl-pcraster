@@ -1,0 +1,41 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>windowhighpass</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re113.html" title="windowdiversity"><link rel="next" href="rn01re115.html" title="windowmajority"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">windowhighpass</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re113.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re115.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="windowhighpass"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>windowhighpass &#8212; 
+Increases spatial frequency within a specified square neighbourhood 
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>windowhighpass</b>( <code class="varname">expression</code>, <code class="varname">windowlength</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">expression</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">windowlength</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3048490"></a><h2>Options</h2><p class="option">
+--unittrue or --unitcell</p><div class="variablelist"><dl><dt><span class="term">--unittrue</span></dt><dd><p> <code class="varname">windowlength</code> is measured in true length (default)
+</p></dd><dt><span class="term">--unitcell</span></dt><dd><p> <code class="varname">windowlength</code> is measured in number of cell lengths
+</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id3048548"></a><h2>Operation</h2><p>
+
+For each cell <span class="italic">c</span> its windowhighpass value is computed as follows. A
+square window with the cell <span class="italic">c</span> in its centre is defined by
+<code class="varname">windowlength</code>. The <code class="varname">windowlength</code> is the length of the window in
+horizontal and vertical directions. For each cell <span class="italic">i</span> which is entirely or
+partly in the window and which is not the centre cell <span class="italic">c</span> the fraction of
+the cell in the window is determined. This is the area of the part of the cell
+in the window divided by the total area of a cell. Let <span class="italic">fraction</span>(<span class="italic">i</span>) be this
+fraction; let <code class="varname">expression</code>(<span class="italic">i</span>) be the <code class="varname">expression</code> value of a surrounding
+cell <span class="italic">i</span> and <code class="varname">expression</code>(<span class="italic">c</span>) the <code class="varname">expression</code> value of the centre cell
+<span class="italic">c</span>. The windowhighpass filter value on the centre cell <span class="italic">c</span> is
+calculated according to:
+
+
+</p><div class="literallayout"><p><br>
+highpass(c) =``` 2 times expression(c) times {big sum from i=1 to n {@Quote {"fraction"} (i)}}````` - `````big sum from i=1 to n lbrace{expression(i) times @Quote {"fraction"} (i)}rbrace<br>
+</p></div><p>
+
+
+where <span class="italic">n</span> is the number of cells <span class="italic">i</span> surrounding the centre cell <span class="italic">c</span> in the
+window.
+This computation is performed for all cells: for each cell the
+highpass(<span class="italic">c</span>) value is assigned to the corresponding cell on <code class="varname">Result</code>.
+
+</p></div><div class="refsect1" lang="en"><a name="id3048696"></a><h2>Notes</h2><p>
+
+The cell value on <code class="varname">windowlength</code> should be greater than 0, else a
+missing value is assigned to the corresponding cell on <code class="varname">Result</code>. 
+</p><p>
+A cell on <code class="varname">windowlength</code> with a missing value results
+in a missing value on <code class="varname">Result</code> at the corresponding cell. However, if a
+missing value on <code class="varname">windowlength</code> occurs in a cell which is not the centre
+cell of the window the <code class="varname">expression</code> value in that cell <span class="italic">is</span> included in
+the computation of the highpass value in the window.
+</p></div><div class="refsect1" lang="en"><a name="id3048743"></a><h2>Group</h2><p>This operation belongs to the group of  Neigbourhood operators; window operators </p></div><div class="refsect1" lang="en"><a name="id3048751"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result1.map = windowhighpass( Expr.map, 6)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/windowhighpass.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr.map</code></td></tr><tr><td><div><img src="examples/windowaverage.Expr.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result2.map = windowhighpass( Expr.map, WinLen2.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/windowhighpass.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr.map</code></td></tr><tr><td><div><img src="examples/windowaverage.Expr.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">WinLen2.map</code></td></tr><tr><td><div><img src="examples/windowaverage.WinLen2.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re113.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re115.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">windowdiversity </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> windowmajority</td></tr></table></div></body></html>

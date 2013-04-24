@@ -1,0 +1,28 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lddmask</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re55.html" title="ldddist"><link rel="next" href="rn01re57.html" title="lddrepair"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lddmask</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re55.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re57.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="lddmask"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lddmask &#8212; 
+Local drain direction map cut into a (smaller) sound local drain direction map
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>lddmask</b>( <code class="varname">ldd</code>, <code class="varname">mask</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">ldd</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">mask</code></td><td class="type" valign="top">boolean</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3008588"></a><h2>Operation</h2><p>
+
+The cell values on <code class="varname">mask</code> are interpreted as boolean values, where 1 is
+TRUE and 0 is FALSE. The part of the local drain direction map <code class="varname">ldd</code>
+which you want to cut out must totally be filled with 1 (TRUE) values on
+<code class="varname">mask</code>.
+
+
+</p><p>
+
+Each cell with a <code class="varname">mask</code> value 0 (FALSE) is assigned a missing value on
+<code class="varname">Result</code>. Each cell with a <code class="varname">mask</code> value 1 (TRUE) is assigned a value
+which corresponds with the value on <code class="varname">ldd</code>, except cells with a <code class="varname">mask</code>
+value 1 that have a local drain direction on <code class="varname">ldd</code> towards a cell with a
+0 (FALSE) on <code class="varname">mask</code>. These last named cells are outflow cells on the
+edge of the new ldd, these are assigned a cell value 5, which is the ldd
+code for a pit.
+
+</p></div><div class="refsect1" lang="en"><a name="id3008647"></a><h2>Notes</h2><p>
+
+A cell with a missing value on <code class="varname">mask</code> is interpreted as a <code class="varname">mask</code> value
+0 (FALSE) and handled in that way. In addition, a cell with a missing value on
+<code class="varname">ldd</code> is assigned a missing value on <code class="varname">Result</code>.
+
+</p></div><div class="refsect1" lang="en"><a name="id3008674"></a><h2>Group</h2><p>This operation belongs to the group of  Missing value creation </p></div><div class="refsect1" lang="en"><a name="id3008682"></a><h2>See Also</h2><p><a class="xref" href="ch06s02.html#groupldd" title="6.2.4. Operations with local drain direction maps">Section 6.2.4</a> 
+</p></div><div class="refsect1" lang="en"><a name="id3008695"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result.map = lddmask(Ldd.map,Mask.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result.map</code></td></tr><tr><td><div><img src="examples/lddmask.Result.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Mask.map</code></td></tr><tr><td><div><img src="examples/lddmask.Mask.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re55.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re57.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">ldddist </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> lddrepair</td></tr></table></div></body></html>

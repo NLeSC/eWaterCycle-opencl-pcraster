@@ -1,0 +1,27 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>4.3. Point operations</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch04.html" title="Chapter 4. Cartographic Modelling"><link rel="prev" href="ch04s02.html" title="4.2. General approach to Cartographic Modelling"><link rel="next" href="ch04s04.html" title="4.4. Neighbourhood operations"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">4.3. Point operations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Cartographic Modelling</th><td width="20%" align="right"> <a accesskey="n" href="ch04s04.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secstatpoint"></a>4.3. Point operations</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatpointintro"></a>4.3.1. Introduction to point operations</h3></div></div></div><p>
+The class of point operations includes functions that operate only on the
+values of the map layers relating to each cell (<a class="xref" href="ch04s03.html#fig5.2" title="Figure 4.2. Point operation. A new map is generated on a cell-by-cell basis. No lateral relations between cells are included.">Figure 4.2</a>).
+The property of a cell is changed on basis of the relations between
+attributes or the vertical flow of material within the cells: the operation is
+independent of the property of neighbouring cells (i.e. no relations in
+lateral direction). In  other words, for each cell a new value (stored to a
+new layer) is calculated on basis of the values in that cell on one or more
+map layers.
+
+</p><div class="figure"><a name="fig5.2"></a><p class="title"><b>Figure 4.2. Point operation. A new map is generated on a cell-by-cell
+basis. No lateral relations between cells are included.</b></p><div class="figure-contents"><div><img src="figures/oppoint.png" alt="Point operation. A new map is generated on a cell-by-cell basis. No lateral relations between cells are included."></div></div></div><p><br class="figure-break">
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatpointope"></a>4.3.2. Operators for point operations</h3></div></div></div><p>
+The simplest of the <a class="link" href="ch06.html#secpointop" title="6.1. Point operators">point operations</a>
+are the <span class="emphasis"><em>arithmetic, trigonometric, exponential and logarithmic
+functions</em></span> for mathematical operations such as taking
+the exponent or sine of the values of one map layer or multiplying
+cell values of two map layers. Just as simple are operators for
+<span class="emphasis"><em>rounding</em></span> finding extremes (<span class="emphasis"><em>minimize,
+maximize</em></span>) or <b>order</b>, <span class="emphasis"><em>comparison
+operators</em></span> and <span class="emphasis"><em>conditional statements</em></span>. For
+applying Boolean logic <span class="emphasis"><em>Boolean operators</em></span> can be
+used. Point operations with user specified keys in tables defining
+relations between map layers can be performed with operators for
+<span class="emphasis"><em>relations in lookuptables</em></span>. Also random cell values
+can be generated using <span class="emphasis"><em>field generation</em></span> operators.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.2. General approach to Cartographic Modelling </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 4.4. Neighbourhood operations</td></tr></table></div></body></html>

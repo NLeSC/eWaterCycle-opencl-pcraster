@@ -1,0 +1,271 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>map2col</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re125.html" title="map2asc"><link rel="next" href="rn02re127.html" title="mapattr"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">map2col</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re125.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re127.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="map2col"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>map2col &#8212; 
+Converts from PCRaster map format to column file format
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>map2col</b> [options] <code class="varname">PCRmap1</code> <code class="varname">PCRmap2</code>....<code class="varname">PCRmap</code>n <code class="varname">columnfile</code></pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="3" valign="top"><code class="varname">PCRmap</code></td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional, ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td class="note" valign="top">The maps must have the <a class="link" href="ch02s03.html#secdatbasemaphead" title="2.3.2. Location attributes, missing values">same projection</a>, the other location attributes and the data types may be different between the maps.
+  </td></tr><tr><td valign="top"><code class="varname">columnfile</code></td><td class="type" valign="top">asciifile</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3063047"></a><h2>Options</h2><p class="option">
+--unittrue or --unitcell</p><div class="variablelist"><dl><dt><span class="term">--unittrue</span></dt><dd><p> 
+coordinates in <code class="varname">columnfile</code> are interpreted as real distance (default)
+</p></dd><dt><span class="term">--unitcell</span></dt><dd><p>
+coordinates in <code class="varname">columnfile</code> are interpreted as distance in number of cell lengths
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+coordinate positions:</p><div class="variablelist"><dl><dt><span class="term">--coorcentre</span></dt><dd><p> 
+cell values on <code class="varname">columnfile</code> are assigned the coordinates of
+the centres of the cells on <code class="varname">PCRmap</code>1 (default).
+</p></dd><dt><span class="term">--coorul</span></dt><dd><p> 
+cell values on <code class="varname">columnfile</code> are assigned the coordinates of the
+upper left corner of the cells on <code class="varname">PCRmap</code>1.
+</p></dd><dt><span class="term">--coorlr</span></dt><dd><p> 
+cell values on <code class="varname">columnfile</code> are assigned the coordinates of the
+lower right corner of the cells on <code class="varname">PCRmap</code>1.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+columnnumbers</p><div class="variablelist"><dl><dt><span class="term">-x <span class="italic">columnnumberx</span></span></dt><dd><p> 
+<span class="italic">columnnumberx</span>
+ is the column number of the x coordinate in <code class="varname">columnfile</code>; in append mode: the colum number of the x coordinate in the <span class="italic">inputcolumnfile</span> (default 1).
+</p></dd><dt><span class="term">-y <span class="italic">columnnumbery</span></span></dt><dd><p> 
+<span class="italic">columnnumbery</span> is the column number of the y coordinate in <code class="varname">columnfile</code>; in append mode: the colum number of the y coordinate in the <span class="italic">inputcolumnfile</span> (default 2).
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-m <span class="italic">nodatavalue</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+<span class="italic">nodatavalue</span> is the value in <span class="italic">columnfile</span> which is converted to a missing value on <code class="varname">PCRresult</code>. It can be one ascii character (letters, figures, symbols) or a string of ascii charaters. For instance: -m -99.98 or -m ! or -m j5w. Default, if this option is not set, 1e31 is recognized as a missing value.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-M
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+Default, if <code class="varname">PCRmap</code>1 has a
+missing value in a cell, the cell is not saved in <code class="varname">columnfile</code>. If the option
+-M is set these cells <span class="italic">are</span> saved in <code class="varname">columnfile</code>. They are assigned the
+<span class="italic">nodatavalue</span>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-s <span class="italic">seperator</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+By default, whitespace (one or more tabs, spaces) is recognized as separator between the values of a row in the <code class="varname">columnfile</code>. If the values are separated by a different separator, you can specify it with the option. The <span class="italic">separator</span> can be one of the ascii characters (always one). In that case, <b>col2map</b> recognizes the specified separator with or without whitespace as separator. For instance, if the values in <code class="varname">columnfile</code> are separated by a ; character followed by 5 spaces, specify -s ; in the command line (you do not need to specify the whitespace characters).
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+specifying format of columnfile </p><div class="variablelist"><dl><dt><span class="term">-p</span></dt><dd><p>
+<code class="varname">columnfile</code> is in plain format without header (default)
+</p></dd><dt><span class="term">-g</span></dt><dd><p>
+<code class="varname">columnfile</code> is in simplified <a class="link" href="ch02s06.html#secdatbasepointform" title="2.6.2. Format">Geo-EAS format</a>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+row wise or column wise output </p><div class="variablelist"><dl><dt><span class="term">-r</span></dt><dd><p>
+row wise output (default). The cell values in the first row on
+<code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n will be at the top of the
+<code class="varname">columnfile</code>, underneath the cells in the second row, etc.
+</p></dd><dt><span class="term">-c</span></dt><dd><p>
+column wise output. The cell values in the first column on
+<code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n will be at the top of the
+<code class="varname">columnfile</code>, underneath the cells in the second column, etc.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-a <span class="italic">inputcolumnfile</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p>
+append mode. The <code class="varname">inputcolumnfile</code> is the name of the column file to
+which the data are appended. The file with the appended data is saved as
+<code class="varname">columnfile</code>. See operation in append mode below.  
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-f <span class="italic">C-typeformat</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p>
+This option is used to specify the sort of
+format which is assigned to the cell values in <code class="varname">columnfile</code>. The
+format determines the maximal and minimal cell value which can be
+converted, the precision the data can be saved in <code class="varname">columnfile</code> and the
+number of positions used for each cell value. The default format that
+is used depends on the data type of <code class="varname">PCRmap</code>. For boolean, nominal
+and ordinal maps, containing only whole values, the smallest possible
+number of positions is used for each cell value field in <code class="varname">columnfile</code>,
+taking into account all cell values and the number of positions needed
+for the missing value. For instance, a nominal map with nominal values
+between 12 and 19 and a no data value -999 (given by the option -m
+<span class="italic">nodatavalue</span>) is written to <code class="varname">columnfile</code> using four positions for
+each cell value (resulting from the number of positions needed for the
+<span class="italic">nodatavalue</span>). For instance, the value 12 is printed as a cell value
+field made up of 2 spaces followed by 12.
+<br>
+Maps of scalar and
+directional data type are always printed in the <span class="italic">C-type format</span> 11.6g,
+also used in the C programming language: the precision the data are
+saved on <code class="varname">columnfile</code> corresponds with the precision they are
+available on <code class="varname">PCRmap</code>, with the restriction that the maximal number of
+significant figures which can be saved on <code class="varname">columnfile</code> is six per cell
+value. The maximum and minimum value which can be saved is 10<sup>
+99</sup> and -10<sup>99</sup> respectively; a notation with base<sub>10</sub> exponents
+is used if the value is larger than 10<sup>6</sup> or smaller than
+-10<sup>6</sup>.
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+Examples:<br>
+<br>
+PCRmap   				columnfile<br>
+-894.41000				-894.41<br>
+-5674935      		-5.67494e+06<br>
+453628190.6   		4.53628e+08<br>
+0.000000000031		3.1e-11<br>
+-0.02000012    		-0.0200001<br>
+-1.0200001     		-1.02<br>
+</p></div></div><p>
+
+
+If you want to prevent the usage of base 10 exponents for scalar or directional data
+use the C-type
+format f and specify  -f <span class="italic">a</span>.<span class="italic">d</span>f, where <span class="italic">a</span> and <span class="italic">d</span>  must be whole
+numbers equal to or larger than 0. The value <span class="italic">d</span> is the number of
+decimal figures which will be used for each cell value, the value <span class="italic">a</span> is
+the minimal total number of positions used for each value; if more
+positions are needed (large values), more positions are used.
+
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+Examples:<br>
+<br>
+C-typeformat    PCRmap        columnfile<br>
+5.6f            1234.1981     1234.198100<br>
+5.3f            1234.1981     1234.198<br>
+5.0f            1234.1981     1234<br>
+3.1f            1234.1981     1234.2<br>
+15.6f           1234.1981     1234.1981 <br>
+2.1f            1289128932.75 1289128932.7<br>
+</p></div></div><p>
+
+You can also specify other C-type formats, see for description of these
+formats a C programming language standard work.
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3063766"></a><h2>Operation</h2><p>
+<span class="italic">Default operation (no append mode)</span><br>
+Operation if <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n have corresponding location attributes:<br> 
+In most cases only one <code class="varname">PCRmap</code>1 is given in the command line or
+several maps <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n are given which
+have the same location attributes. In these cases, the operation is performed 
+as follows. The PCRaster expression(s) <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n are
+converted to <code class="varname">columnfile</code>, which is an ascii file in column format. Each
+line in this columnfile represents one cell on <code class="varname">PCRmap</code>1, <code class="varname">PCRmanp</code>2,...<code class="varname">PCRmap</code>n.
+The x and y coordinates of the cells will be in
+the column numbers specified by the options -x <span class="italic">columnumberx</span> and -y
+<span class="italic">columnnumbery</span>. The cell values of <code class="varname">PCRmap</code>1 will be in the first 'empty'
+column, the values of <code class="varname">PCRmap</code>2 in the next column etc. For instance if you
+set -x 2 -y 3, values of <code class="varname">PCRmap</code>1 are written in the first column, values
+of <code class="varname">PCRmap</code>2 in the fourth, values of <code class="varname">PCRmap</code>3 in the fifth etc.
+</p><p>
+Operation if <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n have different location attributes:<br> 
+If more than one <code class="varname">PCRmap</code> is given in the command line and the
+given maps have different location attributes (with the exception of the
+projection which must be the same) the operation is performed in a
+somewhat different way. Only the x, y coordinates of the first map
+<code class="varname">PCRmap</code>1 are printed in <code class="varname">columnfile</code>. Real world coordinates or
+cell coordinates are printed, as specified by the option --unittrue,
+--unitcell; the coordinate position that is printed is specified by the
+option --coorul, --coorlr, --coorcentre. The cell values are printed as
+follows: first, each x, y coordinate pair is supplemented with its cell
+value of <code class="varname">PCRmap</code>1. Than, each line in <code class="varname">columnfile</code> is supplemented
+with the cell values of the remaining maps <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. No new lines
+are appended for these maps. For each of these maps and each line, the cell value is printed of the cell which
+has a real world location that corresponds with the real world location
+of the <code class="varname">PCRmap</code>1 cell that is already printed on that line. The real
+world location corresponds if the real world x,y coordinate of the
+<code class="varname">PCRmap</code>1 cell comes into the cell of the <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n under
+consideration (the x,y coordinate of upper left corner, lower right
+corner or centre of each <code class="varname">PCRmap</code>1 cell is used, as specified by the
+--coorcentre, --coorlr, --coorcentre option). 
+A line on the <code class="varname">columnfile</code> that represents a <code class="varname">PCRmap</code>1 cell with a real world
+x,y coordinate that does not come into a cell
+on the <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n under consideration is assigned a missing value in the appended field.
+</p><p>
+<span class="italic">operation in append mode</span><br>
+
+Data can also be appended to an existing column file <span class="italic">inputcolumnfile</span>.
+This columnfile may be a plain column file without a header or a column
+file in simplified Geo-EAS format. These formats don't need to be
+specified, the <b>map2col</b> operator will detect the format of
+<code class="varname">inputcolumnfile</code> itself. For the append mode, the option -a <span class="italic">inputcolumnfile</span> is used.
+The <span class="italic">inputcolumnfile</span> is the name
+of the column file to which the data are appended. The file with the
+appended data is saved as <code class="varname">columnfile</code>. The data are appended as
+follows: each line (record) of the <span class="italic">inputcolumnfile</span> is supplemented with
+the <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n values of the cell in
+which the x,y coordinates of the line (record) are. On each line, the
+values of <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n will be typed in
+the order they are specified in the command line (i.e. <code class="varname">PCRmap</code>1 values
+are printed in the first column after the columns in the <span class="italic">inputfile</span>,
+<code class="varname">PCRmap</code>2 in the second column, etc.).
+</p><p>
+The append mode results in the appending of columns only, no lines will
+be appended: a cell on <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n
+without a x,y coordinate in the <span class="italic">inputcolumnfile</span> that comes into the
+cell will <span class="italic">not</span> be saved in a new line (record). A line (record) on
+<span class="italic">inputcolumnfile</span> with a x,y coordinate that does not come into a
+cell on <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n is assigned a
+missing value in the appended column(s).
+</p><p>
+In append mode the options -M, -r, -c, -p and -g must not be used. The
+other options can be used as normal, but the default values will be
+appropriate in almost any case; the flags -m, -f and -s will only affect the
+columns which are appended. The options --coorcentre, --coorul and --coorlr
+have the following meaning when used in append mode:
+
+
+</p><div class="variablelist"><dl><dt><span class="term">--coorcentre (default) and --coorul</span></dt><dd><p>
+lines (records) with coordinates in
+<span class="italic">inputcolumnfile</span> that are exactly at the upper or left edge of a cell are
+supplemented with the cell value of that cell, records with coordinates at
+the lower or right edge are supplemented with the value of a neighbouring
+cell.
+</p></dd></dl></div><p>
+
+
+</p><div class="variablelist"><dl><dt><span class="term">--coorlr</span></dt><dd><p>
+lines (records) with coordinates in <span class="italic">inputcolumnfile</span> that are
+exactly at the lower or right edge of a cell are supplemented with the cell
+value of that cell, records with coordinates at the upper or left edge are
+supplemented with the value of a neighbouring cell.
+</p></dd></dl></div><p>
+</p></div><div class="refsect1" lang="en"><a name="id3064222"></a><h2>Notes</h2><p>
+</p></div><div class="refsect1" lang="en"><a name="id3064233"></a><h2>Group</h2><p>This operation belongs to the group of  Creation of PCRaster maps</p></div><div class="refsect1" lang="en"><a name="id3064241"></a><h2>See Also</h2><p><a class="xref" href="rn02re125.html" title="map2asc"><span class="refentrytitle">map2asc</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3064255"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">map2col --coorul PCRmap.map ColFile1.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">ColFile1.txt</code></pre></td></tr><tr><td><pre class="programlisting">          10          10      123.23
+          18          10           0
+          10          14        45.5
+          14          14         124
+          18          14       0.419
+          10          18       56.34
+          14          18          32
+          18          18       0.016
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap.map</code></td></tr><tr><td><div><img src="examples/map2asc.PCRmap.gif"></div></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">map2col -M -m -9999 -f 5.0f -g --coorcentre -c PCRmap.map ColFile2.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">ColFile2.txt</code></pre></td></tr><tr><td><pre class="programlisting">map2col
+3
+x-coordinate
+y-coordinate
+PCRmap.map
+    12    12   123
+    12    16    46
+    12    20    56
+    16    12 -9999
+    16    16   124
+    16    20    32
+    20    12     0
+    20    16     0
+    20    20     0
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap.map</code></td></tr><tr><td><div><img src="examples/map2asc.PCRmap.gif"></div></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">map2col --coorcentre -a ColFile2.txt PCRmap3.map ColFile3.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">ColFile2.txt</code></pre></td></tr><tr><td><pre class="programlisting">map2col
+4
+x-coordinate
+y-coordinate
+PCRmap.map
+map2col append: map2col.PCRmap3.map
+    12    12   123    5
+    12    16    46    8
+    12    20    56 1e31
+    16    12 -9999    6
+    16    16   124    9
+    16    20    32 1e31
+    20    12     0 1e31
+    20    16     0 1e31
+    20    20     0 1e31
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap3.map</code></td></tr><tr><td><div><img src="examples/map2col.PCRmap3.gif"></div></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re125.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re127.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">map2asc </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> mapattr</td></tr></table></div></body></html>

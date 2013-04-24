@@ -1,0 +1,47 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>ldd</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re51.html" title="kinematic"><link rel="next" href="rn01re53.html" title="lddcreate"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">ldd</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re51.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re53.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="ldd"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>ldd &#8212; 
+Data conversion from specific data types to local drain direction data type
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>ldd</b>( <code class="varname">expression</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">expression</code></td><td class="type" valign="top">nominal, ordinal, directional</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3003461"></a><h2>Options</h2><p class="option">
+conversion from directional data type: --degrees or --radians</p><div class="variablelist"><dl><dt><span class="term">--degrees</span></dt><dd><p> values on <code class="varname">expression</code> are interpreted as degrees (default)
+</p></dd><dt><span class="term">--radians</span></dt><dd><p> values on <code class="varname">expression</code> are interpreted as radians
+</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id3003520"></a><h2>Operation</h2><p>
+
+If the <code class="varname">expression</code> is a PCRaster map or a calculation resulting in a PCRaster map, 
+it is converted. If the 
+<code class="varname">expression</code> has a data type nominal or ordinal, only the data type is
+changed; the cell values on <code class="varname">Result</code> correspond with the values on
+<code class="varname">expression</code>. For this conversion it is required that the cell values (or directions) on
+<code class="varname">expression</code> are in the domain of the ldd data type, i.e. a whole number
+from 1 up to and including 9. The values resemble the layout of the numeric key pad of your computer. 
+If <code class="varname">expression</code> has a directional data type,
+the circular directional scale of <code class="varname">expression</code> is converted to the local
+drain direction codes of the ldd data type as follows: the local drain
+direction codes are interpreted as real clockwise directions where a local
+drain direction to the top of the map (ldd code 8) is 0 degrees. Each
+directional cell value on <code class="varname">expression</code> is assigned the ldd code of the
+local drain direction which is closest to the direction given by
+<code class="varname">expression</code>. For instance, assuming the option --degrees is
+set, all <code class="varname">expression</code> values equal to 22.5 or between 22.5 and 67.5 (i.e
+values in the range [22.5,67.5&gt;) are assigned a ldd code 9 on <code class="varname">Result</code>.<br> 
+Or it generates a map of local drain direction data type with one constant value.
+
+</p><p>
+
+If <code class="varname">expression</code> has no PCRaster data type, a <code class="varname">Result</code> with data type
+ldd is generated. This is the case if <code class="varname">expression</code> is a number. The value
+of <code class="varname">expression</code> must be in the domain of the ldd data type, i.e. a whole
+number from 1 up to and including 9. <code class="varname">Result</code> will be a map with the same location
+attributes as the <a class="link" href="ch03s06.html#GOClone">global clone map</a>; all cells will
+have the value of <code class="varname">expression</code>.
+
+</p><p>
+
+
+</p></div><div class="refsect1" lang="en"><a name="id3003636"></a><h2>Notes</h2><p>
+
+A missing value on <code class="varname">expression</code> is assigned a missing value on
+<code class="varname">Result</code>.
+
+</p></div><div class="refsect1" lang="en"><a name="id3003654"></a><h2>Group</h2><p>This operation belongs to the group of  Conversion and assignment </p></div><div class="refsect1" lang="en"><a name="id3003662"></a><h2>See Also</h2><p><a class="xref" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types">Section 2.3.3</a> 
+<a class="xref" href="ch02s03.html#formldd" title="2.3.3.7. Ldd data type">Section 2.3.3.7</a> 
+<a class="xref" href="ch04s07.html#DataTyToNumb" title="4.7.2.1. Numbers and data types">Section 4.7.2.1</a> 
+</p></div><div class="refsect1" lang="en"><a name="id3003687"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result.map = ldd(Expr.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result.map</code></td></tr><tr><td><div><img src="examples/ldd.Result.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr.map</code></td></tr><tr><td><div><img src="examples/ldd.Expr.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re51.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re53.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">kinematic </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> lddcreate</td></tr></table></div></body></html>

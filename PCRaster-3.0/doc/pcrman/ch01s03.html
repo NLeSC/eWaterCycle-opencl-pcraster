@@ -1,0 +1,28 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.3. Dynamic Modelling</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch01.html" title="Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout"><link rel="prev" href="ch01s02.html" title="1.2. GIS and Cartographic Modelling"><link rel="next" href="ch01s04.html" title="1.4. gstat module: Geostatistical Modelling"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">1.3. Dynamic Modelling</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a> </td><th width="60%" align="center">Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout</th><td width="20%" align="right"> <a accesskey="n" href="ch01s04.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secintrodyn"></a>1.3. Dynamic Modelling</h2></div></div></div><p>
+The central idea of Cartographic Modelling is the derivation of new cell
+attributes from these attributes already present, or from attributes
+of neighbouring cells. In Dynamic Modelling the principle of spatial
+modelling is elaborated further by adding the concept of time: new
+attributes are computed as a function of attribute changes over time.
+</p><p>
+The Dynamic Modelling module is integrated at a high level with the part
+of the package for GIS functions and Cartographic Modelling. It provides
+a meta-language within which the user can build a dynamic model with the
+operators that are also used for Cartographic Modelling. Extra operators
+are added for creation of iterations through time and the reading of
+time series. The dynamic modelling language can be used for building a
+wide range of models, from very simple (point) models up to conceptually
+complicated or physically based models for environmental modelling (for
+instance erosion models). A dynamic model developed in the PCRaster
+Dynamic Modelling module can carry out all steps performed in modelling
+with ordinary low level GIS integrated models such as MODFLOW, MICROFEM
+(i.e. validating and calibrating). It has the advantage that the model
+is integrated at a high level with the GIS: data exchange problems do
+not exist, because the database of the GIS <span class="emphasis"><em>is</em></span> the database of the
+model and vice versa. So it is very easy to run models using distributed
+data sets imported, analyzed and manipulated with the GIS and
+Cartographic Modelling part of the PCRaster package or created with the
+other modules of the package. Additionally the results of model runs can
+be visualised and analyzed without further data exchange. 
+<a class="xref" href="ch05.html" title="Chapter 5. Dynamic modelling">Chapter 5</a> covers the Dynamic Modelling module.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch01s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">1.2. GIS and Cartographic Modelling </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 1.4. gstat module: Geostatistical Modelling</td></tr></table></div></body></html>

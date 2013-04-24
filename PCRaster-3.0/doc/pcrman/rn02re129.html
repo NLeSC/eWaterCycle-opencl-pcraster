@@ -1,0 +1,322 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>table</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re128.html" title="resample"><link rel="next" href="rn02re130.html" title="timeplot"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">table</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re128.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re130.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="table"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>table &#8212; 
+Creates on basis of one or more maps a table with a score  
+for each key in the table. 
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>table</b> [options] <code class="varname">PCRmap</code>1 <code class="varname">PCRmap</code>2.....<code class="varname">PCRmap</code>n<code class="varname">Resulttable</code></pre></div><div class="refsect1" lang="en"><a name="id3070377"></a><h2>Options</h2><p class="option">
+--unittrue or --unitcell
+</p><div class="variablelist"><dl><dt><span class="term">
+--unittrue
+</span></dt><dd><p> 
+the score is the total true area of the cells that match a
+key (default) 
+</p></dd><dt><span class="term">
+--unitcell
+</span></dt><dd><p> 
+the score is the number of cells that match a key
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+--degrees or --radians
+</p><div class="variablelist"><dl><dt><span class="term">
+--degrees
+</span></dt><dd><p> 
+directions of directional data type are in degrees (default)
+</p></dd><dt><span class="term">
+--radians
+</span></dt><dd><p> 
+directions of directional data type are in radians
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+--columntable or --matrixtable}
+</p><div class="variablelist"><dl><dt><span class="term">
+--columntable
+</span></dt><dd><p> 
+--Resulttable will be a <a class="link" href="ch02s04.html#ColTabForm">column table </a>(column table
+format).
+</p></dd><dt><span class="term">
+--matrixtable
+</span></dt><dd><p> 
+if two maps --PCRmap1, --PCRmap2 are
+specified in the command line <code class="varname">Resulttable</code> will be a matrix in 
+<a class="link" href="ch02s04.html#ColTabForm">matrix table format</a>, instead of a
+table. The options -i and -m are ignored.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+keys defined automatically
+</p><div class="variablelist"><dl><dt><span class="term">
+-n <span class="italic">nrintervals</span>
+</span></dt><dd><p> 
+the number of intervals in the key column for scalar and directional data type (default 8)
+</p></dd><dt><span class="term">
+-h
+</span></dt><dd><p> 
+the intervals in the key column for scalar and directional data type
+are histogram stretched: intervals are chosen that result in an (almost)
+equal number of cells into each interval. 
+</p></dd><dt><span class="term">
+-H <span class="italic">nrhistslots</span>
+</span></dt><dd><p> 
+corresponds with -h, additionally the number of
+histogramslots (<span class="italic">nrhistslots</span>) can be given. With the default value
+1024 the number of intervals in each interval will be almost the same,
+but not exactly. Choosing a larger <span class="italic">nrhistslots</span> will improve the
+accuracy the intervals are chosen, on the contrary it will take longer
+to determine the intervals.} 
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+keys defined by the user: -i
+</p><div class="variablelist"><dl><dt><span class="term">
+-i <span class="italic">Inputtable</span>
+</span></dt><dd><p> 
+the <span class="italic">Inputtable</span> is an ascii table that defines
+the keys used for calculation of the scores. For explanation, see
+Operation.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+remove keys with score zero
+</p><div class="variablelist"><dl><dt><span class="term">
+-0
+</span></dt><dd><p> 
+all keys, including these with a zero score, are printed in
+<code class="varname">Resulttable</code>. Default: keys with a zero score are not printed.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+change order of columns mode, for column tables only
+</p><div class="variablelist"><dl><dt><span class="term">
+-m <span class="italic">columnnrmove</span>
+</span></dt><dd><p> 
+Use in
+combination with -i <span class="italic">Inputtable</span>
+and do not specify input maps <code class="varname">PCRmap</code>1,
+<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. In
+<span class="italic">Inputtable</span> the column with column number
+<span class="italic">columnnrmove</span> is moved to the last
+column. The table with changed column order is saved as <code class="varname">Resulttable</code>.
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3071395"></a><h2>Operation</h2><p>
+<span class="italic">Operation with a column table (with <a class="link" href="ch02s04.html#ColTabForm">global option</a>)</span>
+
+</p><p>
+</p><div class="example"><a name="id3071420"></a><p class="title"><b>Example 11. 
+Example of a column table generated with the <b>table</b> operation
+with two input maps and the setting -n 4. The first and second column give
+the values of <code class="varname">PCRmap</code>1 (data type scalar) and <code class="varname">PCRmap</code>2 (data type nominal) respectively; the third column contains the score fields.
+</b></p><div class="example-contents"><div class="literallayout"><p><br>
+&lt;0,2]				1				205<br>
+&lt;2,4]				1				123<br>
+&lt;4,6]				1				142<br>
+&lt;6,8]				1				0<br>
+&lt;0,2]				2				10<br>
+&lt;2,4]				2				350<br>
+&lt;4,6]				2				4209<br>
+&lt;6,8]				2				2<br>
+</p></div></div></div><p><br class="example-break">
+
+The maps <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n are PCRaster maps 
+with the same location attributes. In the <code class="varname">Resulttable</code> relations
+between the cell values on these maps are given. Combinations of
+cellvalues on <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n can be specified
+in keys or are determined automatically. For each combination (key) the
+number of cells that matches the combination is counted and added to the
+key in the <code class="varname">Resulttable</code>.
+</p><p>
+The <code class="varname">Resulttable</code> will consist of a number of <span class="italic">n</span>+1 columns. The
+first <span class="italic">n</span> columns are key columns, where <span class="italic">n</span> is the number of the
+one or more maps <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. The key
+columns consist of key fields; each key field is one value or a range of
+values. The key fields in the first column have been linked to cell
+values on <code class="varname">PCRmap</code>1, the key fields in the second column to values on
+<code class="varname">PCRmap</code>2, and so on, where the key fields in the <span class="italic">n</span>th column have
+been linked to values on <code class="varname">PCRmap</code>n. The last column (column number
+n+1) contains so called score fields with the scores. Each row in
+the <code class="varname">Resulttable</code> is called a tuple. Of course, a row consists of
+<span class="italic">n</span> key fields and one score field.
+</p><p>
+For a tuple in the <code class="varname">Resulttable</code>, the <b>table</b> operator has counted
+the number of cells that match the key fields in the tuple. This number
+multiplied with the area of one cell (if the option --unitcell is set:
+the number of cells) has been assigned to the score field in the tuple.
+So for each cell, the value on <code class="varname">PCRmap</code>i (where <span class="italic">i</span> is 1 to <span class="italic">n</span>)
+has been compared with the <span class="italic">i</span>th key field of the tuple. The
+<code class="varname">PCRmap</code>i value of the cell matches the key field if it is equal to
+the value in the key field or if it is in the range of the key field, in
+case of a key field consisting of a range of values. If all cell values
+on the maps match the key fields belonging to them the cell matches the
+tuple and has been included in the score. This counting has been done
+for each tuple.
+</p><p>
+The <code class="varname">Resulttable</code> is an ordinary ascii text file. You can display the
+table by typing the DOS command 'type' followed by a space and the
+table name <code class="varname">Resulttable</code>. It has the following lay-out. In a row
+(tuple), the number of key fields equals the number of maps <code class="varname">PCRmap</code>1,
+<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. The key fields are followed by the score
+field. The fields are separated by one or more spaces or tabs. A key
+field is a single value, or a range of values, where a range of values
+is typed as: '[' or '&lt;' symbol, minimum value, comma, maximum value, ']'
+or '&gt;' symbol. The minimum and maximum values are included in the range
+if square brackets (respectively '[' and ']') are used, they are not
+included if '&lt;' or '&gt;' are used. A value which is omitted in the range
+definition means infinity. Examples of tuples are (assume a cellarea of
+100 m<sub>2</sub>):
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+# one <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n.:
+</span></dt><dd><p> 
+</p><div class="literallayout"><p><br>
+[ ,0.05&gt;     37600<br>
+</p></div><p>
+<br>
+An area of 37600 (376 cells of 100 m<sub>2</sub>) has  <code class="varname">PCRmap</code>1 values
+smaller than 0.05.
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+#two <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n:
+</span></dt><dd><p> 
+</p><div class="literallayout"><p><br>
+[-1.42,-0.2&gt;     [ ,9&gt;     20800<br>
+</p></div><p>
+<br>
+An area of 20800 (208 cells of 100 m<sub>2</sub>) has an <code class="varname">PCRmap</code>1
+value equal to -1.42 or between -1.42 and -0.2 and an <code class="varname">PCRmap</code>2 value
+smaller than 9.
+</p></dd></dl></div><p class="operation">
+</p><p>
+Default the keys are determined automatically, before the counting of
+cells starts. The way this is done depends on the data type of the maps
+<code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n:
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+boolean, nominal, ordinal, ldd data type
+</span></dt><dd><p> 
+the key column consists of sets of all whole values between and
+including the maximum and minimum cell value on the map linked to the
+key column.  
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+scalar data type
+</span></dt><dd><p> 
+the key column consists of sets of ranges; default 8 ranges of equal
+width, or specified by the options -n <span class="italic">nrintervals</span>; -h or
+-H <span class="italic">nrhistslots</span>.
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+directional data type
+</span></dt><dd><p> 
+the key column consists of sets of: the number -1 for the value -1
+(no direction) and <span class="italic">nrintervals</span>-1
+ranges for the directions, the number of ranges used can be specified by
+-n <span class="italic">nrintervals</span>; -h or -H <span class="italic">nrhistslots</span>; default, 7 ranges of equal width
+are used.
+</p></dd></dl></div><p class="operation">
+</p><p>
+</p><div class="example"><a name="id3071888"></a><p class="title"><b>Example 12. 
+Example of a matrix table generated with the <b>table</b>
+operation with the settings --matrixtable and -n
+4. Same input maps were used as in the first table (shown above). 
+The fields in the first row contain ranges of
+<code class="varname">PCRmap</code>1; the fields in the first column contain
+values of <code class="varname">PCRmap</code>2. The field in the top left corner
+is a dummy field. The remaining fields are score fields.
+</b></p><div class="example-contents"><div class="literallayout"><p><br>
+999			&lt;0,2]			&lt;2,4]			&lt;4,6]			&lt;6,8]<br>
+1				205				123				142				0<br>
+2				10				350				4209			2<br>
+</p></div></div></div><p><br class="example-break">
+
+
+The keys can also be given by the user, specifying an <span class="italic">Inputtable</span> with the option -i. The <span class="italic">Inputtable</span> must have the same lay-out as
+the <code class="varname">Resulttable</code> described above with the exception
+that the column with the scores does not need to be given (of course
+it is generated by the <b>table</b> command). The <span class="italic">Inputtable</span> can be made using your favourite
+text editor program or with a spread sheet or word processing program
+(export as text file!). If you want to change the order of the columns
+in a table you have made, use <b>table</b> with the option
+-m. A <code class="varname">Resulttable</code> created with <b>table</b>
+can also be used as <span class="italic">Inputtable</span>.
+</p><p>
+The key columns of <span class="italic">Inputtable</span>
+will be linked to the input PCRaster maps: the
+first column to <code class="varname">PCRmap</code>1, the
+second to <code class="varname">PCRmap</code>2,..., the <span class="italic">n</span>th to <code class="varname">PCRmap</code>n. If <span class="italic">Inputtable</span> contains more columns than the
+number of <span class="italic">n</span> input maps specified
+in the command line, the (<span class="italic">n</span> +
+1)th columns and further are deleted by <b>table</b> before
+execution of the operation. The scores are written to the (<span class="italic">n</span> + 1) column.
+</p><p>
+Each key column must contain key values in the domain of the data type
+of the map which is linked to the key:
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+boolean, nominal, ordinal, ldd data type
+</span></dt><dd><p> 
+whole values
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+scalar data type
+</span></dt><dd><p> 
+values or ranges;
+</p></dd></dl></div><p class="operation">
+</p><p class="operation">
+</p><div class="variablelist"><dl><dt><span class="term">
+directional data type
+</span></dt><dd><p> 
+the value -1; or values or ranges in the domain of
+the data type [0,360&gt; (option --degrees), [0,2pi&gt; (option --radians).
+</p></dd></dl></div><p class="operation">
+</p><p>
+<span class="italic">operation with a matrix table (with the option --matrixtable)</span>
+<br>
+With the option --matrixtable set, with two maps <code class="varname">PCRmap</code>1,
+<code class="varname">PCRmap</code>2 specified in the command line, <code class="varname">Resulttable</code> will be a
+matrix table instead of a column table.  If the option --matrixtable is
+set and a different number of  <code class="varname">PCRmap</code>1, <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n
+is specified, a column table is generated and the operation is performed
+as described above.  
+</p><p>
+The matrix will have the following lay-out. The first field in the top
+left corner has no meaning, it is a dummy field. The first row consists
+of this dummy field and the key fields which have been linked to
+<code class="varname">PCRmap</code>1. The first column consists of the dummy field and the key
+fields which have been linked to <code class="varname">PCRmap</code>2. The remaining fields in
+the matrix are score fields. Each score field contains the number of
+cells that have an <code class="varname">PCRmap</code>1 value of the key field of its column and
+have an <code class="varname">PCRmap</code>2 value of the key field of its row. 
+</p><p>
+If in addition to --matrixtable, the option -i <span class="italic">Inputtable</span> is used,
+the input table must have the following lay-out. The first row of
+<span class="italic">Inputtable</span> consists of a dummy field and the key fields which will
+be linked to <code class="varname">PCRmap</code>1. The first column consists of the dummy field
+and the key fields which will be linked to <code class="varname">PCRmap2</code>. The remaining
+fields must be filled in with arbitrary values; these will be replaced
+by the scores.
+</p></div><div class="refsect1" lang="en"><a name="id3072225"></a><h2>Group</h2><p>This operation belongs to the group of  Point operators; relations in tables </p></div><div class="refsect1" lang="en"><a name="id3072233"></a><h2>See Also</h2><p><a class="xref" href="rn01re61.html" title="lookup"><span class="refentrytitle">lookup</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3072246"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">table -n 4 PCRmap1.map Result1.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRMap1.map</code></td></tr><tr><td><div><img src="examples/table.PCRmap1.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Result1.txt</code></pre></td></tr><tr><td><pre class="programlisting">[-85.5 ,-58.75&gt; 1 
+[-58.75,-32   &gt; 0 
+[-32   ,-5.25 &gt; 0 
+[-5.25 ,21.5  ] 24
+
+        </pre></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">table -n 4 -h PCRmap1.map Result2.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRMap1.map</code></td></tr><tr><td><div><img src="examples/table.PCRmap1.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Result2.txt</code></pre></td></tr><tr><td><pre class="programlisting">[-85.5  ,6.03516&gt; 7
+[6.03516,10.0059&gt; 7
+[10.0059,13.0361&gt; 5
+[13.0361,21.5   ] 6
+
+        </pre></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">table -i Input.txt PCRmap1.map PCRmap2.map Result3.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Input.txt</code></pre></td></tr><tr><td><pre class="programlisting">&lt;,6] 2
+&lt;6,&gt; 2
+&lt;,6] 3
+&lt;6,&gt; 3
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap1.map</code></td></tr><tr><td><div><img src="examples/table.PCRmap1.gif"></div></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap2.map</code></td></tr><tr><td><div><img src="examples/table.PCRmap2.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Result3.txt</code></pre></td></tr><tr><td><pre class="programlisting">&lt; ,6] 2 4 
+&lt;6, &gt; 2 11
+&lt; ,6] 3 3 
+&lt;6, &gt; 3 7 
+    </pre></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">table -m 2 -i Input2.txt Result4.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Input2.txt</code></pre></td></tr><tr><td><pre class="programlisting">2 &lt;1,5] 2 0
+2 &lt;5,10] 1 1
+2 &lt;10,20] 3 1
+3 &lt;20,30] 4 1
+       </pre></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Result4.txt</code></pre></td></tr><tr><td><pre class="programlisting">2 2 0 &lt;1 ,5 ]
+2 1 1 &lt;5 ,10]
+2 3 1 &lt;10,20]
+3 4 1 &lt;20,30]
+</pre></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re128.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re130.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">resample </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> timeplot</td></tr></table></div></body></html>

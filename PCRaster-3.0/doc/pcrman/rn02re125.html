@@ -1,0 +1,99 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>map2asc</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re124.html" title="legend"><link rel="next" href="rn02re126.html" title="map2col"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">map2asc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re124.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re126.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="map2asc"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>map2asc &#8212; 
+Converts from PCRaster maps format to ascii file format
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>map2asc</b> [options] <code class="varname">PCRmap</code> <code class="varname">asciifile</code></pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">PCRmap</code></td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional, ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td valign="top"><code class="varname">asciifile</code></td><td class="type" valign="top">formatted asciifile</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3061510"></a><h2>Options</h2><p>
+Options can be given for assigning a special layout to <code class="varname">asciifile</code>. These options are described in the operation section. Other options are:
+</p><p class="option">
+-m <span class="italic">nodatavalue</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+<span class="italic">nodatavalue</span> may be one ascii character (letters, figures, symbols) or a string of ascii charaters. For instance: -m -999, -m ? or -m 8kf.f. The missing values on the map will be assigned the <span class="italic">nondatavalue</span> on the <code class="varname">asciifile</code> 
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-s <span class="italic">seperator</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+<span class="italic">separator</span> may be one ascii character (letters, figures, symbols,
+space, tab) or a string of ascii characters. A space or tab is specified
+using "\" \"", for instance: -s "\" \"" is a space as separator. The
+cell values which are on one row on <code class="varname">PCRmap</code> will be separated by
+<span class="italic">separator</span> on <code class="varname">asciifile</code>. Default, if -s is not set, <b>map2asc</b>
+prints one space <span class="italic">before</span> each cell value field.
+Note that if you want
+to convert the <code class="varname">asciifile</code> back to PCRaster map format with the
+<b>asc2map</b> operator, it should contain whitespace characters only or
+whitespace characters with only <span class="italic">one</span> non whitespace character as
+separator.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-f C <span class="italic">-typeformat</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+This option is used to specify the sort of format which is assigned to the
+cell values in <code class="varname">asciifile</code>. See the discussion of -f in <b>map2col</b>.
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3061689"></a><h2>Operation</h2><p>
+
+<span class="italic"> simple conversion</span><br>
+
+
+The data in PCRaster map format on <code class="varname">PCRmap</code> are converted to ascii
+format and saved as <code class="varname">asciifile</code>. Default a simple conversion is
+performed. This is a rowwise conversion to an <code class="varname">asciifile</code> without header.
+The rows on <code class="varname">PCRmap</code> are scanned from left to right, starting with the
+top row and ending with the bottom row. Each time a value is scanned it
+is added to <code class="varname">asciifile</code>, starting with a new line on <code class="varname">asciifile</code> if a new
+row on <code class="varname">PCRmap</code> is scanned. The values in one row on <code class="varname">PCRmap</code>
+will be on one line on <code class="varname">asciifile</code>, with a separator defined by the option -
+s (default one or more spaces, see above). The lines on <code class="varname">asciifile</code> always
+end in a cell value. 
+</p><p>
+<span class="italic">conversion to ARC/INFO input format</span>
+<br>
+In ARC/INFO ascii data with a special lay-out containing a header with
+location attributes and the <span class="italic">nodatavalue</span> can be imported using the
+ARC/INFO command asciigrid. An <code class="varname">asciifile</code> with the lay-out needed for this command
+can be created with <b>map2asc</b> specifying the option -a. Additionally
+only the option -m can be specified.
+</p><p>
+<span class="italic">conversion to other ascii file lay-outs</span>
+<br>
+Two options can be set to specify <code class="varname">asciifiles</code> with other lay-outs:
+</p><div class="variablelist"><dl><dt><span class="term">-c</span></dt><dd><p>
+Default a rowwise output is performed: lines on <code class="varname">asciifile</code> correspond
+with rows on <code class="varname">PCRmap</code>. If this option is set the output will be
+columnwise: the first column on <code class="varname">PCRmap</code> (from top to bottom) is
+printed as the first line (from left to right) on <code class="varname">asciifile</code>, the
+second column as the second line etc. The number of columns on
+<code class="varname">PCRmap</code> will correspond with the number of rows on <code class="varname">asciifile</code>.
+</p></dd></dl></div><p>
+
+</p><div class="variablelist"><dl><dt><span class="term">-n</span></dt><dd><p>
+<span class="italic">numberofcellsonline</span> must be a whole value larger or equal to 1.
+Default, each row of cell values on <code class="varname">PCRmap</code> is saved as one line in
+<code class="varname">asciifile</code>. This option can be used to print a different number of
+cell values (the value of <span class="italic">numberofcellsonline</span>) on one line in
+<code class="varname">asciifile</code>.
+</p></dd></dl></div><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id3061882"></a><h2>Notes</h2><p>
+</p></div><div class="refsect1" lang="en"><a name="id3061903"></a><h2>Group</h2><p>This operation belongs to the group of  Data export from PCRaster map</p></div><div class="refsect1" lang="en"><a name="id3061902"></a><h2>See Also</h2><p><a class="xref" href="rn02re126.html" title="map2col"><span class="refentrytitle">map2col</span></a> 
+ 
+</p></div><div class="refsect1" lang="en"><a name="id3061920"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">map2asc -m -m PCRmap.map AscFile1.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">AscFile1.txt</code></pre></td></tr><tr><td><pre class="programlisting">      123.23           m           0
+        45.5         124       0.419
+       56.34          32       0.016
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap.map</code></td></tr><tr><td><div><img src="examples/map2asc.PCRmap.gif"></div></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">map2asc -m m -s s -f 3.1f PCRmap.map AscFile2.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">AscFile2.txt</code></pre></td></tr><tr><td><pre class="programlisting">123.2sms0.0
+45.5s124.0s0.4
+56.3s32.0s0.0
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap.map</code></td></tr><tr><td><div><img src="examples/map2asc.PCRmap.gif"></div></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">map2asc -m m -a PCRmap.map AscFile3.txt</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">AscFile3.txt</code></pre></td></tr><tr><td><pre class="programlisting">NCOLS 3
+NROWS 3
+XLLCORNER 10.000000
+YLLCORNER 22.000000
+CELLSIZE 4.000000
+NODATA_VALUE           m
+      123.23           m           0
+        45.5         124       0.419
+       56.34          32       0.016
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">PCRmap.map</code></td></tr><tr><td><div><img src="examples/map2asc.PCRmap.gif"></div></td></tr></tbody></table></td><td class="auto-generated"> </td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re124.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re126.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">legend </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> map2col</td></tr></table></div></body></html>

@@ -1,0 +1,365 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3. PCRaster maps</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch02.html" title="Chapter 2. The Database"><link rel="prev" href="ch02s02.html" title="2.2. Concepts, kinds of data used in the database"><link rel="next" href="ch02s04.html" title="2.4. Tables"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.3. PCRaster maps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s02.html">Prev</a> </td><th width="60%" align="center">Chapter 2. The Database</th><td width="20%" align="right"> <a accesskey="n" href="ch02s04.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secdatbasemap"></a>2.3. PCRaster maps</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbasemapintro"></a>2.3.1. Introduction </h3></div></div></div><p>
+ 
+<a class="indexterm" name="id2931407"></a>
+This section describes the format of the main sort
+of data used in the PCRaster package: the PCRaster map, which contains
+spatial data in raster format. A header is attached to each PCRaster map;
+it contains both the location attributes and the data type of the map. 
+The location attributes define the position of the map with respect to a real world coordinate system, the size and shape of the map and its resolution (cell size). The
+sort of attribute stored in the map is given by the data type of the map. The data type determines the PCRaster operations that can be performed on the map. Data typing used
+in PCRaster helps to structure your data.
+</p><p>
+If you start a project, and want to import data to the PCRaster package
+in PCRaster map format it is wise first to make a map containing the
+header with the correct location attributes and the data type of the
+first data set you want to import. How this is done is described in
+<a class="xref" href="ch03s02.html" title="3.2. PCRaster maps: database management">Section 3.2</a>.  This section also
+describes other aspects of database management with a map.  
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbasemaphead"></a>2.3.2. Location attributes, missing values </h3></div></div></div><p>
+ 
+<a class="indexterm" name="id2925512"></a>
+This section gives an overview of the geographical location attributes 
+linked to a PCRaster map.
+</p><p>
+The location attributes <span class="emphasis"><em>projection</em></span>,
+<span class="emphasis"><em>x<sub>UL</sub></em></span>,<span class="emphasis"><em>y<sub>UL</sub></em></span>, <span class="emphasis"><em>cell length</em></span>, <span class="emphasis"><em>number
+of rows</em></span>, <span class="emphasis"><em>number of columns</em></span> and
+<span class="emphasis"><em>angle</em></span> are used to define the position of the map with
+respect to a real world coordinate system and the shape and resolution
+of the map. <a class="xref" href="ch02s03.html#fig3.5" title="Figure 2.3. Location attributes used to define the spatial characteristics of a PCRaster map. For explanation, see text.">Figure 2.3</a> shows schematically a PCRaster map
+of a study area and the location attributes used. As shown, the location
+attributes define the map with respect to the real world coordinate system
+(an ordinary x,y coordinate system).
+
+</p><div class="figure"><a name="fig3.5"></a><p class="title"><b>Figure 2.3. Location attributes used
+to define the spatial characteristics of a PCRaster map. For
+explanation, see text.</b></p><div class="figure-contents"><div><img src="figures/locattr.png" alt="Location attributes used to define the spatial characteristics of a PCRaster map. For explanation, see text."></div></div></div><p><br class="figure-break">
+</p><p>
+ 
+<a class="indexterm" name="id2925323"></a>
+The choice of the location attributes must be based upon the shape of
+the study area and the data set you want to store in the map. PCRaster
+maps always have a rectangular shape, but the shape and size of the
+map does not need to correspond exactly with the shape of the area
+studied, as shown in <a class="xref" href="ch02s03.html#fig3.5" title="Figure 2.3. Location attributes used to define the spatial characteristics of a PCRaster map. For explanation, see text.">Figure 2.3</a>: during data import to the
+PCRaster map the cells in the map outside the study area are assigned
+<span class="emphasis"><em>missing values</em></span>.
+A missing valued cell is a cell which contains no attribute
+value. Missing valued cells are considered not to be included in the
+study area: PCRaster GIS and Cartographic or Dynamic Modelling operators
+ignore the missing valued cells. In general, cells that have a missing
+value on an input map of an operation are assigned a missing value on
+the resulting output map(s) also.
+</p><p>
+For a complete description of the choice of the location attributes
+related to the data set that will be stored in the map, see <a class="xref" href="ch03s02.html#secimportmapcrea" title="3.2.1. Creation of a PCRaster map; data import">Section 3.2.1</a>.
+</p><p>
+The location attributes have the following meaning; see also 
+<a class="xref" href="ch02s03.html#fig3.5" title="Figure 2.3. Location attributes used to define the spatial characteristics of a PCRaster map. For explanation, see text.">Figure 2.3</a>:
+
+</p><div class="variablelist"><dl><dt><span class="term"><span class="emphasis"><em>projection</em></span>   
+ 
+<a class="indexterm" name="id2911364"></a>
+</span></dt><dd><p>
+The projection of the real coordinate system which will also be assigned
+to the PCRaster map, is assumed to be a simple x,y field (also used in
+basic mathematics). The x coordinates increase from left to right. The y
+coordinates increase from top to bottom or from bottom to top. This can
+be chosen; from top to bottom is default.
+</p></dd><dt><span class="term"><span class="emphasis"><em>x<sub>UL</sub></em></span>,<span class="emphasis"><em>y<sub>UL</sub></em></span>   
+ 
+<a class="indexterm" name="id2929221"></a>
+   
+<a class="indexterm" name="id2921738"></a>
+ </span></dt><dd><p>
+The <span class="emphasis"><em>x<sub>UL</sub></em></span>, <span class="emphasis"><em>y<sub>UL</sub></em></span> are the real world coordinates
+of the upper left corner   
+<a class="indexterm" name="id2917514"></a>
+ of the PCRaster
+map. The location of the PCRaster map with respect to the real world coordinate
+system is given by this corner: if a rotated map is used (an angle
+not equal to zero), it is rotated around this point (so rotation over 90
+degrees will result in a <span class="emphasis"><em>x<sub>UL</sub></em></span>, <span class="emphasis"><em>y<sub>UL</sub></em></span> that is at
+the bottom left side in <a class="xref" href="ch02s03.html#fig3.5" title="Figure 2.3. Location attributes used to define the spatial characteristics of a PCRaster map. For explanation, see text.">Figure 2.3</a>). Other PCRaster map
+corners are <span class="emphasis"><em>x<sub>LL</sub></em></span>,  <span class="emphasis"><em>y<sub>LL</sub></em></span> ; <span class="emphasis"><em>x<sub>UR</sub></em></span>,
+<span class="emphasis"><em>y<sub>UR</sub></em></span> ; <span class="emphasis"><em>x<sub>LR</sub></em></span> , <span class="emphasis"><em>y<sub>LR</sub></em></span> .
+
+</p></dd><dt><span class="term"><span class="emphasis"><em>cell length</em></span>    
+<a class="indexterm" name="id2943102"></a>
+</span></dt><dd><p>
+The cell length is the length of the cells in horizontal and vertical direction.
+This implies that cells in a PCRaster map are all of the same size and
+always square. The cell length is measured in the distance unit of the real
+world coordinate system.
+</p></dd><dt><span class="term"><span class="emphasis"><em>number of rows</em></span>, <span class="emphasis"><em>number of columns</em></span>    
+<a class="indexterm" name="id2927549"></a>
+</span></dt><dd><p>
+The number of rows and the number of columns are the number of rows and
+columns of the PCRaster map respectively. The cell length multiplied by
+the number of rows and number of columns is the height and width of the
+PCRaster map, respectively (in distance units of the real world
+coordinate system).
+</p></dd><dt><span class="term"><span class="emphasis"><em>angle</em></span>   
+<a class="indexterm" name="id2933001"></a>
+</span></dt><dd><p>
+The angle is the angle between the horizontal direction on the PCRaster
+map and the x axis of the real world coordinate system. It must be
+between -90 and 90 degrees; a map with a positive angle has been rotated
+counter clockwise with respect to the real coordinate system, a map with
+a negative angle has been rotated clockwise. In most cases an unrotated
+map will be sufficient (angle = 0 degrees), see also <a class="xref" href="ch03s02.html#secimportmapcrea" title="3.2.1. Creation of a PCRaster map; data import">Section 3.2.1</a>.
+</p></dd></dl></div><p>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbasemaptype"></a>2.3.3. Data types</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="datTYPDes"></a>2.3.3.1. Introduction</h4></div></div></div><p>
+ 
+<a class="indexterm" name="id2925272"></a>
+Data stored in PCRaster maps can be grouped according to the sort of
+attribute they represent. For instance, a distinction is often made between
+attributes that are stored in maps as classified data (for instance soil
+classes) or continuous data (for instance elevation). In PCRaster, attribute
+information is linked to each map by specifying one of six data types. Each
+<span class="emphasis"><em>data type</em></span> imposes a distinct domain of values   
+that may occur on a map (whole values or fractional values, range of
+possible values) and whether some kind of order/scale is represented by the
+data (with or without order; linear or directional scale). If a legend is
+attached to a map, the map is subtyped  
+ 
+<a class="indexterm" name="id2935962"></a>
+by its
+legend: the attribute stored in the map is not only specified by the data
+type of the map, but also by the legend. Also the domain of a subtyped
+map is determined by the legend: it consists only of the map values linked
+to the classes given in the legend. As a result, PCRaster prevents some
+operations that otherwise would combine maps with different legends. For
+instance a landuse map and a soil map cannot be joined laterally together.
+The legend of a map and the resulting <span class="emphasis"><em>subtype</em></span> is described in
+<a class="xref" href="ch02s03.html#secdatabaseleg" title="2.3.4. Legends">Section 2.3.4</a>.
+</p><p>
+ 
+<a class="indexterm" name="id2934771"></a>
+The data type mechanism used in PCRaster will help you understand and
+organize your ideas about the attributes stored in your database or used
+in some kind of spatial model. The data types will prevent you from doing
+operations that are nonsense: each time a operation is done, the system
+checks the data type of the input maps and if the operations would result
+in nonsense an error message is given. Also, for some PCRaster operators
+the system adapts the way the operation is done to the data type of the
+input maps (this is called polymorphic behaviour
+ 
+<a class="indexterm" name="id2916789"></a>
+of GIS operators). Additionally, the map
+resulting from an operation is given the data type that fits the sort of data
+that result from the operation.
+</p><p>
+ 
+<a class="indexterm" name="id2917732"></a>
+Most data types have a distinct <span class="emphasis"><em>cell
+representation</em></span> . The cell representation is not related to
+the <span class="emphasis"><em>concept</em></span> of data type checking in the GIS, and
+for ordinary use it is of little importance: it only determines the way
+the values of the cells are stored and processed in the computer. The
+cell representations used in PCRaster are <span class="emphasis"><em>single real</em></span>
+
+ 
+<a class="indexterm" name="id2929006"></a>
+or <span class="emphasis"><em>double real</em></span>
+ 
+<a class="indexterm" name="id2938528"></a>
+for scalar and directional data and <span class="emphasis"><em>small
+integer</em></span> 
+ 
+<a class="indexterm" name="id2927154"></a>
+or <span class="emphasis"><em>large integer</em></span>  
+ 
+<a class="indexterm" name="id2916569"></a>
+
+for nominal and ordinal data. These are represented in the computer by
+REAL4 (single real), REAL8 (double real), UINT1 (small integer) and INT4
+(large integer). UINT1, REAL4, REAL8, UINT1 and INT4 are also applied
+in other software, see for an exact description a standard book about
+computers in your library. By default, PCRaster automatically chooses the
+cell representation for each data type, so for ordinary use you do not
+need to take care of the cell representation. In some cases, especially if
+you want to store extremely large or small data values at a high precision
+ 
+<a class="indexterm" name="id2926104"></a>
+you may want to choose a cell
+representation another than the default. This can be done
+with <a class="link" href="ch03s06.html#GOrepres">global options for defining cell representations</a>.  The cell representations for each data
+type are given in the next sections.
+</p><p>
+The data types are described in <a class="xref" href="ch02s03.html#formboolean" title="2.3.3.2. Boolean data type">Section 2.3.3.2</a>
+up to and including <a class="xref" href="ch02s03.html#formldd" title="2.3.3.7. Ldd data type">Section 2.3.3.7</a>; a short overview of
+the types is given in Table <a class="xref" href="ch02s03.html#tdatatype" title="Table 2.1.  List of data types, domaines for default cell representation, without legends">Table 2.1</a>. Operators
+for creating and conversion between data types are listed in <a class="xref" href="ch03s02.html#secimportmaptype" title="3.2.3. Cutting or joining maps; changing geographical location attributes or data types">Section 3.2.3</a>.
+
+</p><div class="table"><a name="tdatatype"></a><p class="title"><b>Table 2.1. 
+List of data types, domaines for default cell representation, without legends
+</b></p><div class="table-contents"><table summary="
+List of data types, domaines for default cell representation, without legends
+" width="100%" border="1"><colgroup><col><col><col><col></colgroup><thead><tr><th><p>data type</p></th><th><p>description attributes</p></th><th><p>domain</p></th><th><p>example</p></th></tr></thead><tbody><tr><td><p>boolean</p></td><td><p>boolean</p></td><td><p>0 (false), 1 (true)</p></td><td><p>suitable/unsuitable, visible/non visible</p></td></tr><tr><td><p>nominal</p></td><td><p>classified, no order</p></td><td><p>0...255, whole values</p></td><td><p>soil classes, administrative regions</p></td></tr><tr><td><p>ordinal</p></td><td><p>classified, order</p></td><td><p>0...255, whole values</p></td><td><p>succession stages, income groups</p></td></tr><tr><td><p>scalar</p></td><td><p>continuous, lineair</p></td><td><p>- 10exp(37)...10exp(37), real values</p></td><td><p>elevation, temperature</p></td></tr><tr><td><p>directional</p></td><td><p>continuous, directional</p></td><td><p>0 to 2 pi (radians), or to 360 (degrees), and -1 (no direction), real values</p></td><td><p>aspect</p></td></tr><tr><td><p>ldd</p></td><td><p>local drain direction to neighbour cell</p></td><td><p>1...9 (codes of drain directions)</p></td><td><p>drainage networks, wind directions</p></td></tr></tbody></table></div></div><p><br class="table-break">
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="formboolean"></a>2.3.3.2. Boolean data type</h4></div></div></div><p>
+The domain of the Boolean data type is 1 (Boolean TRUE) and 0 (Boolean
+FALSE). It is used for all attributes that only may have a value TRUE or
+FALSE, for instance 'suitable or unsuitable for maize', or to specify
+cells that come into a class or do not come into a class, for instance
+cells with a watch-tower or cells without a watch-tower.  A legend can
+be made for a map of data type Boolean; it has no effect on the domain
+of the map.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="formnominal"></a>2.3.3.3. Nominal data type</h4></div></div></div><p>
+The nominal data type is used for classified data without order. It
+represents attributes described by classes, for instance a map with soil
+classes. If the default cell representation is used (small integer),
+the domain consists of whole values equal to or between 0 and 255,
+so 256 different classes can be distinguished. Of course any number in
+the domain can be chosen to represent a class, but normally for each
+class a number is chosen starting with 1, and a value of 0 is chosen
+for cells that do not belong to a class. If the cell representation
+large integer is chosen (optional) the domain consists of all whole
+values between <span class="emphasis"><em>-2</em></span><sup>31</sup>
+and <span class="emphasis"><em>2</em></span><sup>31</sup> and many more
+classes can be stored in the map.
+</p><p>
+A legend can be attached to a map of nominal data type, see 
+<a class="xref" href="ch02s03.html#secdatabaseleg" title="2.3.4. Legends">Section 2.3.4</a>. This results
+in subtyping of the map.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="formordinal"></a>2.3.3.4. Ordinal data type</h4></div></div></div><p>
+The ordinal data type is used for classified data that represent some
+kind of order. For instance stages of succession or soil texture
+measured at an ordinal scale (silt, sand, gravel for instance). If
+the default cell representation is used (small integer), the domain
+consists of whole values equal to or between 0 and 255, so 256
+ordinal classes can be distinguished.  Of course any number in the
+domain can be chosen to represent an ordinal class, but normally
+for the first class an ordinal value of one is chosen and for the
+next classes the values 1, 2, 3,.. etc.; a value of 0 is chosen
+for cells that do not come into a class. If the cell representation
+large integer is chosen (optional) the domain consists of all whole
+values between <span class="emphasis"><em>-2</em></span><sup>31</sup>
+and <span class="emphasis"><em>2</em></span><sup>31</sup> and much more
+ordinal classes can be distinguished.
+</p><p>
+A legend can be attached to a map of ordinal data type, see 
+<a class="xref" href="ch02s03.html#secdatabaseleg" title="2.3.4. Legends">Section 2.3.4</a>. This results
+in subtyping of the map.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="formscalar"></a>2.3.3.5. Scalar data type</h4></div></div></div><p>
+The scalar data type is used for continuous data that do not represent a
+direction, for instance number of inhabitants, air particle concentration,
+amount of rain, elevation, or wind speed. The default cell representation
+is single real, which allows for storing and processing real values of
+data between <span class="emphasis"><em>-1</em></span>*10<sup>37</sup>
+and <span class="emphasis"><em>1</em></span>*10 <sup>37</sup>, using a
+maximum of six decimals. Optionally the cell representation double
+real can be used, it allows for storing and processing real values
+between <span class="emphasis"><em>-2</em></span>*10<sup>308</sup> and
+<span class="emphasis"><em>2</em></span>*10<sup>308</sup> with a maximal
+number of fifteen decimals.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="formdirectional"></a>2.3.3.6. Directional data type</h4></div></div></div><p>
+The directional data type is used for continuous data that represent a
+direction. The domain depends on the sort of directional data that is
+used: if the global option --degrees is set (for global
+options see <a class="xref" href="ch03s06.html" title="3.6. Global options and local options">Section 3.6</a>), the domain consists of real
+values equal to 0 or between 0 and 360 degrees and the number -1 for
+cells without a direction (-1 and [0,360&gt; which means that 360 is not
+in the domain). If the global option --radians is set the
+direction is given in radians, the domain is [0,<span class="emphasis"><em>2pi</em></span>
+&gt; and the number -1 for cells without a direction. The value -1 is not
+a missing value: it represents a cell for which no direction can be
+given. For instance a cell in a flat terrain does not have an aspect;
+as a result it has the value -1 on a map with aspects. The direction
+in the map of a directional value 0 depends on the location attribute
+angle of the map, see <a class="xref" href="ch02s03.html#secdatbasemaphead" title="2.3.2. Location attributes, missing values">Section 2.3.2</a> : a cell
+value of 0 points to the North of the map (the y direction of the real
+world coordinate system), the remaining values increase in clock wise
+direction. In most cases the top of the map will be the North (location
+attribute angle = 0 degrees). In these cases a directional value 0 is
+to the top of the map and 90 degrees (East) corresponds with a direction
+to the right side of the PCRaster map.
+</p><p>
+The directional data type can be used for all attributes that have
+a circular scale, for instance orientation or a year scale. Default
+the cell representation is single real; double real can be chosen
+for a higher precision, but in almost any case single real will give
+satisfying results.  Note that statistics of directional data, like
+mean and variance, are computed in a different way than for scalar data
+(see also <a class="xref" href="bi01.html#mardia72" title="Statistics of Directional Data">[4]</a>).  So always use the
+directional data type for directional data: PCRaster will automatically
+apply statistics for directional data to the map values.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="formldd"></a>2.3.3.7. Ldd data type</h4></div></div></div><p>
+ 
+<a class="indexterm" name="id2943727"></a>
+The ldd data type is used for maps that represent a local drain direction
+network . A local drain direction network is made up of a network of
+cells; each cell has a whole value from 1 to 9.  These codes identify
+the neighbour of the cell to which material flows. The values have the
+meaning shown in <a class="xref" href="ch02s03.html#figfildd" title="Figure 2.4. Directions of ldd codes. A value 5 (not shown) defines a cell without local drain direction (a pit).">Figure 2.4</a>; note that the values are chosen
+to resemble the numeric key pad of your computer.
+
+</p><div class="figure"><a name="figfildd"></a><p class="title"><b>Figure 2.4. Directions of ldd codes. A value 5 (not shown) defines a cell
+without local drain direction (a pit).</b></p><div class="figure-contents"><div><img src="figures/lddcode.png" alt="Directions of ldd codes. A value 5 (not shown) defines a cell without local drain direction (a pit)."></div></div></div><p><br class="figure-break">
+
+For instance, during transport of material, a cell with value 3 designates
+flow to the bottom right neighbouring cell. The value 5 represents a
+<b>pit</b>
+ 
+<a class="indexterm" name="id2943780"></a>
+: this is a cell without drainage to one of its
+neighbours.
+</p><p>
+ 
+<a class="indexterm" name="id2943801"></a>
+Since the local drain direction network on a map of ldd data type
+defines a relationship between cells, a map of this data type must
+meet some requirements to safeguard these relationships. If a map
+meets these requirements it contains a so called <span class="emphasis"><em>sound ldd
+network</em></span>. A ldd map is sound if it is a map containing only
+whole values from 1 to 9 or missing values. Additionally the values on the
+map must be ordered in such a way that each downstream path starting at
+a non-missing value cell ends in a pit cell. A downstream path consists
+of the consecutively neighbouring downstream cells; the pit cell at the
+end of the path is called the <span class="emphasis"><em>outlet point</em></span>  
+ 
+<a class="indexterm" name="id2943838"></a>
+of the cell where the path started.
+</p><p>
+   
+  <a class="indexterm" name="id2943859"></a>
+Here is a (non exhaustive) list of situations which cause a ldd to be
+<span class="emphasis"><em>unsound</em></span>:
+  </p><div class="itemizedlist"><ul type="disc"><li><p>
+a cell on the border of the map has a local drain direction to the
+outside of the map. For example, a ldd code 7, 8 or 9 on the first (top)
+row of cells or a value 7, 4 or 1 on the first (left) column of cells
+of the map.
+      </p></li><li><p>
+a cell with a local drain direction to a cell with a missing value. For
+example a cell with a value 3 while its bottom right neighbour is a
+missing value.
+      </p></li><li><p>
+the ldd contains a cycle.
+        
+        <a class="indexterm" name="id2943906"></a>
+A cycle is a set of cells that do not drain to a pit because they drain to
+each other in a closed cycle.  The smallest cycle consists of two cells
+with local drain directions to each other; larger cycles may consist of
+several cells.
+      </p></li></ul></div><p>
+</p><p>
+A ldd that is not sound cannot be used for PCRaster operations. So
+you must always prevent operations that may generate an unsound ldd.
+Normally, a ldd network is made from an elevation map using the
+operator <b>lddcreate</b>. This will always result in a ldd
+that is sound. Other operations that can be used to generate a map
+of ldd data type will almost always result in a ldd that is unsound;
+examples are <b>asc2map</b>, <b>col2map</b>,
+<b>cover</b>, <b>lookup</b>. Some operations
+for making changes in a ldd must be done with care: editing using
+<b>aguila</b> and also cutting in a ldd map: always use the
+operator <b>lddmask</b> for cutting instead of for instance
+<b>if then</b>, <b>if then else</b>.  A ldd that is
+not sound can be made sound using the operator <b>lddrepair</b>.
+Always use this operator if you are not sure whether your ldd is sound;
+it will be repaired if it is unsound.
+</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatabaseleg"></a>2.3.4. Legends</h3></div></div></div><p>
+Legend labels can be attached to boolean, nominal and ordinal maps with
+the operator <b>legend</b>.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.2. Concepts, kinds of data used in the database </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 2.4. Tables</td></tr></table></div></body></html>

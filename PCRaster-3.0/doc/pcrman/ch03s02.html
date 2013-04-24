@@ -1,0 +1,153 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.2. PCRaster maps: database management</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch03.html" title="Chapter 3. How to Import or Export Data, Display Maps, Global Options"><link rel="prev" href="ch03.html" title="Chapter 3. How to Import or Export Data, Display Maps, Global Options"><link rel="next" href="ch03s03.html" title="3.3. Tables: database management"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.2. PCRaster maps: database management</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. How to Import or Export Data, Display Maps, Global Options</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secimportmap"></a>3.2. PCRaster maps: database management</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportmapcrea"></a>3.2.1. Creation of a PCRaster map; data import</h3></div></div></div><p>
+PCRaster maps are in a binary format which is only used in PCRaster. As
+a result you cannot analyze PCRaster maps with other software packages.
+So, it is important to know how to convert data (for instance point data
+column files) to and from PCRaster map format.
+</p><p class="indexterm-concept"><a name="clonemapCREA"></a>
+<a class="indexterm" name="id2948432"></a>
+
+If you start a project and want to use PCRaster maps for analyzing your
+data, first make an empty clone map to define
+the geographical and cartographical location attributes and set this map
+as global clone map with the global option
+<a class="link" href="ch03s06.html#GOClone">--clone</a>.
+
+To make the clone map, use the operator <b>mapattr</b>;
+the location attributes can be entered using the menu given by the
+<a class="link" href="rn02re127.html" title="mapattr"><b>mapattr</b></a>.
+
+This map can be used as a clone (mask map) for all data sets you want
+to import. A data type and its cell representation can also be attached
+to the clone map using <b>mapattr</b>. This data type and cell
+representation will by default be assigned to the data that are imported,
+but the type of the imported data can also be specified during the import.
+</p><p>
+ 
+<a class="indexterm" name="id2948481"></a>
+The choice of geographical location attributes must be based upon the
+spatial characteristics of the data set you want to import to the PCRaster
+map format and upon whether x,y coordinates are attached to the data in
+the data set or not. There are two possibilities for data import: 
+</p><p>
+1) import of point data with x,y coordinates using either a <span class="emphasis"><em>column file
+in simplified Geo-EAS format</em></span> or <span class="emphasis"><em>plain column file format</em></span> 
+<a class="indexterm" name="id2948516"></a>
+</p><p>
+ 
+<a class="indexterm" name="id2948539"></a>
+The data file you want to import contains x and y coordinates with data
+values. In this case the location attributes of the PCRaster map must
+be chosen in correspondence with the spatial distribution of the data
+given by the x and y coordinates. If the data are regularly spaced on a
+rectangular grid, you probably want location attributes that match the
+set of x and y coordinates of the data set. If the data are irregularly
+spaced we advise to choose a map size of the smallest bounding rectangle
+(or somewhat larger) that comprises the study area, as shown in <a class="xref" href="ch02s03.html#fig3.5" title="Figure 2.3. Location attributes used to define the spatial characteristics of a PCRaster map. For explanation, see text.">Figure 2.3</a>. In this Figure a rectangle has been chosen that is
+rotated with respect to the real coordinate system (positive angle).
+Quite often, it is better not to rotate the map, and to choose an
+unrotated (smallest) rectangle.  Rotation may result in a map that better
+fits the shape of the study area. But remember that rotation has an
+important effect which may be very clumsy: rotation will not only result
+in a rotated map but of course also in a grid of cells that is rotated
+with respect to the real coordinate system. As a result, cells that are
+in one row on the PCRaster map will not have the same y coordinates;
+the same holds for cells in one column and their x coordinates.  
+</p><p>
+Two sorts of column files with x and y coordinates may be imported:
+a <span class="emphasis"><em>column file in simplified Geo-EAS format</em></span> or a
+<span class="emphasis"><em>plain column file format</em></span>. These formats are used
+in PCRaster for representation of point data, especially in the gstat
+module for geostatistical analysis.
+<a class="xref" href="ch02s06.html" title="2.6. Point data column files">Section 2.6</a> describes these formats. Point
+data are imported to PCRaster map format with the PCRaster operator
+<a class="link" href="rn02re123.html" title="col2map"><b>col2map</b></a>.
+</p><p>
+2) import of data without x and y coordinates (ascii formatted) 
+</p><p>
+The data do not contain x and y coordinates: the asciifile with your
+data contains a sequence of cell values, without coordinates. In this
+case, the number of rows and columns of the PCRaster map must correspond
+exactly with the number of rows and columns of the file you want to import
+or else the import of data will result in nonsense.  Among other data,
+maps from the ARC/INFO or Genamap GIS packages are imported in this
+way. It is done with the PCRaster operator <a class="link" href="rn02re122.html" title="asc2map"><b>asc2map</b></a>.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportmapexpo"></a>3.2.2. Data export from a PCRaster map</h3></div></div></div><p>
+Data can be exported from a PCRaster map using one of the operators
+<a class="link" href="rn02re126.html" title="map2col"><b>map2col</b></a>
+and <a class="link" href="rn02re125.html" title="map2asc"><b>map2asc</b></a>.
+</p><p>
+ 
+<a class="indexterm" name="id2948659"></a>
+The operator <b>map2col</b> exports data to an ascii column file in
+simplified Geo-EAS format or a plain column file format.
+Both contain x,y coordinates and data values. These kind of data are
+also used in the PCRaster package for representation of point data, see
+for formats <a class="xref" href="ch02s06.html" title="2.6. Point data column files">Section 2.6</a>. The plain column file
+format can easily be imported in spreadsheet, database management or
+word processing programs. It is also used in the gstat module of PCRaster.
+</p><p>
+ 
+<a class="indexterm" name="id2948697"></a>
+The operator <b>map2asc</b> exports to an ascii file which will contain
+only data values, without x and y coordinates.  
+This operator is used if you want to export data to the ARC/INFO
+package.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportmaptype"></a>3.2.3. Cutting or joining maps; changing geographical location attributes or
+data types</h3></div></div></div><p>
+The spatial characteristics of the spatial data in PCRaster map format can
+be changed with both the operator <a class="link" href="rn02re128.html" title="resample"><b>resample</b></a> and <a class="link" href="rn02re127.html" title="mapattr"><b>mapattr</b></a>. 
+Note that these two operations have a totally different result: 
+</p><p>
+ 
+<a class="indexterm" name="id2948755"></a>
+If you want to resample your data in a PCRaster map to a new map with
+different geographical location attributes use the operator <b>resample</b>.
+First create a new map with the location attributes you wish (this
+is done with <b>mapattr</b>). For instance it may have
+geographical location attributes that define an area that only partly
+covers the old map, with a somewhat smaller or larger cell size. Now
+the <b>resample</b> operator can be used to resample your old
+data to the new map: for each cell of the new map a new cell value is
+computed on basis of the cell values on the old map that come into the
+cell on the new map.
+</p><p>
+The <b>resample</b> operator can also be used to join two maps together.
+The maps that are joined together will be resampled and may have
+different location attributes: for instance they may overlap or may not
+overlap or may have different cell sizes.  
+</p><p>
+The geographical location attributes of a map can be changed using
+the operator <b>mapattr</b>. Using this operator will
+not result in resampling of the data: each cell of the new map will
+contain a value that corresponds with the value on that cell of the old
+map. For instance halving the cell width of a map that consists of 50
+x 50 cells of width 10 m. results in a (smaller) map of 50 x 50 cells
+of width 5 m., containing values that are taken directly from the old
+map. So changing the location attributes with <b>mapattr</b>
+will result in a new location of your data with respect to the real
+world coordinate system. Maybe this sounds silly but you may want to
+change the geographical location attributes after a map has been made,
+especially if you made an error in the specification of the location
+attributes with <b>mapattr</b>.
+</p><p>
+Conversion between data types is done using one of the conversion of data
+type operators (<a class="link" href="rn01re30.html" title="boolean"><b>boolean</b></a>, 
+<a class="link" href="rn01re74.html" title="nominal"><b>nominal</b></a>, 
+<a class="link" href="rn01re79.html" title="ordinal"><b>ordinal</b></a>, 
+<a class="link" href="rn01re88.html" title="scalar"><b>scalar</b></a>,
+<a class="link" href="rn01re39.html" title="directional"><b>directional</b></a> and 
+<a class="link" href="rn01re52.html" title="ldd"><b>ldd</b></a>.
+ 
+<a class="indexterm" name="id2948871"></a>
+These operators
+change the data type of the input map to the data type that corresponds
+with the name of the operator. Conversion is only possible if it results in
+a map that has some meaning with the new data type attached to it.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportmapleg"></a>3.2.4. Attaching a legend to a PCRaster map</h3></div></div></div><p>
+The operator <a class="link" href="rn02re124.html" title="legend"><b>legend</b></a>
+attaches a legend to a PCRaster map.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportmapdis"></a>3.2.5. Screen display, hard copy output of PCRaster maps</h3></div></div></div><p>
+<span class="emphasis"><em>hard copy output: not yet included in software</em></span> 
+</p><p>
+Visualisation of PCRaster maps and time series is done with <b>aguila</b>.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. How to Import or Export Data, Display Maps, Global Options </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.3. Tables: database management</td></tr></table></div></body></html>

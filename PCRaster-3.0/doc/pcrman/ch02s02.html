@@ -1,0 +1,122 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.2. Concepts, kinds of data used in the database</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch02.html" title="Chapter 2. The Database"><link rel="prev" href="ch02.html" title="Chapter 2. The Database"><link rel="next" href="ch02s03.html" title="2.3. PCRaster maps"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.2. Concepts, kinds of data used in the database</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02.html">Prev</a> </td><th width="60%" align="center">Chapter 2. The Database</th><td width="20%" align="right"> <a accesskey="n" href="ch02s03.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secdatbaseconc"></a>2.2. Concepts, kinds of data used in the database</h2></div></div></div><p>
+Four kinds of data are used in the PCRaster database.  Data from
+2D areas are represented by raster maps. These PCRaster maps have a
+special PCRaster format that enables simple and structured manipulation
+of spatial data in the package. It is the most important kind of data
+in the database: almost any PCRaster operation uses and/or generates a
+PCRaster map. For analysis of PCRaster maps with other software packages,
+conversion to ascii format is needed. The remaining three kinds of
+data (tables, time series and point data column files) represent
+relations between PCRaster maps, temporal data and data from points
+respectively. These kinds of data are in ascii format; as a result these
+can also be analysed with other software packages, without conversion.
+</p><p>
+ 
+<a class="indexterm" name="id2914737"></a>
+
+In PCRaster a stack of <span class="emphasis"><em>PCRaster map</em></span> layers represents
+the landscape, where each map layer represents one attribute, see <a class="xref" href="ch02s02.html#fig3.1" title="Figure 2.1. A stack of PCRaster maps resulting in a 2.5 D representation of the landscape. One cell is shown; its property is defined by the attribute values stored in map layers Map1, Map2, Map3,...">Figure 2.1</a>. The discretization of the spatial domain results
+in cells. At each cell location, the total information for that cell
+is represented by the values of the different layers at that cell. The
+representation described here is sometimes referred to as 2.5 D: the
+lateral directions are represented in real, while a certain kind of
+vertical dimension is implemented using several layers.
+
+</p><div class="figure"><a name="fig3.1"></a><p class="title"><b>Figure 2.1. A stack of PCRaster maps resulting in a 2.5 D representation
+of the landscape. One cell is shown; its property is defined by the attribute
+values stored in map layers Map1, Map2, Map3,...</b></p><div class="figure-contents"><div><img src="figures/stack.png" alt="A stack of PCRaster maps resulting in a 2.5 D representation of the landscape. One cell is shown; its property is defined by the attribute values stored in map layers Map1, Map2, Map3,..."></div></div></div><p><br class="figure-break">
+
+
+The spatial characteristics of a PCRaster map are defined by its
+geographical <span class="emphasis"><em>location attributes</em></span>   
+<a class="indexterm" name="id2929022"></a>
+. These define the
+shape and the area covered by the map and the size of the cells. 
+</p><p>
+ 
+<a class="indexterm" name="id2928933"></a>
+
+The kind of attribute represented by the layers controls the type of
+operations that can be done with the data stored in the layer. This
+knowledge is implemented in the PCRaster package by the idea of 
+data types: each PCRaster map layer has a <span class="emphasis"><em>data
+type</em></span> attached to it. Six data types are recognized. Data types for
+data in classes  
+ 
+<a class="indexterm" name="id2941328"></a>
+are the boolean, nominal and ordinal data types. The boolean data type
+is meant for data that may only have two values: TRUE or FALSE. Boolean
+logic can be applied to maps of this data type. The nominal data type
+represents data with an unlimited number of classes, for instance soil
+groups. The ordinal data type also represents data in classes; unlike
+the nominal data type it includes the concept of order between the
+classes, for instance classes that represent income groups. The scalar
+and directional data type represent continuous data
+ 
+<a class="indexterm" name="id2915234"></a>
+; the scalar data type for data on a linear scale, for instance elevation,
+the directional data type for data on a circular scale, for instance
+aspect in the terrain. The ldd data type represents a map with a local
+drain direction network. For each cell, a local drain direction map
+contains a pointer to the neighbouring cell to which material (for
+instance water) will flow to.  The direction of these pointers is
+represented by ldd codes.
+</p><p>
+<a class="xref" href="ch02s03.html" title="2.3. PCRaster maps">Section 2.3</a> describes
+the format of maps, including the location attributes, data types and
+legends in detail.  
+</p><p>
+Relations between PCRaster maps can be defined by
+<span class="emphasis"><em>tables</em></span>, which is the second kind of data used in
+PCRaster, see <a class="xref" href="ch02s02.html#fig3.2" title="Figure 2.2. A table defining relations between PCRaster map layers; using these conditions a NewMap is generated, on a cell by cell basis">Figure 2.2</a>. In a table, map layers are
+combined by specifying keys. Each key
+ 
+<a class="indexterm" name="id2925115"></a>
+gives a certain combination of cell values of the map layers 1,2,3,... A key
+may be for instance: the cell of map 1 must have a value 6, the cell
+of map 2 a value larger than 200 and the cell of map 3 must contain
+a negative value.  Using the keys in a table a new map layer can be
+generated which contains information taken from several layers. For
+instance a soil map, vegetation map and a slope map can be combined using
+keys in a table containing the classes of these maps, generating a new
+map with landscape classes.  Also a table can be used for determining
+the number of cells that match the conditions given in the keys. <a class="xref" href="ch02s04.html" title="2.4. Tables">Section 2.4</a> describes the format of tables.
+
+</p><div class="figure"><a name="fig3.2"></a><p class="title"><b>Figure 2.2. A table defining relations between
+PCRaster map layers; using these conditions a NewMap is generated,
+on a cell by cell basis </b></p><div class="figure-contents"><div><img src="figures/stackrel.png" alt="A table defining relations between PCRaster map layers; using these conditions a NewMap is generated, on a cell by cell basis"></div></div></div><p><br class="figure-break">
+</p><p>
+ 
+<a class="indexterm" name="id2933144"></a>
+The third kind of data used in PCRaster is the <span class="emphasis"><em>time
+series</em></span>. In Dynamic Modelling, time series are linked to a
+PCRaster map to control spatial data that vary over time and space:
+for each time step, a different spatial data set that represents a
+certain variable used in the model can be imported or stored. For
+instance when simulating evapotranspiration of water in a catchment,
+for each time step the amount and the spatial distribution of rain water
+can be given in a time series; the amount of water that evaporates from
+a certain part of the map can be stored in a different time series. The
+time series is a table that crosses the unique identifier values on a
+PCRaster map with the numbers of the successive time steps used in the
+model. During a model run, it is read from top to bottom. If the time
+series is used for data input to the model, each unique identifier value
+on the PCRaster map is assigned the value linked to that unique identifier
+in the time series. This is done for each time step.  If the time series
+is used to store data, for each time step the model results for certain
+areas specified on the PCRaster map can be assigned to the time series.
+<a class="xref" href="ch02s05.html" title="2.5. Time series">Section 2.5</a> describes the format of time series.
+</p><p>
+ 
+<a class="indexterm" name="id2920605"></a>
+In addition to spatial data in raster format, point data are used in the
+PCRaster package, stored as <span class="emphasis"><em>point data column files</em></span>,
+the fourth sort of data used. Point data consist of a x,y coordinate
+and one or more attribute values. Quite often data will be available
+in this format, especially if they are gathered through field study. In
+the gstat module point data column files
+can be used for analysis of spatial structures with the variogram tools
+and for interpolation to a raster (in PCRaster map format) of estimated
+values using (block) kriging.  <a class="xref" href="ch02s06.html" title="2.6. Point data column files">Section 2.6</a> describes
+the format of point data column files.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch02s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 2. The Database </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 2.3. PCRaster maps</td></tr></table></div></body></html>

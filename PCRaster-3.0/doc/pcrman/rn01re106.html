@@ -1,0 +1,70 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>timeoutput</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re105.html" title="timeinput"><link rel="next" href="rn01re107.html" title="timeslice"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">timeoutput</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re105.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re107.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="timeoutput"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>timeoutput &#8212; 
+Expression value of an uniquely identified cell or cells written to a time series per timestep 
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">ResultTimeSeries</code> = <b>timeoutput</b>( <code class="varname">idexpression</code>, <code class="varname">expression</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">idexpression</code></td><td class="type" valign="top">boolean, nominal, ordinal</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">expression</code></td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional, ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">ResultTimeSeries</code></td><td class="type" valign="top">time series</td></tr><tr><td class="dimension" valign="top">
+</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3043128"></a><h2>Operation</h2><p>
+
+This operation is used in the iterative sections (dynamic, storage and transport sections) of
+a dynamic model script only. The keyword report precedes the operation. The
+<code class="varname">idexpression</code> is an expression that contains one identified cell or several uniquely
+identified cells. For each timestep the value of <code class="varname">expression</code> at the identified cell or cells
+is written to <code class="varname">ResultTimeSeries</code>, which is an ascii formatted time series file. 
+After a model run, the time series contains for each identified cell a list of expression
+cell values per timestep.
+</p><p>
+
+The <code class="varname">idexpression</code> must contain one or more uniquely identified cells, which are
+numbered with consecutive whole values, starting with 1. The remaining cells must have a
+value 0. For instance, if you want to write the <code class="varname">expression</code> values from three different
+cells to <code class="varname">ResultTimeSeries</code>, these cells must have the values 1, 2 and 3 on
+<code class="varname">idexpression</code> respectively, the remaining cells must have a value 0.
+
+</p><p>
+
+The <code class="varname">ResultTimeSeries</code> is an ascii formatted time series with header. It has the following
+lay out: 
+</p><p>
+
+line 1: header, description: <code class="varname">expression</code> map name 
+</p><p>
+
+line 2: header, number of columns in the file 
+</p><p>
+
+line 3: header, time column description: model time 
+</p><p>
+
+line 4 up to and including line <span class="italic">n</span> + 3: header, the numbers of the <span class="italic">n</span> uniquely
+identified cells: 1,2,3,...<span class="italic">n</span>. 
+
+</p><p>
+
+subsequent lines: data formatted in rows and columns. Each row represents one timestep
+<span class="italic">i</span> at time <span class="italic">t</span>(<span class="italic">i</span>) in the model from which the time series is the result; the first
+row contains data for timestep <span class="italic">i</span> = 1, the second row for timestep <span class="italic">i</span> =2, etc. The
+first column contains the time <span class="italic">t</span> at the timesteps. At the first row which contains data
+for the first time step (<span class="italic">i</span> = 1) it is always the starttime <span class="italic">t</span>(1). 
+
+
+The remaining columns (column number 2 up to and including <span class="italic">n</span> + 1, where
+<span class="italic">n</span> is the number of uniquely identified cells as above said) contain values that are taken
+from <code class="varname">expression</code>: column number <span class="italic">n</span> + 1 contains data of the cell that has a value
+<span class="italic">n</span>. 
+
+</p></div><div class="refsect1" lang="en"><a name="id3043313"></a><h2>Notes</h2><p>
+
+In principle, each unique identifier is represented by one cell on <code class="varname">idexpression</code>. This is
+the basic use: to sample certain locations. Alternatively, more than one cell on
+<code class="varname">idexpression</code> may have the same unique identifier value. In that case
+<code class="varname">ResultTimeSeries</code> contains for the id under consideration an aggregate <code class="varname">expression</code>
+value of the set of cells with that id. If <code class="varname">expression</code> is of data type scalar or directional
+the average <code class="varname">expression</code> value of cells with the id under consideration on
+<code class="varname">idexpression</code> is written to <code class="varname">ResultTimeSeries</code>. If the data type is directional cells
+without a direction (cellvalue -1) are discarded in the calculation of the average value. If all
+cells with the id under consideration have no direction, a -1 value is written to
+<code class="varname">ResultTimeSeries</code>. If <code class="varname">expression</code> is of data type boolean, nominal or ordinal the
+highest score (most ocurring cell value) of the cells with the id under consideration is written
+to the time series. If several values all have the highest score, the highest value is assigned.
+
+
+
+</p></div><div class="refsect1" lang="en"><a name="id3043375"></a><h2>Group</h2><p>This operation belongs to the group of  Time operators </p></div><div class="refsect1" lang="en"><a name="id3043383"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result.map = timeslice()</pre><div class="informaltable"><table border="0"><colgroup><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result.map</code></td></tr><tr><td><div><img src="examples/boolean.Result.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re105.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re107.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">timeinput </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> timeslice</td></tr></table></div></body></html>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" href="$class_assimilation_framework_1_1framework_base_1_1_framework_base.html" title="Base class for frameworks." alt="" coords="5,85,360,115"/>
+<area shape="rect" href="$class_assimilation_framework_1_1dynamic_framework_1_1_dynamic_framework.html" title="Framework for dynamic models." alt="" coords="443,5,837,35"/>
+<area shape="rect" href="$class_assimilation_framework_1_1kalman_filter_framework_1_1_ens_kalman_filter_framework.html" title="Framework for particle filter runs." alt="" coords="408,59,872,88"/>
+<area shape="rect" href="$class_assimilation_framework_1_1mc_framework_1_1_monte_carlo_framework.html" title="Framework for Monte Carlo simulations." alt="" coords="449,112,831,141"/>
+<area shape="rect" href="$class_assimilation_framework_1_1static_framework_1_1_static_framework.html" title="Framework for static models." alt="" coords="459,165,821,195"/>
+</map>

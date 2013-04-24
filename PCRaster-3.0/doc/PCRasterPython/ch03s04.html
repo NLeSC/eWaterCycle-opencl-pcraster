@@ -1,0 +1,24 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4. Accessing cell values of a map</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Python"><link rel="up" href="ch03.html" title="Chapter 3. Differences between PCRcalc and PCRaster Python"><link rel="prev" href="ch03s03.html" title="3.3. Writing output maps"><link rel="next" href="ch03s05.html" title="3.5. Global options"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.4. Accessing cell values of a map</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Differences between PCRcalc and PCRaster Python</th><td width="20%" align="right"> <a accesskey="n" href="ch03s05.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id356038"></a>3.4. Accessing cell values of a map</h2></div></div></div><p>
+           With PCRaster Python you can query cell values from a map:
+           </p><pre class="programlisting">cellvalue(map, row, col)
+  Returns a cell value from a map.
+
+  map      Map you want to query.
+  row      Row index of a cell in the map. Indices range from
+  [1, numer-of-rows].
+  col      Col index of a cell in the map. Indices range from
+  [1, numer-of-cols].
+  Returns a tuple with two elements: the first is the cell value, the second
+  is a boolean value which shows whether the first element, is valid or not.
+  If the second element is False, the cell contains a missing value.
+
+
+cellvalue(map, index)
+  Returns a cell value from a map.
+
+  map      Map you want to query.
+  index    Linear index of a cell in the map. Indices range from
+  [1, numer-of-cells].
+  Returns a tuple with two elements: the first is the cell value, the second
+  is a boolean value which shows whether the first element, is valid or not.
+  If the second element is False, the cell contains a missing value.</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.3. Writing output maps </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.5. Global options</td></tr></table></div></body></html>

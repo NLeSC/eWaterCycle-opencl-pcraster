@@ -1,0 +1,46 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>4.5. Area operations</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch04.html" title="Chapter 4. Cartographic Modelling"><link rel="prev" href="ch04s04.html" title="4.4. Neighbourhood operations"><link rel="next" href="ch04s06.html" title="4.6. Map operations"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">4.5. Area operations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s04.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Cartographic Modelling</th><td width="20%" align="right"> <a accesskey="n" href="ch04s06.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secstatar"></a>4.5. Area operations</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatarintro"></a>4.5.1. Introduction</h3></div></div></div><p>
+
+The third group of PCRaster operations for Cartographic Modelling
+includes those that compute a new value for each cell as a function of
+existing cell values of cells associated with a zone containing that cell, see
+<a class="xref" href="ch04s05.html#figfigarea" title="Figure 4.8. Area operations. The cell value is determined on basis of values of cells which are in the same area as the cell under consideration.">Figure 4.8</a>. These operations provide for the aggregation
+of cell values over units of cartographic space (areas).
+
+</p><p>
+
+The operations are like point operations to the extent that they compute
+new cell values on basis of one or more map layers. Unlike point
+operations, however, each cell value is determined on the basis of the
+several cell values of cells in the zone containing the cell under
+consideration.
+
+</p><p>
+
+Area operations are also like neighbourhood operations to the extent that
+they represent operations for two-dimensional areas. But unlike
+neighbourhood operations, the constituent cells do not conform to any
+particular ordering or spatial configuration.
+
+</p><div class="figure"><a name="figfigarea"></a><p class="title"><b>Figure 4.8. Area operations. The cell value is determined on basis of
+values of cells which are in the same area as the cell under consideration.</b></p><div class="figure-contents"><div><img src="figures/oparea.png" alt="Area operations. The cell value is determined on basis of values of cells which are in the same area as the cell under consideration."></div></div></div><p><br class="figure-break">
+
+
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secstatarope"></a>4.5.2. Operations over areas</h3></div></div></div><p>
+
+The <a class="link" href="ch06s03.html" title="6.3. Area operations">area operations</a> use a nominal,
+ordinal or boolean map that contains the separate area classes. For each cel
+this map identifies the area class to which the cell belongs: cells with the
+same value on this map are member of a separate area class. These cells
+belonging to the same class do not need to be contiguous.
+
+</p><p>
+
+For each area class an operation is performed that calculates a
+statistical value on basis of the cell values of a second input map.
+This value is assigned to all cells on the resulting map belonging to
+the class. A wide range of operations is provided such as computation of
+area averages, determination of the minimum or maximum values within
+each area or calculation of the sum of the cell values within each area.
+Generation of a random number for each area is also possible.
+
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">4.4. Neighbourhood operations </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 4.6. Map operations</td></tr></table></div></body></html>

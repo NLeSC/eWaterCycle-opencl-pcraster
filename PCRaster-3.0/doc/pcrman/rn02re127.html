@@ -1,0 +1,218 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>mapattr</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re126.html" title="map2col"><link rel="next" href="rn02re128.html" title="resample"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">mapattr</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re126.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re128.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="mapattr"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>mapattr &#8212; 
+Create a new PCRaster map, change or display location attributes of existing PCRaster map
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>mapattr</b> [options] <code class="varname">PCRmap</code>1 <code class="varname">PCRmap</code>2....<code class="varname">PCRmap</code>n</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">PCRmap</code>1-n</td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional, ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3066217"></a><h2>Options</h2><p>
+<span class="italic">Options that apply to all modes of operations</span>
+</p><p class="option">
+Set default attribute values with existing map
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+--clone
+<span class="italic">PCRclone</span> is taken as clone map. This option
+can be set in the command line or as a <a class="link" href="ch03s06.html#GOClone">global option</a>. If a map attribute is not
+specified by the user (in the menu or with options) the attribute value
+of <span class="italic">PCRclone</span> is assigned to the map that is generated. If 
+<span class="italic">clone</span>
+is not set the following defaults are used: data type: boolean; cell
+representation: small integer; projection: y increases from top to
+bottom, upper left corner (<span class="italic">x<sub>UL</sub></span>, <span class="italic">y<sub>UL</sub></span>): (0,0), cell
+length 1 and angle 0.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+Print information for all maps
+</p><div class="variablelist"><dl><dt><span class="term">
+-p</span></dt><dd><p> 
+gives information for all maps <code class="varname">PCRmap</code>1,
+<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n (from top to bottom):
+<br> number of rows, number
+of columns, cell length, data type, cell representation, projection,
+angle in degrees, upper left corner (<span class="italic">x<sub>UL</sub></span>, <span class="italic">y<sub>UL</sub></span>),
+minimum value, maximum value, PCRaster version number, file_id (i.e. the
+number of the file, used internally by PCRaster), native/not native
+(specifies whether the byte order of the file is native ('y' is
+printed) or not native ('n' is printed): big endian or little
+endian), attribute table (specifies whether the file contains additional
+attributes ('y' is printed) like for example a legend or a colour palette or
+not ('n').
+</p></dd></dl></div><p class="option">
+</p><p>
+<span class="italic">Options that apply to operation with the menu</span>
+</p><p class="option">
+Change location attributes of an existing map
+</p><div class="variablelist"><dl><dt><span class="term">
+-e
+</span></dt><dd><p> 
+starts the menu allowing to change the location attributes projection, upper left corner
+(<span class="italic">x<sub>UL</sub></span>, <span class="italic">y<sub>UL</sub></span>), cell
+length and angle of the existing map <code class="varname">PCRmap</code>1. The other map attributes
+are fixed. Only one map (<code class="varname">PCRmap</code>1) can be specified. Do not use -e in
+combination with other options.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+Copy location attributes of a map to other maps
+</p><div class="variablelist"><dl><dt><span class="term">
+-c
+</span></dt><dd><p> 
+when using this option two or more <code class="varname">PCRmap</code>1,
+<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n
+must be specified. These maps must have corresponding number
+of rows and corresponding number of columns. The location
+attributes cell length, projection, angle, upper left corner
+(<span class="italic">x<sub>UL</sub></span>, <span class="italic">y<sub>UL</sub></span>), of the first map
+<code class="varname">PCRmap</code>1 are copied to the other map(s)
+<code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n. The other
+map attributes are not changed. Do not use -c in combination with other
+options. 
+</p></dd></dl></div><p class="option">
+</p><p>
+<span class="italic"> Options that result in operation without the menu </span><br>
+If one of the
+following options are set, <b>mapattr</b> does not invoke the menu. So all
+attributes must be defined with the following options else the default
+values (or the values of <span class="italic">PCRclone</span>, see the <a class="link" href="ch03s06.html#GOClone">global clone</a>option) are
+assigned.
+</p><p class="option">
+-R <span class="italic">NumberOfRows</span>
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the number of rows in the map that is
+generated. <span class="italic">NumberOfRows</span> must be a whole positive value.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-C <span class="italic">NumberOfColumns</span>
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the number of columns in the map that is
+generated. <span class="italic">NumberOfColumns</span> must be a whole positive value.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-B,-N,-O,-S,-D or -L
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the data type of the map that is generated (respectively
+boolean, nominal, ordinal, scalar, directional, ldd). Default: boolean,
+or if --clone is set, the data type of the clone map <code class="varname">PCRclone</code>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+--single or --double and --small or --large</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p>
+In most case, the default cell representation will be sufficient. If you want, you can specify the cell representations:<br>
+Scalar and directional data types
+</p></dd><dt><span class="term">--single</span></dt><dd><p>
+cell values are represented by single real cell representations (default, single, precision)
+</p></dd><dt><span class="term">--double</span></dt><dd><p>
+cell values are represented by double real cell presentations (double precision)
+</p></dd><dt><span class="term"></span></dt><dd><p>
+Nominal and ordinal data types
+</p></dd><dt><span class="term">--small</span></dt><dd><p> 
+cell values are represented by small integer cell representaiton (default)
+</p></dd><dt><span class="term">--large</span></dt><dd><p> 
+cell values are represented by large integer cell representation
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-P yt2b or -P yb2t
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the projection: -P yt2b, y increases from top to bottom or
+-P yb2t, y increases from bottom to top. Default: yt2b or if
+--clone is set the projection of <span class="italic">PCRclone</span>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-x <span class="italic">XCorULC</span>
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the x-coordinate of the upper left corner of the map that
+is generated. <span class="italic">XCorULC</span> is a real value. Default: 0.0 or if --clone is set, the value of the clone map <span class="italic">PCRclone</span>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-y <span class="italic">YCorULC</span>
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the y-coordinate of the upper left corner of the map that
+is generated. <span class="italic">YCorULC</span> is a real value. Default: 0.0 or if --clone is set, the value of the clone map <span class="italic">PCRclone</span>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-l <span class="italic">CellLength</span>
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the celllength of the map that is generated. <span class="italic">CellLength</span>
+is a real value. Default: 1 or if --clone is set, the value of the
+clone map <span class="italic">PCRclone</span>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-a <span class="italic">Angle</span>
+</p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p> 
+Specifies the angle of the map that is generated. <span class="italic">Angle</span> is the
+angle in degrees between -90 and 90 degrees. Default: 0.0 or if
+--clone is set, the value of the clone map <span class="italic">PCRclone</span>.
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3066945"></a><h2>Operation</h2><p>
+The <b>mapattr</b> operator generates a new PCRaster map
+with map attributes specified by the user, changes the <a class="link" href="ch02s03.html#secdatbasemaphead" title="2.3.2. Location attributes, missing values">location</a> attributes of an existing map or prints map attribute information.
+</p><p>
+<span class="italic">Operation with the menu</span>
+<br>
+A new map is generated by specifying one input file <code class="varname">PCRmap</code>1 and not
+setting options. The operator invokes a menu. In the menu the location
+attributes can be entered of the new map <code class="varname">PCRmap</code>1 that is created.
+You can scroll through the menu with the arrow up or arrow down keys or
+the keys listed at the bottom of the menu. An menu item is entered by
+pressing &lt;Enter&gt; and typing the value followed by &lt;Enter&gt;. The menu
+items 'data type' and 'projection'  are filled in by selecting
+one of the options with the arrow left or arrow right keys (or one of
+the keys listed at the bottom of the menu) instead of typing the entry.
+Quit the menu by pressing 'q'. The program asks you whether the map
+must be created. You can answer by pressing 'Y' (Yes, create the
+map), 'N' (No, do not create the map and leave the menu) or by
+pressing &lt;Escape which effects that you can resume editing. 
+</p><p>
+Location attributes of one map can be changed by specifying one existing
+map <code class="varname">PCRmap</code>1 and the option -e. Note that this is not meant for
+cutting or resampling the map which is done with the operator
+<b>resample</b>. See also the section on <a class="link" href="ch03s02.html#secimportmaptype" title="3.2.3. Cutting or joining maps; changing geographical location attributes or data types"> the import map type</a>.
+</p><p>
+Location attributes of the first, existing, <code class="varname">PCRmap</code>1 are copied to the
+existing <code class="varname">PCRmap</code>2,...<code class="varname">PCRmap</code>n with the option -c.
+</p><p> 
+Map attribute information of multiple <code class="varname">PCRmap</code>1-n is printed with
+the option -p. 
+</p><p>
+<span class="italic">Operation without the menu</span><br>
+
+The map attributes can also be entered without the menu, by setting
+options. If one of the options -R, -C, -B,-N,-O,-S,-D,-L, -P, -x, -y,
+-l and/or -a for specifying the map attributes from the command line are
+set, the operation is performed without the menu. All modes of
+operation possible with the menu can also be executed in this command
+line/no menu mode. So you can also use the options -e or -c for changing
+map attributes of an existing map and copying map attributes from one
+map to other maps respectively. 
+</p><p>
+If one of the map attributes is not specified with an option in the
+command line, <b>mapattr</b> assigns the default value or, if a clone map
+is specified with the option --clone, the value of the
+<span class="italic">PCRclone</span>. See also the --clone option in the option list at
+the top of the <b>mapattr</b> description.
+</p></div><div class="refsect1" lang="en"><a name="id3067105"></a><h2>See Also</h2><p><a class="xref" href="rn02re128.html" title="resample"><span class="refentrytitle">resample</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3067119"></a><h2>Examples</h2><p>
+Generation of a new map that is stored under the filename
+'mask.map'; invokes the menu:
+</p><div class="literallayout"><p><br>
+mapattr mask.map <br>
+</p></div><p>
+</p><p>
+Changing the location attributes of an existing map <span class="italic">clone.map</span>;
+invokes the menu:
+
+</p><div class="literallayout"><p><br>
+mapattr -e clone.map<br>
+</p></div><p>
+</p><p>
+Copying the location attributes of <code class="varname">clone1.map</code> to <code class="varname">dem.map</code>
+and <code class="varname">ldd.map</code>; does not invoke the menu:
+</p><div class="literallayout"><p><br>
+mapattr -c clone1.map dem.map ldd.map<br>
+</p></div><p>
+</p><p>
+Printing (on the screen) the map info for <code class="varname">clone1.map</code>, <code class="varname">dem.map</code> and <code class="varname">ldd.map</code>:
+</p><div class="literallayout"><p><br>
+mapattr -p clone1.map dem.map ldd.map<br>
+</p></div><p>
+</p><p>
+Generation of a new map that is stored under the filename
+<code class="varname">mask2.map</code>; does not invoke the menu (here, the option -a is not set
+so the angle of the map is assigned the default value 0):
+</p><div class="literallayout"><p><br>
+mapattr -R 19 -C 68 -B -P yb2t -x 12 -y -14.02 -l 0.8 mask2.map<br>
+</p></div><p>
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re126.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re128.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">map2col </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> resample</td></tr></table></div></body></html>

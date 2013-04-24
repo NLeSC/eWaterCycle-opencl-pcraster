@@ -1,0 +1,6 @@
+Collection.Index
+==========================
+.. currentmodule:: PCRaster.Collection
+.. autoclass:: Index
+   :members:
+   :undoc-members:

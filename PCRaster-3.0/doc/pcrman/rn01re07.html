@@ -1,0 +1,81 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>accucapacityflux, accucapacitystate</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re06.html" title="abs"><link rel="next" href="rn01re08.html" title="accuflux"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">accucapacityflux, accucapacitystate</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re06.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re08.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="accucapacity"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>accucapacityflux, accucapacitystate &#8212; 
+Transport of material downstream over a local drain direction network
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Resultflux</code> = <b>accucapacityflux</b> ( <code class="varname">ldd</code>, <code class="varname">material</code>, <code class="varname">transportcapacity</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Resultstate</code> = <b>accucapacitystate</b>( <code class="varname">ldd</code>, <code class="varname">material</code>, <code class="varname">transportcapacity</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Resultflux</code>, <code class="varname">Resultstate</code> = <b>accucapacityflux</b>, <b>accucapacitystate</b> ( <code class="varname">ldd</code>, <code class="varname">material</code>, <code class="varname">transportcapacity</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">ldd</code></td><td class="type" valign="top">ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">material</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">transportcapacity</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Resultflux</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Resultstate</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id2971111"></a><h2>Operation</h2><p>
+
+
+These operations describe accumulation of material in a drainage network
+with a limited transport capacity of the drainage channel. For instance, when
+water is flowing through pipes or when sediment is transported whereby the transport is
+limited by the water velocity and thus transport capacity. The material that is not transported is stored. For each cell,
+<b>accucapacityflux</b> assigns the amount of
+material which is transported out of the cell, <b>accucapacitystate</b> assigns
+the amount which is stored in the cell. Both operators perform the same function
+of accumulation of material with a limited transport capacity, the only
+difference between the operators is the sort of result that is saved:
+<b>accucapacitystate</b> yields storages of material in cells,
+<b>accucapacityflux</b> yields fluxes of material out of cells.
+
+
+</p><p>
+
+For each cell, the amount of material input, for instance the amount of
+rain, is given by <code class="varname">material</code>. This is transported in downstream direction
+through the consecutively neighbouring downstream cells, following the
+local drain directions on <code class="varname">ldd</code>. Each time material moves through a cell
+a fraction is stored in the cell. These storages are saved as <code class="varname">Resultstate</code>,
+if the <b>accucapacitystate</b> operator is used. The remaining material is
+transported out of the cell, these amounts of outflow from each cell into
+its neighbouring downstream cell are the result of the
+<b>accucapacityflux</b> operator, they are saved as <code class="varname">Resultflux</code>.
+
+
+</p><p>
+
+The function can be described by flow of material through a set of linked
+systems, where a cell represents a system. The flow starts at the
+cells/systems at the watershed boundaries (defined by <code class="varname">ldd</code>) and ends at
+a pit cell. The systems are linked by the local drain directions on <code class="varname">ldd</code>,
+these define the path of flow through the set of cells/systems. Each time
+a system is passed, the amount of flow changes.
+
+
+</p><p>
+
+For a cell/system somewhere in the map, the flow of material is described
+by a system. The inflow of the cell is the
+sum of the outflow amounts of its upstream neighbours. This inflow
+amount is added to the <code class="varname">material</code> value in the cell itself. This amount of
+material is potentially available for transport out of the cell. The amount
+which is actually transported out of the cell is limited by the
+<code class="varname">transportcapacity</code> value of the cell: if the sum of material is larger than
+the <code class="varname">transportcapacity</code> value, the amount of material which is
+transported out of the cell is equal to the <code class="varname">transportcapacity</code> value, the
+remaining material is stored in the cell. If the sum of material is equal to
+or smaller than the <code class="varname">transportcapacity</code> value, all material is transported
+out of the cell and nothing will be stored in the cell.
+
+
+</p><p>
+
+For each cell, the amount of material which is transported to its
+downstream neighbour (or out of the map if the cell is a pit cell) is saved
+as <code class="varname">Resultflux</code> (use the operator <b>accucapacityflux</b>); the amount of
+material which is stored to the cell is saved as <code class="varname">Resultstate</code> (use
+<b>accucapacitystate</b>)
+
+</p></div><div class="refsect1" lang="en"><a name="id2971256"></a><h2>Notes</h2><p>
+
+The values on <code class="varname">material</code> and <code class="varname">transportcapacity</code> must be equal to or
+larger than zero. 
+</p><p>
+
+A cell with missing value on <code class="varname">material</code> and/or <code class="varname">transportcapacity</code> is
+assigned a missing value on <code class="varname">Resultflux</code> or <code class="varname">Resultstate</code>. Additionally,
+all its downstream cells are assigned a missing value. 
+</p><p>
+
+The local drain direction network on <code class="varname">ldd</code> must be <a class="link" href="ch02s03.html#SoundLDD">sound</a>.
+
+</p></div><div class="refsect1" lang="en"><a name="id2971320"></a><h2>Group</h2><p>This operation belongs to the group of  Neighbourhood operators; local drain directions </p></div><div class="refsect1" lang="en"><a name="id2971318"></a><h2>See Also</h2><p><a class="xref" href="ch04s04.html#secstatneightr" title="4.4.5. Transport of material over a ldd">Section 4.4.5</a> 
+<a class="xref" href="rn01re56.html" title="lddmask"><span class="refentrytitle">lddmask</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id2971338"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Flux1.map, State1.map = accucapacityflux, accucapacitystate (Ldd.map, Material.map, 1.5)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Flux1.map</code></td></tr><tr><td><div><img src="examples/accucapacity.Flux1.gif"></div></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">State1.map</code></td></tr><tr><td><div><img src="examples/accucapacity.State1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Material.map</code></td></tr><tr><td><div><img src="examples/accu.Material.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  Flux2.map, State2.map = accucapacityflux, accucapacitystate (Ldd.map, Material.map, TransCap.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Flux2.map</code></td></tr><tr><td><div><img src="examples/accucapacity.Flux2.gif"></div></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">State2.map</code></td></tr><tr><td><div><img src="examples/accucapacity.State2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Ldd.map</code></td></tr><tr><td><div><img src="examples/accu.Ldd.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Material.map</code></td></tr><tr><td><div><img src="examples/accufraction.Material.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">TransCap.map</code></td></tr><tr><td><div><img src="examples/accucapacity.TransCap.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">abs </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> accuflux</td></tr></table></div></body></html>

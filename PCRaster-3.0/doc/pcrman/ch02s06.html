@@ -1,0 +1,60 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.6. Point data column files</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch02.html" title="Chapter 2. The Database"><link rel="prev" href="ch02s05.html" title="2.5. Time series"><link rel="next" href="ch03.html" title="Chapter 3. How to Import or Export Data, Display Maps, Global Options"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">2.6. Point data column files</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s05.html">Prev</a> </td><th width="60%" align="center">Chapter 2. The Database</th><td width="20%" align="right"> <a accesskey="n" href="ch03.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secdatbasepoint"></a>2.6. Point data column files</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbasepointintro"></a>2.6.1. Introduction</h3></div></div></div><p>
+The concept of point data was discussied in a previous section of this chapter (<a class="xref" href="ch02s02.html" title="2.2. Concepts, kinds of data used in the database">Section 2.2</a>). The next section (<a class="xref" href="ch02s06.html#secdatbasepointform" title="2.6.2. Format">Section 2.6.2</a>) gives the format used
+for point data column files. The creation of a point data column file and the
+conversion between point data column files and PCRaster maps will be discussed in the next chapter (<a class="xref" href="ch03s05.html" title="3.5. Point data column files: database management">Section 3.5</a>).
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secdatbasepointform"></a>2.6.2. Format</h3></div></div></div><p>
+Ascii formatted column files are used for representation of point data in
+PCRaster. A column file consists of two columns containing the x and y
+coordinates respectively and one or more columns containing data values.
+Two types of column files can be used in PCRaster: a <span class="emphasis"><em>column file in
+simplified Geo-EAS format</em></span>  
+ 
+<a class="indexterm" name="id2945096"></a>
+
+ or a <span class="emphasis"><em>plain column file</em></span>   <a class="indexterm" name="id2945120"></a>. These have the following format:
+
+
+
+1) <span class="emphasis"><em>column file in simplified Geo-EAS format</em></span>:
+
+line 1: header, description
+
+line 2: header, number (<span class="emphasis"><em>n</em></span>) of columns in the file
+
+line 3 up to and including line <span class="emphasis"><em>n</em></span> + 2: header, the names of the
+<span class="emphasis"><em>n</em></span> variables 
+
+subsequent lines: data which are formatted in at least
+three columns containing the x coordinates, y coordinates and values,
+respectively. Each line contains a record. The separator between the
+columns may be one or more whitespace character(s) (spaces, tabs) or
+ascii character(s). 
+
+2) <span class="emphasis"><em>plain column file</em></span>:
+
+This is a file formatted like the simplified Geo-EAS format, but without
+header lines. The column separator may be chosen by the user. Fields
+with the x coordinates, y coordinates and values in the columnfile may
+contain the characters: -eE.0123456789. Fields may not be empty, valid
+fields are for instance: 25.11, -3324.4E-12 (which represents -3324.4 x
+10-12), .22 (which represents 0.22).
+</p><p>
+The Table below gives an example of a column file in simplified Geo-EAS format.
+
+
+</p><div class="example"><a name="id2945167"></a><p class="title"><b>Example 2.2. 
+Example of a point data column file in simplified Geo-EAS format.
+</b></p><div class="example-contents"><div class="literallayout"><p><br>
+pH data January 17<br>
+4<br>
+xcoor<br>
+ycoor<br>
+pHfield<br>
+pHlab<br>
+349.34  105.03  3.4  4.1<br>
+349.36  102.51  3.4  4.1<br>
+348.89  104.00  3.6  4.1<br>
+348.44  102.68  3.5  4.1<br>
+349.89  104.72  3.8  4.1<br>
+</p></div></div></div><p><br class="example-break">
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s05.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">2.5. Time series </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 3. How to Import or Export Data, Display Maps, Global Options</td></tr></table></div></body></html>

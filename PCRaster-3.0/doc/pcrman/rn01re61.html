@@ -1,0 +1,231 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lookup</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re60.html" title="log10"><link rel="next" href="rn01re62.html" title="lt or &lt;"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lookup</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re60.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re62.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="lookup"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lookup &#8212; 
+Compares cell value(s) of one or more expression(s) with the search key in a table
+
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lookupboolean</b>( <code class="varname">table</code>, <code class="varname">expression</code> 1, <code class="varname">expression</code> 2,... <code class="varname">expression</code> n) </pre><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lookupnominal</b>( <code class="varname">table</code>, <code class="varname">expression</code> 1, <code class="varname">expression</code> 2,... <code class="varname">expression</code> n) </pre><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lookupordinal</b>( <code class="varname">table</code>, <code class="varname">expression</code> 1, <code class="varname">expression</code> 2,... <code class="varname">expression</code> n) </pre><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lookupscalar</b>( <code class="varname">table</code>, <code class="varname">expression</code> 1, <code class="varname">expression</code> 2,... <code class="varname">expression</code> n) </pre><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lookupdirectional</b>( <code class="varname">table</code>, <code class="varname">expression</code> 1, <code class="varname">expression</code> 2,... <code class="varname">expression</code> n) </pre><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lookupldd</b>( <code class="varname">table</code>, <code class="varname">expression</code> 1, <code class="varname">expression</code> 2,... <code class="varname">expression</code> n) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td valign="top"><code class="varname">table</code></td><td class="type" valign="top">ascii text table</td></tr><tr><td rowspan="2" valign="top"><code class="varname">expression</code>1-n</td><td class="type" valign="top">boolean, nominal, ordinal, scalar, directional, ldd</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">type is specified by the sort of command: <b>lookupboolean</b> results in
+a boolean <code class="varname">Result</code>, <b>lookupnominal</b> results in a nominal <code class="varname">Result</code> etc.</td></tr><tr><td class="dimension" valign="top">spatial; non spatial if all <code class="varname">expression</code>s 1-n are non spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3011576"></a><h2>Options</h2><p class="option">
+--columntable or --matrixtable</p><div class="variablelist"><dl><dt><span class="term">--columntable</span></dt><dd><p> a column table is read always (default)
+</p></dd><dt><span class="term">--matrixtable</span></dt><dd><p> if two expressions <code class="varname">expression</code>1,
+<code class="varname">expression</code>2,...<code class="varname">expression</code>n are specified
+in the command line a matrix table is read instead of a column table.
+</p></dd></dl></div><p class="option">
+--degrees or --radians</p><div class="variablelist"><dl><dt><span class="term">--degrees</span></dt><dd><p> directional values in <code class="varname">table</code> are interpreted as degrees (default)
+</p></dd><dt><span class="term">--radians</span></dt><dd><p> directional values in <code class="varname">table</code> are interpreted as radians</p></dd></dl></div><p class="option">
+cell representation for <b>lookupnominal</b> and <b>lookupordinal</b></p><div class="variablelist"><dl><dt><span class="term">--small</span></dt><dd><p> cell representation is small integer cell representation (default)
+</p></dd><dt><span class="term">--large</span></dt><dd><p> cell representation is large integer cell representation </p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id3011737"></a><h2>Operation</h2><p>
+
+
+
+<span class="italic">operation with a column table</span> (with global option --columntable):
+
+</p><p>
+
+In the <code class="varname">table</code> relations between the values of <code class="varname">expression</code>1,
+<code class="varname">expression</code>2,...<code class="varname">expression</code>n are given. For each combination of
+values of <code class="varname">expression</code>1, <code class="varname">expression</code>2,...<code class="varname">expression</code>n a new
+value can be specified.
+
+
+</p><p>
+
+If the option --columntable is set, a column table is always used
+for <code class="varname">table</code>. The column <code class="varname">table</code> consists of a number
+of <span class="italic">n</span> +1 columns. The first <span class="italic">n</span> columns are key columns, where
+<span class="italic">n</span> is the number of the one or more expressions <code class="varname">expression</code>1,
+<code class="varname">expression</code>2,...<code class="varname">expression</code>n. The key columns consist of key fields;
+each key field is one value or a ranges of values. The key fields in the first
+column will be linked to cell values on <code class="varname">expression</code>1, the key fields in
+the second column to values on <code class="varname">expression</code>2, and so on, where the key
+fields in the <span class="italic">n</span>th column will be linked to values on <code class="varname">expression</code>n.
+The last column (column number n+1) contains so called value fields;
+these are values which will be assigned to <code class="varname">Result</code>. Each row in the
+<code class="varname">table</code> is called a tuple. Of course, it consists of <span class="italic">n</span> key fields and one
+value field. An example of a column table is given in the Table below.
+
+</p><div class="example"><a name="id3011870"></a><p class="title"><b>Example 8. Example of a column table. The first, second and third column give the values of <span class="italic">expression1</span>, <span class="italic">expression2</span> and <span class="italic">expression3</span> respectively; the fourth column contains the value fields.
+</b></p><div class="example-contents"><div class="literallayout"><p><br>
+&lt;2,&gt;    3    &lt;,12&gt;    1<br>
+&lt;,2]     3    &lt;,12&gt;    3<br>
+&lt;2,&gt;    14   &lt;,12&gt;    7<br>
+&lt;,2]     14   &lt;,12&gt;    9<br>
+&lt;2,&gt;    14     8     4<br>
+&lt;,2]     14     8      8<br>
+</p></div></div></div><p><br class="example-break">
+
+</p><p>
+
+For each cell, the <b>lookup</b> operator reads the values in that cell on
+<code class="varname">expression</code>1,<code class="varname">expression</code>2,...<code class="varname">expression</code>n and looks for a tuple
+whose key fields match these cell values, starting at the first row of the
+<code class="varname">table</code>. So, in a tuple the <span class="italic">i</span>th key field (where <span class="italic">i</span> is 1 to <span class="italic">n</span>) is
+compared with the value on <code class="varname">expression</code>i. It matches if the cell value on
+<code class="varname">expression</code>i is equal to the value in the key field or if it is in the range
+of the key field, in case of a key field consisting of a range of values. If
+all key fields in a tuple match the cell values of the expressions belonging
+to them, the value in the value field of the tuple is sent to the
+corresponding cell on <code class="varname">Result</code>.
+
+
+</p><p>
+
+The <code class="varname">table</code> is an ordinary ascii text file which can be made using any
+text editor program you wish. Alternatively you can make it with a spread
+sheet program or word processing program and export <code class="varname">table</code> as an ascii
+text file. You can have a squint at your table by typing the DOS command
+<b>type</b> followed by a space and the table name <code class="varname">table</code>.
+
+
+</p><p>
+
+The precise format of the <code class="varname">table</code> is as follows. In a row (tuple), the
+number of key fields must equal the  number of expressions
+<code class="varname">expression</code>1,<code class="varname">expression</code>2,...<code class="varname">expression</code>n. The key fields are
+followed by one value field. The fields must be separated by one or more
+spaces or tabs. The number of spaces or tabs doesn't matter. A value field
+is one single value. A key field is a single value, or a range of values,
+where a range of values is typed as: '[' or '&lt;' symbol, minimum value,
+comma, maximum value, ']' or '&gt;' symbol. The minimum and maximum
+values are included in the range if square brackets (respectively '[' and ']')
+are used, they are not included if '&lt;' or '&gt;' are used. Omitting a value
+in the range definition means infinity. Ranges can be used for nominal,
+ordinal, scalar and directional data types. Values in keys are typed as an
+ordinary number (for instance 24.453) or using <sub>10</sub> exponentials (for
+instance 32.45e3 means 32450). Examples of tuples are:
+
+</p><div class="literallayout"><p><br>
+[,0.05&gt;     1<br>
+     Assign a 1 to all <span class="italic">expression</span> cell values smaller than 0.05<br>
+<br>
+[-2e3,0&gt;    2<br>
+     Assign a 2 to all <span class="italic">expression</span> cell values equal to -200 or between -200 and 0.<br>
+<br>
+[-1.42,-0.2&gt;    [,9&gt;    -2.2<br>
+     Assign a -2.2 to all cells with: <span class="italic">expression1</span> cell value equal to -1.42 or between <br>
+     -1.42 and -0.2 and <span class="italic">expression2</span> cell value smaller than 9.<br>
+</p></div><p>
+
+In one <code class="varname">table</code> as many tuples as needed can be specified. Remember that
+for each cell the value field is assigned of the <span class="italic">first</span> tuple (from top to
+bottom) that matches the set of <code class="varname">expression</code>1,
+<code class="varname">expression</code>2,...<code class="varname">expression</code>n values on the cell.
+
+
+</p><p>
+
+<span class="italic">operation with a matrix table</span> (with global option --matrixtable):
+
+</p><p>
+
+If two expressions <code class="varname">expression</code>1, <code class="varname">expression</code>2,...<code class="varname">expression</code>n are
+specified in the command line, <code class="varname">table</code> will be interpreted as a matrix
+table instead of a column table. If a different
+number of expressions <code class="varname">expression</code>1, <code class="varname">expression</code>2,...<code class="varname">expression</code>n
+is specified <code class="varname">table</code> will be read as a column table and the operation is
+performed as described above.
+
+
+</p><p>
+
+If a matrix table is read, the <code class="varname">table</code> must have the following
+make-up; Table <a class="link" href="ch02s04.html#tmatrixtable" title="Table 2.3.  Example of a matrix table. The fields in the first row contain values of expression1; the fields in the first column contain values of expression2. The field in the top left corner is a dummy field. The remaining fields are value fields.">2</a> gives an example.
+The first field in the top left corner of the matrix, is not
+considered during operation but is necessary to align the matrix; it is a
+dummy field and may have any value. The first row consists of this
+dummy field and the key fields which will be linked to <code class="varname">expression</code>1.
+The first column consists of the dummy field and the key fields which will
+be linked to <code class="varname">expression</code>2. The key fields may be a single value or
+may be a range, where ranges are specified in the same way as it is done in a 
+column table (see above). The remaining fields in the matrix are value
+fields and consist of the values which will be assigned to <code class="varname">Result</code>. In
+horizontal direction, fields must be separated by one or more spaces or
+tabs. All fields must be filled in.
+
+</p><p>
+</p><div class="example"><a name="id3012193"></a><p class="title"><b>Example 9. 
+Example of a matrix table. The fields in the first row contain values
+of <span class="italic">expression1</span>; the fields in the first column contain values of
+<span class="italic">expression</span>. The field in the top left corner is a dummy field. The remaining
+fields are value fields.
+</b></p><div class="example-contents"><div class="literallayout"><p><br>
+-99     1       2        3        4<br>
+12     6.5     6.5       6        6<br>
+14     -4      -4       -4       -4<br>
+16    -13     -13     -12     -12<br>
+}}<br>
+</p></div></div></div><p><br class="example-break">
+
+
+For each cell, the operator reads the <code class="varname">expression</code>1 value and the
+<code class="varname">expression</code>2 value. It searches in the matrix both the column with a key
+field value which matches the <code class="varname">expression</code>1 value and the row
+with a key field value which matches the <code class="varname">expression</code>2 value.
+The value field which is in this column and row is assigned to the
+corresponding cell on <code class="varname">Result</code>. If more than one combination of column
+key field and row key field match the cell values of <code class="varname">expression</code>1 and
+<code class="varname">expression</code>2, the value field is chosen which is firstly in the most left
+column and secondly in the most upper row.
+
+</p></div><div class="refsect1" lang="en"><a name="id3012261"></a><h2>Notes</h2><p>
+
+If a cell has <code class="varname">expression</code>1 and/or <code class="varname">expression</code>2 and/or...<code class="varname">expression</code>n
+values that don't match with a key field in the table, a missing value
+is assigned to the cell on <code class="varname">Result</code>. 
+</p><p>
+
+A cell with a missing value on an expression <code class="varname">expression</code>1,
+<code class="varname">expression</code>2,...<code class="varname">expression</code>n is assigned a missing value on <code class="varname">Result</code>.
+
+</p><p>
+
+Each value in the key fields must be in the domain of the (sub) data type
+of the expression to which it will be linked, else the operation will give an error.
+Also, the value fields must be in the domain of the data type of the <code class="varname">Result</code> map
+(specified by the type of command: <b>lookupboolean</b>,
+<b>lookupnominal</b>,.. etc.). 
+
+</p><p>
+
+Using <b>lookupldd</b> for generating a <code class="varname">Result</code> of data type ldd is quite
+risky: probably it will result in a ldd which is <a class="link" href="ch02s03.html#formldd" title="2.3.3.7. Ldd data type">unsound</a>. If you
+do want to create a <code class="varname">Result</code> of data type ldd use the operator
+<b>lddrepair</b> afterwards. This operator will modify the ldd in such a way
+that it will be sound, see the operator <b>lddrepair</b>.
+
+</p></div><div class="refsect1" lang="en"><a name="id3012368"></a><h2>Group</h2><p>This operation belongs to the group of  Point operators; relations in tables </p></div><div class="refsect1" lang="en"><a name="id3012367"></a><h2>See Also</h2><p><a class="xref" href="rn01re57.html" title="lddrepair"><span class="refentrytitle">lddrepair</span></a> 
+<a class="xref" href="ch02s04.html#tableCon">???</a> 
+<a class="xref" href="ch03s03.html#secimportlookcrea" title="3.3.2. Creating and editing tables">Section 3.3.2</a> 
+</p></div><div class="refsect1" lang="en"><a name="id3012392"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result1.map = lookupnominal(Table.txt,Expr1.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr valign="top"><td class="pcr-omap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/lookup.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Table.txt</code></pre></td></tr><tr><td><pre class="programlisting">
+          
+          [, -2.5&gt;			1
+ -2.5					3
+&lt;-2.5, 0]			5
+&lt;0, 10&gt;				7
+[12.5, 17.75]	9
+&lt;17.75, 250&gt;	11 
+&lt;0, 1&gt;				13 
+
+        </pre></td></tr></tbody></table></td><td class="pcr-imap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr1.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr1.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result2.map = lookupordinal(Table2.txt,Expr12.map,Expr22.map,Expr32.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col><col></colgroup><tbody><tr valign="top"><td class="pcr-omap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/lookup.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Table2.txt</code></pre></td></tr><tr><td><pre class="programlisting">
+
+          1   7    &lt;,&gt;   1
+1  &lt;7,&gt;  [0,&gt;  2
+1  &lt;7,&gt;  &lt;,0&gt;  3
+0   7    &lt;,&gt;   4
+0  &lt;7,&gt;  [0,&gt;  5
+0  &lt;7,&gt;  &lt;,0&gt;  6
+
+        </pre></td></tr></tbody></table></td><td class="pcr-imap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr12.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr12.gif"></div></td></tr></tbody></table></td><td class="pcr-imap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr22.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr22.gif"></div></td></tr></tbody></table></td><td class="pcr-imap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr32.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr32.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  --matrixtable Result3.map = lookupordinal(Table2.txt,1,100,Expr32.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result3.map</code></td></tr><tr><td><div><img src="examples/lookup.Result3.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Table2.txt</code></pre></td></tr><tr><td><pre class="programlisting">
+
+          1   7    &lt;,&gt;   1
+1  &lt;7,&gt;  [0,&gt;  2
+1  &lt;7,&gt;  &lt;,0&gt;  3
+0   7    &lt;,&gt;   4
+0  &lt;7,&gt;  [0,&gt;  5
+0  &lt;7,&gt;  &lt;,0&gt;  6
+
+        </pre></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr32.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr32.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  --matrixtable Result4.map = lookupscalar(Table3.txt,Expr13.map,Expr23.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col><col><col></colgroup><tbody><tr valign="top"><td class="pcr-omap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result4.map</code></td></tr><tr><td><div><img src="examples/lookup.Result4.gif"></div></td></tr></tbody></table></td><td class="pcr-txt-example" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">Table3.txt</code></pre></td></tr><tr><td><pre class="programlisting">
+
+       -9 0     1
+2  12.5 -12.5
+7  13.5 -6
+9  14   -2
+
+                         </pre></td></tr></tbody></table></td><td class="pcr-imap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr13.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr13.gif"></div></td></tr></tbody></table></td><td class="pcr-imap" valign="top"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr23.map</code></td></tr><tr><td><div><img src="examples/lookup.Expr23.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re60.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re62.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">log10 </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> lt or &lt;</td></tr></table></div></body></html>

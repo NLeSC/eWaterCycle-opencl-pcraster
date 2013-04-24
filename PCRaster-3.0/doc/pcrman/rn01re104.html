@@ -1,0 +1,126 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>timeinput...</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re103.html" title="time"><link rel="next" href="rn01re105.html" title="timeinput"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">timeinput...</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re103.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re105.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="timeinput..."></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>timeinput... &#8212; 
+Cell values per timestep read from a time series that is linked to a map with unique identifiers 
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinput...</b> <code class="varname">type</code>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputnominal</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputboolean</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputnominal</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputordinal</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputscalar</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputdirectional</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><pre class="synopsis"><b>pcrcalc</b> <code class="varname">Result</code> = <b>timeinputldd</b>( <code class="varname">TimeSeries</code>, <code class="varname">idexpression</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">TimeSeries</code></td><td class="type" valign="top">ascii formatted time series</td></tr><tr><td class="dimension" valign="top">
+
+</td></tr><tr><td rowspan="2" valign="top"><code class="varname">idexpression</code></td><td class="type" valign="top">boolean, nominal, ordinal</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">type is specified by the sort of command:
+<b>timeinputboolean</b> results in a boolean <code class="varname">Result</code>, <b>timeinputnominal</b> in a nominal <code class="varname">Result</code> etc.</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3041330"></a><h2>Operation</h2><p>
+
+</p><div class="example"><a name="id3041338"></a><p class="title"><b>Example 10. Example of a time series file with header
+</b></p><div class="example-contents"><div class="literallayout"><p><br>
+rain (mm) per area for model with timer 1 6 1<br>
+4<br>
+model time<br>
+Area station A<br>
+Area station B<br>
+Area station C<br>
+1    2.0  0.0  0.0    <br>
+2    3.0  2.0  1.0<br>
+3    7.0  5.0  3.0<br>
+4    9.0  12.0 6.0<br>
+5    6.0  0.0  5.0<br>
+6    0.0  1.0  2.0<br>
+</p></div></div></div><p><br class="example-break">
+
+This operation is used in the iterative sections (dynamic, storage and
+transport sections) of a dynamic model script only. <code class="varname">TimeSeries</code> is an
+ascii formatted time series that contains cell values formatted in rows and
+columns. During a run of a Dynamic Model <code class="varname">TimeSeries</code> is read from
+top to bottom: for each timestep, a row gives cell values that are assigned
+to <code class="varname">Result</code> at the timestep under consideration.  The cell values in a
+row are assigned to the cells of <code class="varname">Result</code> on basis of unique identifiers
+on <code class="varname">idexpression</code>: each column on <code class="varname">TimeSeries</code> gives cell values
+for an unique identifier. Each timestep, the cell value in a column is
+assigned to the cells on <code class="varname">Result</code> that have a unique identifier on
+<code class="varname">idexpression</code> that corresponds with the unique identifier of the
+column.
+
+</p><p>
+
+The data type that is assigned to <code class="varname">Result</code> is specified by the sort of
+operator that is used.
+
+</p><p>
+
+The contents and partly also the format (number of rows) of the
+<code class="varname">TimeSeries</code> must match the dynamic model for which the
+<code class="varname">TimeSeries</code> is used, especially the time dimension of the model. For
+a description of the time dimension and the terms used, see section
+VI.2.2d. Two types of format for the <code class="varname">TimeSeries</code> can be used; the
+<b>timeinput...</b> operator detects the formats by itself: 
+</p><p>
+
+1) a time series file with a header 
+</p><p>
+
+line 1: header, description 
+</p><p>
+
+line 2: header, number of columns in the file 
+</p><p>
+
+line 3: header, time column description 
+</p><p>
+
+line 4 up to and including line <span class="italic">n</span> + 3: header, the names of the <span class="italic">n</span>
+unique identifiers. 
+</p><p>
+
+
+subsequent lines: data formatted in rows and columns. Each row represents
+one timestep <span class="italic">i</span> at time <span class="italic">t</span>(<span class="italic">i</span>) in the model for which the time
+series is used; the first row contains data for timestep <span class="italic">i</span> = 1, the
+second row for timestep <span class="italic">i</span> =2, etc. The first column contains the time
+<span class="italic">t</span> at the timesteps. 
+The remaining columns
+(column number 2 and further) contain values that are assigned to
+<code class="varname">Result</code>. These values must be in the domain of the data type that is
+
+given to <code class="varname">Result</code>. Each column contains data for an unique identifier.
+Column number 2 is associated with an unique identifier 1, column number
+3 with an unique identifier 2, etc. In general, starting with the second
+column, a column number <span class="italic">c</span> is related to an unique identifier <span class="italic">c</span>-
+1. The columns must be separated by one or more whitespace characters
+(spaces, tabs), the number of characters does not matter.
+
+</p><p>
+
+2) a plain time series file 
+</p><p>
+This is a file formatted like the time series file with header, but without
+header lines.
+</p><p>
+
+During operation, the values in a column of <code class="varname">TimeSeries</code> are assigned
+to the cells of <code class="varname">Result</code> that have an unique identifier on
+<code class="varname">idexpression</code> that corresponds with the unique identifier value
+associated with the column of <code class="varname">TimeSeries</code>. So, <code class="varname">idexpression</code> must
+contain a set of whole unique identifier cell values, starting with a value
+one, that is related to the unique identifiers of the columns in
+<code class="varname">TimeSeries</code>: cells with a value 1 are assigned data from the second
+column in <code class="varname">TimeSeries</code>, cells with a value 2 are assigned data from the
+third column etc. 
+
+</p><p>
+
+An example of a time series file with header is given in the table explained above. It is meant for
+a dynamic model with starttime 1, endtime 6 and timeslice 1. It gives
+precipitation for three areas. For instance, values for the area of station B
+are in the third column. These are assigned to cells of <code class="varname">Result</code> that
+have a value 2 on <code class="varname">idexpression</code>. 
+
+</p></div><div class="refsect1" lang="en"><a name="id3041596"></a><h2>Notes</h2><p>
+
+Cells with an unique identifier on <code class="varname">idexpression</code> that is not represented
+by a column associated with the same unique identifier on <code class="varname">TimeSeries</code>
+are assigned a missing value on <code class="varname">Result</code>. For instance: let
+<code class="varname">TimeSeries</code> contain three columns, the first column with the time and
+two columns with data associated with unique identifiers 1 and 2
+respectively. All cells of <code class="varname">Result</code> that have a <code class="varname">idexpression</code> value
+different from 1 or 2 are assigned a missing value. 
+</p><p>
+
+A timeseries generated and stored in the database during a model run by
+the report keyword (or the <b>timeoutput</b> operator) cannot be imported
+during the same model run with the <b>timeinput...</b> operator.
+
+</p></div><div class="refsect1" lang="en"><a name="id3041648"></a><h2>Group</h2><p>This operation belongs to the group of  Time operators </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re103.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re105.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">time </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> timeinput</td></tr></table></div></body></html>

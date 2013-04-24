@@ -1,0 +1,223 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>col2map</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn02.html" title="PCRaster applications"><link rel="prev" href="rn02re122.html" title="asc2map"><link rel="next" href="rn02re124.html" title="legend"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">col2map</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn02re122.html">Prev</a> </td><th width="60%" align="center">PCRaster applications</th><td width="20%" align="right"> <a accesskey="n" href="rn02re124.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="col2map"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>col2map &#8212; 
+Converts from column file format to PCRaster map format
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>col2map</b> [options] <code class="varname">columnfile</code> <code class="varname">PCRresult</code></pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td valign="top"><code class="varname">columnfile</code></td><td class="type" valign="top">asciifile</td></tr><tr><td rowspan="2" valign="top"><code class="varname">PCRresult</code></td><td class="type" valign="top">specified by data type option; if data type option is not set: data type of <span class="italic">PCRclone</span></td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3057809"></a><h2>Options</h2><p class="option">
+</p><div class="variablelist"><dl><dt><span class="term">
+--clone <span class="italic">PCRclone</span>
+</span></dt><dd><p> 
+<span class="italic">PCRclone</span> is taken as clonemap. If
+you have set a global clonemap as <a class="link" href="ch03s06.html#GOClone">global
+option</a>, you don't need to set <b>clone</b> in the
+command line: the clonemap you have set as global option is taken as
+clonemap. If you have not set a global clonemap or if you want to use
+a different clonemap than the global clonemap, you must specify the
+clonemap in the command line with the <b>clone</b> option.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+--unittrue or --unitcell</p><div class="variablelist"><dl><dt><span class="term">--unittrue 
+</span></dt><dd><p>
+coordinates in <code class="varname">columnfile</code> are interpreted as real distance (default) 
+</p></dd><dt><span class="term">--unitcell</span></dt><dd><p>
+coordinates in <code class="varname">columnfile</code> are interpreted as distance in number of cell lengths
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-B, -N, -O, -S, -D and -L 
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+This data type option specifies the type options which is assigned to <code class="varname">PCRresult</code> (respectively boolean, nominal, ordinal, scalar, directional, ldd).
+If the option is not set, <code class="varname">PCRresult</code> is assigned the data type of <span class="italic">PCRclone</span> or the global clone. The data in <code class="varname">columnfile</code> must be in the domain of the data type which is assigned to <code class="varname">PCRresult</code>. For description of these domains see the description of the different<a class="link" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types"> data types</a>.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+--single or --double and --small or --large</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p>
+In most case, the default cell representation will be sufficient. If you want, you can specify the cell representations:<br>
+Scalar and directional data types
+</p></dd><dt><span class="term">--single</span></dt><dd><p>
+cell values are represented by single real cell representations (default, single, precision)
+</p></dd><dt><span class="term">--double</span></dt><dd><p>
+cell values are represented by double real cell presentations (double precision)
+</p></dd><dt><span class="term">
+</span></dt><dd><p>
+Nominal and ordinal data types:
+</p></dd><dt><span class="term">--small</span></dt><dd><p> 
+cell values are represented by small integer cell representaiton (default)
+</p></dd><dt><span class="term">--large</span></dt><dd><p> 
+cell values are represented by large integer cell representation
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+if option -D is set; --degrees of --radians</p><div class="variablelist"><dl><dt><span class="term">
+--degrees
+</span></dt><dd><p> 
+values on <code class="varname">columnfile</code> are interpreted as degrees (default)
+</p></dd><dt><span class="term">--radians</span></dt><dd><p> 
+values on <code class="varname">columnfile</code> are interpreted as radians 
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-m <span class="italic">nodatavalue</span>
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+<span class="italic">nodatavalue</span> is the value in <span class="italic">columnfile</span> which is converted to a missing value on <code class="varname">PCRresult</code>. It can be one ascii character (letters, figures, symbols) or a string of ascii charaters. For instance: -m -99.89 or -m j5w. Default, if this option is not set, 1e31 is recognized as a missing value.
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+-s <span class="italic">seperator</span></p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p> 
+By default, whitespace (one or more tabs, spaces) is recognized as separator between the values of a row in the <code class="varname">columnfile</code>. If the values are separated by a different separator, you can specify it with the option. The <span class="italic">separator</span> can be one of the ascii characters (always one). In that case, <b>col2map</b> recognizes the specified separator with or without whitespace as separator. For instance, if the values in <code class="varname">columnfile</code> are separated by a ; character followed by 5 spaces, specify -s ; in the command line (you do not need to specify the whitespace characters).
+</p></dd></dl></div><p class="option">
+</p><p class="option">
+columnnumbers</p><div class="variablelist"><dl><dt><span class="term">
+-x <span class="italic">columnnumberx</span>
+</span></dt><dd><p> 
+is the column number of the x coordinate in <code class="varname">columnfile</code> (default 1)
+</p></dd><dt><span class="term">
+-y <span class="italic">columnnumbery</span>
+</span></dt><dd><p> 
+<span class="italic">columnnumbery</span> is the column number of the y coordinate in <code class="varname">columnfile</code> (default 2)
+</p></dd><dt><span class="term">
+-v <span class="italic">columnnumberv</span>
+</span></dt><dd><p> 
+<span class="italic">columnnumberv</span> is the column number of the cell values in <code class="varname">columnfile</code> (default 3) 
+</p></dd></dl></div><p class="option">
+</p><p>
+Each cell on <code class="varname">PCRresult</code> is assigned the cell value on <code class="varname">columnfile</code>
+which has x,y coordinates that define a point in that cell";" for assignment
+of values in <code class="varname">columnfile</code> which have x,y coordinates at the edges of
+cells on <code class="varname">PCRresult</code>, the following options are used:
+</p><p class="option">
+--coorcentre, --coorul or --coorlr</p><div class="variablelist"><dl><dt><span class="term">
+--coorcentre (default) or --coorul
+</span></dt><dd><p> 
+values in <code class="varname">columnfile</code> that have x,y coordinates at the upper and
+left margins of a cell come into that cell, values at the bottom and
+right margins come into neighbouring cells. So, cell values with x, y
+coordinates at vertexes of cells come into the cell at the lower right
+side of the vertex.
+</p></dd><dt><span class="term">
+--coorlr
+</span></dt><dd><p> 
+values in <code class="varname">columnfile</code> that have x, y coordinates at the bottom
+and right margins of a cell come into that cell, values at the upper and left
+margins come into neighbouring cells. So, cell values with x, y coordinates
+at vertexes of cells come into the cell at the upper left side of the
+vertex.
+</p></dd></dl></div><p class="option">
+</p><p>
+Options to specify which value is assigned if two or more values in
+<code class="varname">columnfile</code> are found which all come into the same cell on
+<code class="varname">PCRresult</code>:
+</p><p class="option">
+-a, -h, -l, -H, -M</p><div class="variablelist"><dl><dt><span class="term">-a</span></dt><dd><p>
+average value of the values found within the cell is assigned (default for
+scalar and directional data; for directional data and assignment of records
+without a direction, see notes)
+</p></dd><dt><span class="term">-h</span></dt><dd><p>
+highest score: most occuring value found for the cell is assigned; if two
+values are found the same (largest) number of times, the highest value of
+these values is assigned, this is called a majority conflict (default for
+boolean, nominal, ordinal and ldd data)
+</p></dd><dt><span class="term">-l</span></dt><dd><p>
+lowest score: least occurring value found for the cell is assigned (option
+for nominal, ordinal, boolean, ldd data); if two values are found the same
+(smallest) number of times, the smallest value of these values is assigned,
+this is called a minority conflict.
+</p></dd><dt><span class="term">-H</span></dt><dd><p>
+highest value found for the cell is assigned (option for scalar or ordinal data)
+</p></dd><dt><span class="term">-M</span></dt><dd><p>
+lowest value found for the cell is assigned (option for scalar or ordinal data)
+</p></dd></dl></div><p class="option">
+</p></div><div class="refsect1" lang="en"><a name="id3058526"></a><h2>Operation</h2><p>
+The <code class="varname">columnfile</code> is converted to <code class="varname">PCRresult</code>, which is an expression
+in PCRaster map format with the location attributes of <span class="italic">PCRclone</span>. The
+<code class="varname">columnfile</code> must be in ascii format. Two types of column format can
+be converted; the <b>col2map</b> operator detects these formats by itself:
+</p><p>
+a column file in simplified Geo-EAS format:
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p>
+</p><div class="literallayout"><p><br>
+line 1: header, description<br>
+line 2: header, number (<span class="italic">n</span>) of columns in the file<br>
+line 3 up to and including line <span class="italic">n</span> + 2: header, the names of the<br>
+ <span class="italic">n</span> variables subsequent lines: data; they are formatted in at least three columns<br>
+containing the x coordinates, y coordinates and values, respectively. Each<br>
+line contains a record. The default column separator of the <b>col2map</b><br>
+operator is chosen to resemble the separator of the simplified Geo-EAS<br>
+format. <br>
+</p></div><p>
+</p></dd><dt><span class="term">a plain column file:</span></dt><dd><p>
+
+This is a file formatted like the simplified Geo-EAS format, but without
+header. The column separator may be different and can be specified with
+the option -s <span class="italic">separator</span>.
+</p></dd></dl></div><p>
+</p><p>
+Fields with the x coordinates, y coordinates and values in the
+<code class="varname">columnfile</code> may contain the characters: -eE.0123456789. Fields may
+not be empty, valid fields are for instance:
+</p><div class="variablelist"><dl><dt><span class="term">
+</span></dt><dd><p>
+</p><div class="literallayout"><p><br>
+-3324.4E-12 for -3324.4 x 10<sup>-12</sup> <br>
+.22 for 0.22<br>
+</p></div><p>
+</p></dd></dl></div><p>
+
+
+For each cell on <code class="varname">PCRresult</code> the operator searches in <code class="varname">columnfile</code> for
+records that have x,y co-ordinates that come into that cell on
+<code class="varname">PCRresult</code>. If one single record is found, the value of this record is
+assigned to the cell, if several records are found, the value which is
+assigned is specified by the option (-a, -h, -l, -H or -M). A cell on
+<code class="varname">PCRresult</code> without a value on <code class="varname">columnfile</code> that falls into the cell is
+assigned a missing value on <code class="varname">PCRresult</code>.
+</p></div><div class="refsect1" lang="en"><a name="id3058697"></a><h2>Notes</h2><p>
+
+Directional data: If the option -a (average, default) is set, and both records
+without a direction (value -1) and records with a direction come into a cell
+(a so called direction conflict), the records without a direction are
+discarded and the cell value is computed from the records containing a
+direction only. Thus a cell is assigned a no direction value (value -1) only
+if all records for that cell don't have a direction.
+Using <b>col2map</b> for generating a <code class="varname">PCRresult</code> of data type ldd is
+quite risky: probably it will result in a ldd which is unsound (<a class="link" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types">data types</a>).
+If you do want to create a <code class="varname">PCRresult</code> of data type ldd use the operator
+<b>lddrepair</b> afterwards. This operator will modify the ldd in such a way
+that it will be sound, see the operator <b>lddrepair</b>.
+</p></div><div class="refsect1" lang="en"><a name="id3058746"></a><h2>Group</h2><p>This operation belongs to the group of  Creation of PCRaster maps</p></div><div class="refsect1" lang="en"><a name="id3058754"></a><h2>See Also</h2><p><a class="xref" href="rn02re122.html" title="asc2map"><span class="refentrytitle">asc2map</span></a> 
+</p></div><div class="refsect1" lang="en"><a name="id3058767"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">col2map --clone mapclone.map -S -m mv -v 4 ColFile1.txt Result1.map</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">ColFile1.txt</code></pre></td></tr><tr><td><pre class="programlisting">field data
+5
+xcoord
+ycoord
+pH1
+pH2
+code
+25  25  mv  3.4  123
+25  35  7.1  3.8  132
+25  45  7.5  mv  123
+35  25  7.4  3.1  123
+35  35  7.7  3.0  321
+35  45  7.8  3.9  123
+45  25  7.1  3.4  321
+45  35  7.4  3.1  213
+45  45  7.8  3.7  321
+55  25  7.4  3.2  314
+55  35  7.1  3.2  141
+55  45  7.9  3.7  132
+mv  mv  7.4  3.2  111
+mv  mv  7.6  3.1  111
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/col2map.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">mapclone.map</code></td></tr><tr><td><div><img src="examples/mapclone.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">col2map --clone mapclone.map -O -m mv -x 2 -y 3 -v 6 --coorlr -H ColFile2.txt Result2.map</pre><div class="informaltable"><table border="0"><colgroup><col><col><col></colgroup><tbody><tr><td class="pcr-txt-example"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><pre class="programlisting"><code class="varname">ColFile2.txt</code></pre></td></tr><tr><td><pre class="programlisting">1  30  20  7.1  3.5  1  1
+2  30  30  5.3  3.8  8  0
+3  30  40  8.7  3.5  7  1
+4  40  20  9.8  3.2  6  0
+5  40  30  8.5  3.2  5  1
+6  40  40  9.4  3.1  5  0
+7  50  20  7.7  3.2  2  0
+8  50  30  6.2  2.9  4  0
+9  50  40  7.4  3.1  10  1
+10  60  20  5.3  3.3  3  1
+11  60  30  5.4  3.5  11  1
+12  60  40  3.4  3.9  mv  0
+13  1200  345  3.4  2.1  121  1
+14  45.3  25.8  5.3  3.2  125  1
+15  46.2  23.7  5.3  3.2  124  0 
+
+        </pre></td></tr></tbody></table></td><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/col2map.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">mapclone.map</code></td></tr><tr><td><div><img src="examples/mapclone.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn02re122.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn02.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn02re124.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">asc2map </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> legend</td></tr></table></div></body></html>

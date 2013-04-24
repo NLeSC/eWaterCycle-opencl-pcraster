@@ -1,0 +1,8 @@
+Collection.VariableCollection
+=============================
+.. currentmodule:: PCRaster.Collection
+.. autoclass:: VariableCollection
+
+.. autoclass:: ValueTimeoutputTimeseries
+
+.. autoclass:: ValueFromParameterTable

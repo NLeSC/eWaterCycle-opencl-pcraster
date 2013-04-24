@@ -1,0 +1,17 @@
+rain in two rain areas for 1993, time = 1: november; time = 12: october
+3
+model time
+rain (mm/month) in rain area 1, id = 1
+rain (mm/month) in rain area 2, id = 2
+1	74	75
+2	71	71
+3	74	76
+4	58	59
+5	40	40
+6	40	42
+7	45	47
+8	62	64
+9	80	78
+10	80	85
+11	75	79
+12	67	69

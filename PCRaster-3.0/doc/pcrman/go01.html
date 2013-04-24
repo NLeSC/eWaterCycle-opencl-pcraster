@@ -1,0 +1,167 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Glossary</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="index.html" title="PCRaster Version 2 Manual"><link rel="prev" href="ch06s06.html" title="6.6. Data management"><link rel="next" href="bi01.html" title="Reference Pages"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Glossary</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="bi01.html">Next</a></td></tr></table><hr></div><div class="glossary"><div class="titlepage"><div><div><h2 class="title"><a name="id2963481"></a>Glossary</h2></div></div></div><div class="glossdiv"><h3 class="title">A</h3><dl><dt><a name="angle"></a>angle</dt><dd><p>
+Location attribute: the angle is the angle between the horizontal direction
+on the PCRaster map and the x axis of the real world coordinate system.
+	</p><p>See Also <a class="glossseealso" href="go01.html#locationattributes">location attributes</a>.</p></dd><dt><a name="area"></a>area</dt><dd><p>
+A fundamental spatial unit of a PCRaster map consisting of one cell or a
+set of cells.
+	</p></dd><dt><a name="areamapsection"></a>areamap section</dt><dd><p>
+The section in a dynamic modelling script that defines the location attributes of the maps used in the model. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#locationattributes">location attributes</a>, <a class="glossseealso" href="go01.html#dynamicmodellingscript">dynamic modelling script</a>.</p></dd><dt><a name="attribute"></a>attribute</dt><dd><p>
+Property of a geographic object or location.
+	</p></dd></dl></div><div class="glossdiv"><h3 class="title">B</h3><dl><dt><a name="booleandatatype"></a>boolean data type</dt><dd><p>
+data type for attributes that only may have a value TRUE (cellvalue 1) or FALSE (cell value 0).
+	</p><p>See Also <a class="glossseealso" href="go01.html#datatype">data type</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">C</h3><dl><dt><a name="cartographicmodel"></a>Cartographic Model</dt><dd><p>
+A model that computes new attribute values from
+those attribute values already present. It represents one static change in the
+property of cells.
+	</p></dd><dt><a name="cartographicmodellingscript"></a>cartographic modelling script</dt><dd><p>
+A script of a Cartographic Model. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#cartographicmodel">Cartographic Model</a>, <a class="glossseealso" href="go01.html#script">script</a>.</p></dd><dt><a name="cell"></a>cell</dt><dd><p>
+The basic spatial element of a PCRaster map.
+	</p></dd><dt><a name="celllength2"></a>cell length</dt><dd><p>
+Location attribute. The length of cells on a PCRaster map
+which is the same in horizontal and vertical direction. Measured in the
+distance unit of the real coordinate system.
+	</p></dd><dt><a name="cellproperty"></a>cell property</dt><dd><p>
+The combined information at one cell location stored in one
+PCRaster map or several PCRaster maps.
+	</p></dd><dt><a name="cellrepresentation"></a>cell representation</dt><dd><p>
+The method of storage used in the computer for cell values of PCRaster maps. 
+	</p></dd><dt><a name="column"></a>column</dt><dd><p>
+A column of cells in vertical direction on a PCRaster map.
+	</p><p>See Also <a class="glossseealso" href="go01.html#numberofcolumns">number of columns</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">D</h3><dl><dt><a name="database"></a>database</dt><dd><p>
+A collection of interrelated information, usually stored on a
+harddisk. The PCRaster database includes data stored as binary PCRaster
+maps, and ascii formatted tables, time series and point data column files.
+	</p></dd><dt><a name="datatype"></a>data type</dt><dd><p>
+Data description attached to a PCRaster map. It defines the scale
+and the domain of the data stored in the map and as result the behaviour
+with respect to operations performed upon the map. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#booleandatatype">boolean data type</a>, <a class="glossseealso" href="go01.html#nominaldatatype">nominal data type</a>, <a class="glossseealso" href="go01.html#ordinaldatatype">ordinal data type</a>, <a class="glossseealso" href="go01.html#scalardatatype">scalar data type</a>, <a class="glossseealso" href="go01.html#directionaldatatype">directional data type</a>, <a class="glossseealso" href="go01.html#ldddatatype">ldd data type</a>.</p></dd><dt><a name="DynamicModel"></a>Dynamic Model</dt><dd><p>
+A model that computes new attribute values as a function
+of attribute changes over time. It represents a change in the property of
+cells over time.
+	</p></dd><dt><a name="directionaldatatype"></a>directional data type</dt><dd><p>
+Data type for continuous data with a direction.
+	</p><p>See Also <a class="glossseealso" href="go01.html#datatype">data type</a>, <a class="glossseealso" href="go01.html#scalardatatype">scalar data type</a>.</p></dd><dt><a name="dubblereal"></a>dubble real</dt><dd><p>
+Optional cell representation for scalar and directional data
+type, cell values stored in computer as REAL8.
+	</p></dd><dt><a name="dynamicmodellingscript"></a>dynamic modelling script</dt><dd><p>
+Script of a Dynamic Model. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#DynamicModel">Dynamic Model</a>, <a class="glossseealso" href="go01.html#script">script</a>.</p></dd><dt><a name="dynamicsection"></a>dynamic section</dt><dd><p>
+The iterative section in a dynamic modelling script which
+contains <b>calc</b> operations that are consecutively performed at
+each timestep. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#iterativesection">iterative section</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">E</h3><dl><dt><a name="expression"></a>expression</dt><dd><p>
+A PCRaster map or an operation resulting in a PCRaster map.
+	</p></dd></dl></div><div class="glossdiv"><h3 class="title">I</h3><dl><dt><a name="initialsection"></a>initial section</dt><dd><p>
+Cartographic Modelling script; the section containing the
+consecutively performed <b>calc</b> operations which describe the
+Cartographic Model. Dynamic Modelling script; the section which defines
+the map values of maps used in the dynamic section at the start of a model
+run. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#dynamicsection">dynamic section</a>, <a class="glossseealso" href="go01.html#section">section</a>.</p></dd><dt><a name="input"></a>input</dt><dd><p>
+The set of one or more PCRaster maps, tables, time series or point
+data column files which are used in an operation to generate the result of
+the operation.
+	</p></dd><dt><a name="iterativesection"></a>iterative section</dt><dd><p>
+iterative section: a section in a dynamic modelling script that describes the
+temporal change in map values. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#dynamicmodellingscript">dynamic modelling script</a>, <a class="glossseealso" href="go01.html#dynamicsection">dynamic section</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">K</h3><dl><dt><a name="keyword"></a>keyword</dt><dd><p>
+A primitive word used in a script written in the PCRaster
+modelling language. It is a word which has a special meaning in the
+PCRaster modelling language. It is typed in lower case. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#PCRastermodellinglanguage">PCRaster modelling language</a>, <a class="glossseealso" href="go01.html#script">script</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">L</h3><dl><dt><a name="largeinteger"></a>larger integer</dt><dd><p>
+large integer: Optional cell representation for nominal and ordinal data
+type; cell values are stored in computer as INT4. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#cellrepresentation">cell representation</a>, <a class="glossseealso" href="go01.html#smallinteger">small integer</a>.</p></dd><dt><a name="ldddatatype"></a>ldd data type</dt><dd><p>
+Data type for maps that represent a local drain direction network. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#datatype">data type</a>, <a class="glossseealso" href="go01.html#localdraindirectionnetwork">local drain direction network</a>.</p></dd><dt><a name="localdraindirectionnetwork"></a>local drain direction network</dt><dd><p>
+PCRaster map representation of flow paths
+in a landscape. Each cell contains a pointer towards its downstream
+neighbour or no pointer in case it is a pit. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#outletpoint">outlet point</a>, <a class="glossseealso" href="go01.html#pit2">pit</a>.</p></dd><dt><a name="locationattributes"></a>location attributes</dt><dd><p>
+The information entities attached to a PCRaster map
+which give together all spatial properties of the map.
+	</p></dd></dl></div><div class="glossdiv"><h3 class="title">M</h3><dl><dt><a name="map"></a>map</dt><dd><p>
+The collection of digital information about a part of the earth's
+surface. The kind of maps used in PCRaster is the PCRaster map.
+	</p></dd><dt><a name="module"></a>module</dt><dd><p>
+A piece of the PCRaster package with a distinct functionality.
+	</p></dd></dl></div><div class="glossdiv"><h3 class="title">N</h3><dl><dt><a name="nominaldatatype"></a>nominal data type</dt><dd><p>
+Data type for classified data without order.
+	</p><p>See Also <a class="glossseealso" href="go01.html#datatype">data type</a>, <a class="glossseealso" href="go01.html#ordinaldatatype">ordinal data type</a>.</p></dd><dt><a name="numberofcolumns"></a>number of columns</dt><dd><p>
+Location attribute. The number of columns in a PCRaster map. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#column">column</a>.</p></dd><dt><a name="numberofrows"></a>number of rows</dt><dd><p>
+Location attribute. The number of rows in a PCRaster map. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#row">row</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">O</h3><dl><dt><a name="operation"></a>operation</dt><dd><p>
+One static manipulation of one or more database components
+with one operator or several operators nested in one operation resulting in
+one or more database components (PCRaster map, table, time series, point
+data column file).
+	</p></dd><dt><a name="operator"></a>operator</dt><dd><p>
+A primitive PCRaster 'function' of Map Algebra, Cartographic
+Modelling, Dynamic Modelling and GIS. It calculates a result on basis of
+one or more inputs. Both the result and the inputs may be a PCRaster map,
+table, time series or point data column file. 
+	</p></dd><dt><a name="ordinaldatatype"></a>ordinal data type</dt><dd><p>
+Data type for classified data with order. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#datatype">data type</a>, <a class="glossseealso" href="go01.html#nominaldatatype">nominal data type</a>.</p></dd><dt><a name="outletpoint"></a>outlet point</dt><dd><p>
+The pit cell at the end of a downstream path from a cell in a
+local drain direction network. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#localdraindirectionnetwork">local drain direction network</a>, <a class="glossseealso" href="go01.html#pit2">pit</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">P</h3><dl><dt><a name="PCRasterdatabase"></a>PCRaster database</dt><dd><p>
+The database of PCRaster; see database.
+	</p></dd><dt><a name="PCRastermap"></a>PCRaster map</dt><dd><p>
+One of the kind of data in the PCRaster database. Contains
+spatial data of one attribute encoded in the form of a regular grid of cells
+covering an area. Binary format.
+	</p></dd><dt><a name="PCRastermodellinglanguage"></a>PCRaster modelling language</dt><dd><p>
+The computer language provided by
+PCRaster for building Cartographic or Dynamic Models using a script.
+	</p><p>See Also <a class="glossseealso" href="go01.html#script">script</a>, <a class="glossseealso" href="go01.html#cartographicmodel">Cartographic Model</a>, <a class="glossseealso" href="go01.html#DynamicModel">Dynamic Model</a>.</p></dd><dt><a name="pit2"></a>pit</dt><dd><p>
+A cell in a local drain direction network that only has neighbours
+pointing towards it and no neighbours at lower or equal elevation that it
+can point to. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#localdraindirectionnetwork">local drain direction network</a>.</p></dd><dt><a name="pointdatacolumnfile"></a>point data column file</dt><dd><p>
+One of the kind of data in the PCRaster database.
+Contains ascii formatted point data (x,y coordinates with attribute
+value(s)).
+	</p></dd><dt><a name="projection"></a>projection</dt><dd><p>
+Location attribute. The projection of the real world co-
+ordinate system assigned to the PCRaster map. It is an x,y field (also used
+in basic mathematics). The x coordinates increase from left to right. The
+y coordinates increase from top to bottom or from bottom to top. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#locationattributes">location attributes</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">R</h3><dl><dt><a name="result"></a>result</dt><dd><p>
+The set of one or more PCRaster maps, tables, time series or point
+data column files that are generated by an operation.
+	</p></dd><dt><a name="row"></a>row</dt><dd><p>
+PCRaster map; a series of cells in horizontal direction. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#numberofrows">number of rows</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">S</h3><dl><dt><a name="scalardatatype"></a>scalar data type</dt><dd><p>
+data type for continuous data that do not represent a direction. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#datatype">data type</a>, <a class="glossseealso" href="go01.html#directionaldatatype">directional data type</a>.</p></dd><dt><a name="script"></a>script</dt><dd><p>
+An ascii formatted computer programme of a Cartographic or
+Dynamic Model written in the PCRaster modelling language. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#PCRastermodellinglanguage">PCRaster modelling language</a>.</p></dd><dt><a name="section"></a>section</dt><dd><p>
+A separate part of a script identified by a section keyword.
+	</p><p>See Also <a class="glossseealso" href="go01.html#sectionkeyword">section keyword</a>, <a class="glossseealso" href="go01.html#script">script</a>.</p></dd><dt><a name="singlereal"></a>single real</dt><dd><p>
+Default cell representation for scalar and directional data type;
+cell values are stored as REAL4 in computer. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#cellrepresentation">cell representation</a>, <a class="glossseealso" href="go01.html#script">script</a>.</p></dd><dt><a name="sectionkeyword"></a>section keyword</dt><dd><p>
+A keyword that identifies the start of a section. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#keyword">keyword</a>, <a class="glossseealso" href="go01.html#section">section</a>.</p></dd><dt><a name="smallinteger"></a>small integer</dt><dd><p>
+Cell representation for boolean and ldd data type, default for
+nominal, ordinal and ldd data type; cell values are stored as UINT1 in the
+computer. 
+	</p><p>See Also <a class="glossseealso" href="go01.html#cellrepresentation">cell representation</a>, <a class="glossseealso" href="go01.html#largeinteger">larger integer</a>.</p></dd><dt><a name="statement"></a>statement</dt><dd><p>
+One line in a section of a script terminated with a semi colon (;). 
+	</p><p>See Also <a class="glossseealso" href="go01.html#section">section</a>.</p></dd></dl></div><div class="glossdiv"><h3 class="title">T</h3><dl><dt><a name="table2"></a>table</dt><dd><p>
+One of the kind of data in the PCRaster database. Contains relations
+between PCRaster maps. Ascii formatted.
+	</p></dd><dt><a name="timeseries"></a>timeseries</dt><dd><p>
+One of the kind of data used in the PCRaster database.
+Contains a time series of (aggregated) cell values. Ascii formatted.
+	</p></dd></dl></div><div class="glossdiv"><h3 class="title">V</h3><dl><dt><a name="variable"></a>variable</dt><dd><p>
+A PCRaster map, table, time series or point data column file in
+a Cartographic Model or Dynamic Model. Unlike a keyword its name is
+chosen by the model builder and starts with an upper case.
+	</p></dd></dl></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06s06.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="bi01.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">6.6. Data management </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Reference Pages</td></tr></table></div></body></html>

@@ -1,0 +1,38 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.7. Converting to and from NumPy arrays</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Python"><link rel="up" href="ch03.html" title="Chapter 3. Differences between PCRcalc and PCRaster Python"><link rel="prev" href="ch03s06.html" title="3.6. Writing time series"><link rel="next" href="ch03s08.html" title="3.8. PCRcalc operations returning multiple results"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.7. Converting to and from NumPy arrays</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Differences between PCRcalc and PCRaster Python</th><td width="20%" align="right"> <a accesskey="n" href="ch03s08.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id351028"></a>3.7. Converting to and from NumPy arrays</h2></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note:</h3><p>
+The conversion functions are no longer provided by default by importing the PCRaster module, instead use: </p><pre class="programlisting">from PCRaster.NumPy import *</pre><p>
+</p></div><p>You can convert PCRaster maps to NumPy arrays and vice versa with the following conversion functions:</p><pre class="programlisting">numpy2pcr(dataType, array, mv)
+  Converts entities from NumPy to PCRaster.
+
+  dataType Either Boolean, Nominal, Ordinal, Scalar, Directional or Ldd.
+  array    Array you want to convert.
+  mv       Value that identifies a missing value in array.
+  Returns a map</pre><pre class="programlisting">pcr2numpy(map, mv)
+  Converts entities from PCRaster to NumPy.
+
+  map      Map you want to convert.
+  mv       Value to use in result array cells as a missing value.
+  Returns an array</pre><p>   The following example script demonstrates the usage of the conversion functions:</p><pre class="programlisting"># Python
+import numpy
+from PCRaster import *
+from PCRaster.NumPy import *
+
+setclone("clone.map")
+
+a = numpy.array([[12,5,21],[9,7,3],[20,8,2],[5,6,-3]])
+
+# conver a to a PCRaster Python map
+# with the value 20 indicating a 'missing value' cell
+n2p = numpy2pcr(Nominal, a, 20)
+print "cellvalue:", cellvalue(n2p, 2, 3)[0]
+
+# write it to a PCRaster map
+report(n2p, "n2p.map")
+# read the PCRaster map back
+p2n = readmap("n2p.map")
+# print it as a numpy array
+# missing value is replaced by 9999
+print pcr2numpy(p2n, 9999)</pre><p>Execution of the script will result in the following output:</p><pre class="programlisting">cellvalue: 3
+[[  12    5   21]
+ [   9    7    3]
+ [9999    8    2]
+ [   5    6   -3]]</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.6. Writing time series </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.8. PCRcalc operations returning multiple results</td></tr></table></div></body></html>

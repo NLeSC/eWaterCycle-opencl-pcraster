@@ -1,0 +1,76 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lddcreatedem</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re53.html" title="lddcreate"><link rel="next" href="rn01re55.html" title="ldddist"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lddcreatedem</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re53.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re55.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="lddcreatedem"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lddcreatedem &#8212; 
+Modified digital elevation model
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>lddcreatedem</b>( <code class="varname">elevation</code>, <code class="varname">outflowdepth</code>, <code class="varname">corevolume</code>, <code class="varname">corearea</code>, <code class="varname">catchmentprecipitation</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">elevation</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">outflowdepth</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">corevolume</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">corearea</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">catchmentprecipitation</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">scalar</td></tr><tr><td class="dimension" valign="top">spatial</td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id3006109"></a><h2>Options</h2><p class="option">
+pit removing at edges of the map</p><div class="variablelist"><dl><dt><span class="term">--lddout</span></dt><dd><p> small catchments at the edge of the map are not considered as potentially being affected by the pit removing process: pits which are at the edge of the map are not removed. These pits remain in the map as outflow points of these small catchments
+(default).
+</p></dd><dt><span class="term">--lddin</span></dt><dd><p> pits at the edge of the map (outflow points of a catchment) are removed like the other pits (if they have core dimensions smaller than the pit dimension thresholds).
+On the result their original catchment cells (including the pit cell) will drain
+in another catchment.
+</p></dd></dl></div><p class="option">
+--unittrue (default) or --unitcell</p><div class="variablelist"><dl><dt><span class="term">--unittrue</span></dt><dd><p> <code class="varname">elevation</code>, <code class="varname">outflowdepth</code> and <code class="varname">catchmentprecipitation</code> is measured in true
+length, <code class="varname">corearea</code> in true area and <code class="varname">corevolume</code> in true volume. Units used
+for elevation and horizontal distance in x and y direction must be the same (default).
+</p></dd><dt><span class="term">--unitcell</span></dt><dd><p> <code class="varname">elevation</code>, <code class="varname">outflowdepth</code> and <code class="varname">catchmentprecipitation</code> is measured in number
+of cell lengths, <code class="varname">corearea</code> in number of cells and <code class="varname">corevolume</code> in number
+of 3D blocks with edges of one cell length.
+</p></dd></dl></div><p class="option">
+assignment of elevation in pits</p><div class="variablelist"><dl><dt><span class="term">--lddfill</span></dt><dd><p> for each pit which is removed, cells in the area which was formerly the core
+of the pit are assigned an elevation equal to the overflow level of the pit core
+(default).
+</p></dd><dt><span class="term">--lddcut</span></dt><dd><p> for each pit which is removed, cells on the path between the pit and the outflow
+cell are assigned the elevation of the pit cell. The elevation of the other cells
+in the core of the pit is not changed.
+</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id3006289"></a><h2>Operation</h2><p>
+
+This operation corresponds with the local drain direction maker
+<b>lddcreate</b> with the difference that a modified digital elevation model
+is created instead of a local drain direction map. The modified digital elevation model fits 
+the local drain direction map generated on the basis of the original digital elevation model. 'Not real' cores are removed from the local drain direction map. Additionally an extra
+option needed for creation of the modified digital elevation model can be
+specified.
+
+
+</p><p>
+
+The expressions used for the pit removing process <code class="varname">outflowdepth</code>,
+<code class="varname">corevolume</code>, <code class="varname">corearea</code>, <code class="varname">catchmentprecipitation</code> and the options -
+-unitcell/unittrue and --lddout/--lddin have exactly the same meaning and
+are used in the same way as with the <b>lddcreate</b> operation. So, before
+you start making modified dem's using <b>lddcreatedem</b> we advise you
+to read and study the description of the <b>lddcreate</b> command first.
+
+
+</p><p>
+
+First, a local drain direction map is generated internally, using
+<code class="varname">elevation</code>. This is done after the manner of the <b>lddcreate</b> operator,
+but it is not saved as an expression. Second, the original digital elevation
+model <code class="varname">elevation</code> is modified in such a way that it fits this local drain
+direction map. This modified digital elevation model is saved as
+<code class="varname">Result</code>. The cell values on <code class="varname">Result</code> correspond with the values on
+<code class="varname">elevation</code>, with the exception that the elevation of cells in cores of pit
+cells is changed. This is done for cores of pit cells which are removed
+only; the elevation in cores of pits which are not removed remains
+unaffected. The way elevation values in cores are changed is specified with
+the --lddfill and --lddcut options. Setting the option --lddfill the elevation
+of cells in a core is increased until the overflow level is reached. This can
+be compared with fluviatile or lacustrine sedimentation in the core
+depression until a maximum sedimentation level is reached: the level of the
+core pass which is at the lowest elevation. The option --lddcut does not fill
+the core but reduces the elevation of the cells on the path between the pit
+cell and the overflow cell. This can be compared with digging a canal in
+the core between the pit and the pass with the lowest elevation; the canal
+bottom is at the elevation of the pit.
+
+</p></div><div class="refsect1" lang="en"><a name="id3006413"></a><h2>Notes</h2><p>
+
+A cell with missing value on one or more of the input expressions is
+totally ignored during operation of <b>lddcreatedem</b>; it is assigned a
+missing value on <code class="varname">Result</code>.
+
+</p><p>
+
+Here, a somewhat generalized description of pit removing and reversal of local
+drain directions is given. For a detailed description see Van Deursen, 1995.
+
+</p></div><div class="refsect1" lang="en"><a name="id3006439"></a><h2>Group</h2><p>This operation belongs to the group of  Derivatives of elevation maps </p></div><div class="refsect1" lang="en"><a name="id3006447"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result1.map = lddcreatedem(Dem.map,1E35,1E35,1E35,1E35)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/lddcreatedem.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Dem.map</code></td></tr><tr><td><div><img src="examples/lddcreate.Dem.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  --lddcut Result2.map = lddcreate(Dem.map,1E35,1E35,1E35,1E35)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/lddcreatedem.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Dem.map</code></td></tr><tr><td><div><img src="examples/lddcreate.Dem.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re53.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re55.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">lddcreate </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> ldddist</td></tr></table></div></body></html>

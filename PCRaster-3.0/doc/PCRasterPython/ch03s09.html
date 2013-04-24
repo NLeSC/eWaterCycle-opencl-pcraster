@@ -1,0 +1,12 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.9. Boolean operations</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Python"><link rel="up" href="ch03.html" title="Chapter 3. Differences between PCRcalc and PCRaster Python"><link rel="prev" href="ch03s08.html" title="3.8. PCRcalc operations returning multiple results"><link rel="next" href="ch04.html" title="Chapter 4. Known bugs"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.9. Boolean operations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s08.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Differences between PCRcalc and PCRaster Python</th><td width="20%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id343695"></a>3.9. Boolean operations</h2></div></div></div><p>
+                 Do not use PCRaster objects in context of
+Boolean operations.</p><p>
+"In the context of Boolean operations, and also when expressions are used by
+control flow statements, the following values are interpreted as false: None,
+numeric zero of all types, empty sequences (strings, tuples and lists), and empty
+mappings (dictionaries). All other values are interpreted as true."
+&#8212;Python Reference Manual [http://docs.python.org/ref].
+</p><p>
+This means that PCRaster objects will always be interpreted as true when used in the above
+mentioned cases. In this case, the PCRaster function <code class="function">ifthen</code>(<code class="function">else</code>) should be used.
+      </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s08.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.8. PCRcalc operations returning multiple results </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. Known bugs</td></tr></table></div></body></html>

@@ -1,0 +1,79 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>6.2. Neighbourhood operators</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch06.html" title="Chapter 6. Functional list of PCRaster operators"><link rel="prev" href="ch06.html" title="Chapter 6. Functional list of PCRaster operators"><link rel="next" href="ch06s03.html" title="6.3. Area operations"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">6.2. Neighbourhood operators</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch06.html">Prev</a> </td><th width="60%" align="center">Chapter 6. Functional list of PCRaster operators</th><td width="20%" align="right"> <a accesskey="n" href="ch06s03.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secneighop"></a>6.2. Neighbourhood operators</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="groupwind"></a>6.2.1. Windows operations</h3></div></div></div><p>
+<b>windowaverage</b><br>
+For each cell, finds the average of cell values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br>
+<b>windowdiversity</b><br>
+For each cell, finds the number of unique values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br>
+<b>windowhighpass</b><br>
+Increases spatial frequency within a specified square neighbourhood. For each cell, it calculates the sum of cell values of an expression in a specified surrounding neighbourhood; this is subtracted from the cell values itself multiplied by twice the number of cells in the surrounding neighbourhood. The result of this calculation is assigned to the corresponding cell for the result.<br>
+<b>windowmajority</b><br>
+For each cell, finds the most often occurring cell values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br>
+<b>windowmaximum</b><br>
+For each cell, finds the maximum cell value within a specified square neighbourhood and assigns it to the corresponding cell for the result<br>
+<b>windowminimum</b><br>
+For each cell, finds the minimum cell value within a specified square neighbourhood and assigns it to the corresponding cell for the result<br>
+<b>windowtotal</b><br>
+For each cell, finds the sum of cell values within a specified square neighbourhood and assigns it to the corresponding cell for the result<br>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="groupderelev"></a>6.2.2. Derivatives of elevation maps</h3></div></div></div><p>
+<b>lddcreate</b><br>
+Creates a local drain direction map expression using the 8 points pour algorithm with flow directions from each cell to its steepest downslope neighbour. Pits can be removed with pit removing threshold map(s).<br>
+<b>lddcreatedem</b><br>
+Creates a modified digital elevation model which fits the local drain direction map generated on the basis of the original digital elevation model (the elevation model is the input of the operation).<br>
+<b>aspect</b><br>
+For each cell, calculates the aspect using elevations from a digital elevation model.<br>
+<b>plancurv</b><br>
+For each cell, calculates the planform curvature (i.e. curvature transverse to the slope) using elevations from a digital elevation model.<br>
+<b>profcurv</b><br>
+For each cell, calculates the profile curvature (i.e. curvature in the direction of the slope) using elevations from a digital elevation model.<br>
+<b>slope</b><br>
+For each cell, calculates the slope using elevations from a digital elevation model.<br>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="groupspread"></a>6.2.3. Spread operations</h3></div></div></div><p>
+<b>spread</b><br>
+For each cell, calculates the friction-distance of the shortest material-distance path over a map with friction material from an identified source cell or cells to the cell under consideration.<br>
+<b>spreadldd</b><br>
+For each cell, calculates the friction-distance of the shortest material-distance path over a map with friction material from an identified source cell or cells to the cell under consideration, where only paths are considered in downstream direction from the source cells.<br>
+<b>spreadlddzone</b><br>
+For each cell, determines the shortest friction-distance path over a map with friction from an identified source cell or cells to the cell under consideration, where only paths are considered in downstream direction from the source cells. The value of the source cell at the start of this shortest material-distance path is assigned to the cell under consideration.<br>
+<b>spreadzone</b><br>
+Determines for each cell the shortest friction-distance path over a map with friction material from an identified source cell or cells to the cell under consideration. The value of the source cell at the start of this shortest friction-distance is assigned to the cell under consideration.<br>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="groupldd"></a>6.2.4. Operations with local drain direction maps</h3></div></div></div><p>
+<b>ldddist</b><br>
+Calculates for each cell the material-distance of the path over a map with friction from the cell under consideration to the downstream nearest TRUE cell.<br>
+<b>slopelength</b><br>
+For each cell assigns the accumulative-material-distance of the longest accumulative-material-path upstream over the local drain direction network to one of the cells against the divide of its catchment.<br>
+</p><p>
+<span class="italic">transport of material:</span><br>
+<b>accuflux</b><br>
+For each cell calculates the accumulated amount of material that flows out of the cell into its neighbouring downstream cell. This accumulated amount is the amount of material in the cell itself plus the amount of material in upstream cells of the cell.<br>
+<b>accucapacityflux and accucapacitystate</b><br>
+Transport input of material downstream over a local drain direction network; material is transported from one cell to its downstream cell when the transport capacity is exceeded, the remaining material is stored.<br>
+<b>accufractionflux and accufractionstate</b><br>
+Transport input of material downstream over a local drain direction network; a fraction of the material is transported to its downstream cell, the remaining material is stored.<br>
+<b>accuthresholdflux and accuthresholdstate</b><br>
+Transport input of material downstream over a local drain direction network; transport from one cell to its downstream cell only takes place if the amount of the material input to the cell exceeds the transport trigger of the cell: if the trigger is exceeded, all material is transported, else all material is stored.<br>
+<b>accutriggerflux and accutriggerstate</b><br>
+</p><p>
+<span class="italic">miscellaneous operations:</span><br>
+<b>catchment</b><br>
+Determines the catchment(s) (watershed, basin) of each one or more specified cells, subcatchments are not identified.<br>
+<b>downstream</b><br>
+Returns the value of the neighbouring downstream cell.<br>
+<b>downstreamdist</b><br>
+Returns the distance to the first cell downstream.<br>
+<b>path</b><br>
+Determines for each TRUE cell on a Boolean input expression the path over the local drain direction network downstream to its pit; on the result, each cell which is on a path is assigned a TRUE.<br>
+<b>pit</b><br>
+Assigns a Boolean TRUE to all pit cells on a local drain direction network.<br>
+<b>streamorder</b><br>
+Assigns the stream order index to all cells on a local drain direction network.<br>
+<b>subcatchment</b><br>
+Determines the (sub-)catchment(s) (watershed, basin) of each one or more specified cells, subcatchments are identified.<br>
+<b>lddrepair</b><br>
+Repairs an unsound local drain direction map.<br>
+<b>upstream</b><br>
+For each cell, assigns the sum of the cell values of its upstream cell(s).<br>
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="groupvisi"></a>6.2.5. Operations for visibility analysis</h3></div></div></div><p>
+<b>extentofview</b><br>
+Determines the total length of the lines in a number of directions from the cell under consideration to the first cell with a different value.<br>
+<b>view</b><br>
+Assigns a TRUE or FALSE value for each cell on the result according to the visibility of that cell from one or more viewpoint cells in a 3D landscape defined by a digital elevation model.<br>
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch06.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch06.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch06s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 6. Functional list of PCRaster operators </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 6.3. Area operations</td></tr></table></div></body></html>

@@ -1,0 +1,21 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.5. ADAM module: error propagation</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch01.html" title="Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout"><link rel="prev" href="ch01s04.html" title="1.4. gstat module: Geostatistical Modelling"><link rel="next" href="ch01s06.html" title="1.6. Hardware and software requirements, installation"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">1.5. ADAM module: error propagation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01s04.html">Prev</a> </td><th width="60%" align="center">Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout</th><td width="20%" align="right"> <a accesskey="n" href="ch01s06.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secintroadam"></a>1.5. ADAM module: error propagation</h2></div></div></div><p>
+ 
+<a class="indexterm" name="id2915256"></a>
+The ADAM module for error propagation is described in a separate manual,
+see <a class="xref" href="bi01.html#wesseling93" title="ADAM, an Error Propagation Tool for Geographical Information Systems">[9]</a>. Here we give a short
+description.
+</p><p>
+The ADAM module calculates the propagation of errors in a
+Cartographic Model. On the basis of the errors in the (spatial) input parameters
+of the Cartographic Model and non spatial or spatial correlation between
+these input parameters the ADAM module calculates the error in the output
+of the Cartographic Model (i.e. variance, skewness and quantiles of the
+output distribution). Error propagation techniques implemented are Monte
+Carlo method, first and second order Taylor method and Rosenblueth's
+method.
+</p><p>
+The error in the input parameters and the correlation between the input
+parameters is specified in a ADAM script file with the variogram models which are also
+used in the gstat module of PCRaster. ADAM uses the PCRaster map
+format for the input and output of the error propagation models.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch01s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">1.4. gstat module: Geostatistical Modelling </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 1.6. Hardware and software requirements, installation</td></tr></table></div></body></html>

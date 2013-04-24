@@ -1,0 +1,30 @@
+timeseries with discharge (kg/ 3 hours) of chemical at plant, 3 days 
+4
+time, one timestep represents 3 hours
+chemical discharge (kg/3hours) at plant with id 1
+chemical discharge (kg/3hours) at plant with id 2
+chemical discharge in remaining area (id 3)
+1	1000	350	0
+2	1200	200	0
+3	2000	120	0
+4	2800	80	0
+5	4000	40	0
+6	4500	0	0
+7	4300	130	0
+8	4100	160	0	
+9	3800	120	0
+10	2500	210	0
+11	2100	380	0
+12	1500	550	0
+13	1000	680	0
+14	800	900	0
+15	1300	740	0
+16	2000	620	0
+17	3400	560	0
+18	4800	200	0
+19	5400	100	0
+20	5300	40	0
+21	4900	50	0
+22	3800	0	0
+23	3600	50	0
+24	3200	60	0

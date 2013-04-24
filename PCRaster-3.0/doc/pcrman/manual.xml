@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+          "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"[
+  <!-- DocBook extensions -->
+  <!ELEMENT pcr-op (#PCDATA)>
+  <!ELEMENT pcr-go (#PCDATA)>
+  <!ELEMENT pcr-keyword (#PCDATA)>
+  <!ELEMENT br EMPTY>
+  <!ENTITY % local.gen.char.class "|pcr-op|pcr-go|br|pcr-keyword">
+
+ <!-- some shorthands -->
+ <!ENTITY pcr-xul "<emphasis>x<subscript>UL</subscript></emphasis>" >
+ <!ENTITY pcr-xll "<emphasis>x<subscript>LL</subscript></emphasis>" >
+ <!ENTITY pcr-xlr "<emphasis>x<subscript>LR</subscript></emphasis>" >
+ <!ENTITY pcr-xur "<emphasis>x<subscript>UR</subscript></emphasis>" >
+ <!ENTITY pcr-yul "<emphasis>y<subscript>UL</subscript></emphasis>" >
+ <!ENTITY pcr-yll "<emphasis>y<subscript>LL</subscript></emphasis>" >
+ <!ENTITY pcr-ylr "<emphasis>y<subscript>LR</subscript></emphasis>" >
+ <!ENTITY pcr-yur "<emphasis>y<subscript>UR</subscript></emphasis>" >
+
+ <!ENTITY lt "&#60;" >
+
+ <!-- keyboard keys -->
+ <!ENTITY pcr-kb-enter "&lt;Enter>" >
+ <!ENTITY pcr-kb-esc "&lt;Escape" >
+
+ <!-- the  <chapters>'s -->
+ <!ENTITY intro    SYSTEM "intro.xml">
+ <!ENTITY database SYSTEM "database.xml">
+ <!ENTITY howto    SYSTEM "howto.xml">
+ <!ENTITY cartmod  SYSTEM "cartmod.xml">
+ <!ENTITY dynamic  SYSTEM "dynamic.xml">
+ <!ENTITY function SYSTEM "function.xml">
+
+ <!-- glossary -->
+ <!ENTITY glossary SYSTEM "glossary.xml">
+ <!-- bibliography -->
+ <!ENTITY reference SYSTEM "reference.xml">
+ <!-- "index" generated from Makefile -->
+ <!ENTITY genindex SYSTEM "genindex.xml">
+
+<!-- the pcrcalc operators as <refentry>'s -->
+<!ENTITY ref-abs SYSTEM "refpages/abs.xml">
+<!ENTITY ref-accucapacity SYSTEM "refpages/accucapacity.xml">
+<!ENTITY ref-accuflux SYSTEM "refpages/accuflux.xml">
+<!ENTITY ref-accufraction SYSTEM "refpages/accufraction.xml">
+<!ENTITY ref-accuthreshold SYSTEM "refpages/accuthreshold.xml">
+<!ENTITY ref-accutrigger SYSTEM "refpages/accutrigger.xml">
+<!ENTITY ref-acos SYSTEM "refpages/acos.xml">
+<!ENTITY ref-and SYSTEM "refpages/and.xml">
+<!ENTITY ref-argorder SYSTEM "refpages/argorder.xml">
+<!ENTITY ref-argorderaddarealimited SYSTEM "refpages/argorderaddarealimited.xml">
+<!ENTITY ref-argorderarealimited SYSTEM "refpages/argorderarealimited.xml">
+<!ENTITY ref-areaarea SYSTEM "refpages/areaarea.xml">
+<!ENTITY ref-areaaverage SYSTEM "refpages/areaaverage.xml">
+<!ENTITY ref-areadiversity SYSTEM "refpages/areadiversity.xml">
+<!ENTITY ref-areamajority SYSTEM "refpages/areamajority.xml">
+<!ENTITY ref-areamaximum SYSTEM "refpages/areamaximum.xml">
+<!ENTITY ref-areaminimum SYSTEM "refpages/areaminimum.xml">
+<!ENTITY ref-areanormal SYSTEM "refpages/areanormal.xml">
+<!ENTITY ref-areaorder  SYSTEM "refpages/areaorder.xml">
+<!ENTITY ref-areatotal SYSTEM "refpages/areatotal.xml">
+<!ENTITY ref-areauniform SYSTEM "refpages/areauniform.xml">
+<!ENTITY ref-asin SYSTEM "refpages/asin.xml">
+<!ENTITY ref-aspect SYSTEM "refpages/aspect.xml">
+<!ENTITY ref-atan SYSTEM "refpages/atan.xml">
+<!ENTITY ref-boolean SYSTEM "refpages/boolean.xml">
+<!ENTITY ref-catchment SYSTEM "refpages/catchment.xml">
+<!ENTITY ref-catchmenttotal SYSTEM "refpages/catchmenttotal.xml">
+<!ENTITY ref-cellarea SYSTEM "refpages/cellarea.xml">
+<!ENTITY ref-celllength SYSTEM "refpages/celllength.xml">
+<!ENTITY ref-clump SYSTEM "refpages/clump.xml">
+<!ENTITY ref-cos SYSTEM "refpages/cos.xml">
+<!ENTITY ref-cover SYSTEM "refpages/cover.xml">
+<!ENTITY ref-defined SYSTEM "refpages/defined.xml">
+<!ENTITY ref-directional SYSTEM "refpages/directional.xml">
+<!ENTITY ref-downstream SYSTEM "refpages/downstream.xml">
+<!ENTITY ref-downstreamdist SYSTEM "refpages/downstreamdist.xml">
+<!ENTITY ref-eq SYSTEM "refpages/eq.xml">
+<!ENTITY ref-exp SYSTEM "refpages/exp.xml">
+<!ENTITY ref-extentofview SYSTEM "refpages/extentofview.xml">
+<!ENTITY ref-fac SYSTEM "refpages/fac.xml">
+<!ENTITY ref-ge SYSTEM "refpages/ge.xml">
+<!ENTITY ref-gt SYSTEM "refpages/gt.xml">
+<!ENTITY ref-idiv SYSTEM "refpages/idiv.xml">
+<!ENTITY ref-ifthen SYSTEM "refpages/ifthen.xml">
+<!ENTITY ref-ifthenelse SYSTEM "refpages/ifthenelse.xml">
+<!ENTITY ref-kinematic SYSTEM "refpages/kinematic.xml">
+<!ENTITY ref-ldd SYSTEM "refpages/ldd.xml">
+<!ENTITY ref-lddcreate SYSTEM "refpages/lddcreate.xml">
+<!ENTITY ref-lddcreatedem SYSTEM "refpages/lddcreatedem.xml">
+<!ENTITY ref-ldddist SYSTEM "refpages/ldddist.xml">
+<!ENTITY ref-lddmask SYSTEM "refpages/lddmask.xml">
+<!ENTITY ref-lddrepair SYSTEM "refpages/lddrepair.xml">
+<!ENTITY ref-le SYSTEM "refpages/le.xml">
+<!ENTITY ref-ln SYSTEM "refpages/ln.xml">
+<!ENTITY ref-log10 SYSTEM "refpages/log10.xml">
+<!ENTITY ref-lookup SYSTEM "refpages/lookup.xml">
+<!ENTITY ref-lt SYSTEM "refpages/lt.xml">
+<!ENTITY ref-maparea SYSTEM "refpages/maparea.xml">
+<!ENTITY ref-mapmaximum SYSTEM "refpages/mapmaximum.xml">
+<!ENTITY ref-mapminimum SYSTEM "refpages/mapminimum.xml">
+<!ENTITY ref-mapnormal SYSTEM "refpages/mapnormal.xml">
+<!ENTITY ref-maptotal SYSTEM "refpages/maptotal.xml">
+<!ENTITY ref-mapuniform SYSTEM "refpages/mapuniform.xml">
+<!ENTITY ref-max SYSTEM "refpages/max.xml">
+<!ENTITY ref-min SYSTEM "refpages/min.xml">
+<!ENTITY ref-minus SYSTEM "refpages/minus.xml">
+<!ENTITY ref-mod SYSTEM "refpages/mod.xml">
+<!ENTITY ref-ne SYSTEM "refpages/ne.xml">
+<!ENTITY ref-nodirection SYSTEM "refpages/nodirection.xml">
+<!ENTITY ref-nominal SYSTEM "refpages/nominal.xml">
+<!ENTITY ref-normal SYSTEM "refpages/normal.xml">
+<!ENTITY ref-not SYSTEM "refpages/not.xml">
+<!ENTITY ref-or SYSTEM "refpages/or.xml">
+<!ENTITY ref-order SYSTEM "refpages/order.xml">
+<!ENTITY ref-ordinal SYSTEM "refpages/ordinal.xml">
+<!ENTITY ref-path SYSTEM "refpages/path.xml">
+<!ENTITY ref-pit SYSTEM "refpages/pit.xml">
+<!ENTITY ref-plancurv SYSTEM "refpages/plancurv.xml">
+<!ENTITY ref-plus SYSTEM "refpages/plus.xml">
+<!ENTITY ref-pred SYSTEM "refpages/pred.xml">
+<!ENTITY ref-profcurv SYSTEM "refpages/profcurv.xml">
+<!ENTITY ref-rounddown SYSTEM "refpages/rounddown.xml">
+<!ENTITY ref-roundoff SYSTEM "refpages/roundoff.xml">
+<!ENTITY ref-roundup SYSTEM "refpages/roundup.xml">
+<!ENTITY ref-scalar SYSTEM "refpages/scalar.xml">
+<!ENTITY ref-sin SYSTEM "refpages/sin.xml">
+<!ENTITY ref-slash SYSTEM "refpages/slash.xml">
+<!ENTITY ref-slope SYSTEM "refpages/slope.xml">
+<!ENTITY ref-slopelength SYSTEM "refpages/slopelength.xml">
+<!ENTITY ref-spread SYSTEM "refpages/spread.xml">
+<!ENTITY ref-spreadldd SYSTEM "refpages/spreadldd.xml">
+<!ENTITY ref-spreadlddzone SYSTEM "refpages/spreadlddzone.xml">
+<!ENTITY ref-spreadmax SYSTEM "refpages/spreadmax.xml">
+<!ENTITY ref-spreadzone SYSTEM "refpages/spreadzone.xml">
+<!ENTITY ref-sqr SYSTEM "refpages/sqr.xml">
+<!ENTITY ref-sqrt SYSTEM "refpages/sqrt.xml">
+<!ENTITY ref-ster SYSTEM "refpages/ster.xml">
+<!ENTITY ref-sterster SYSTEM "refpages/sterster.xml">
+<!ENTITY ref-streamorder SYSTEM "refpages/streamorder.xml">
+<!ENTITY ref-subcatchment SYSTEM "refpages/subcatchment.xml">
+<!ENTITY ref-succ SYSTEM "refpages/succ.xml">
+<!ENTITY ref-tan SYSTEM "refpages/tan.xml">
+<!ENTITY ref-time SYSTEM "refpages/time.xml">
+<!ENTITY ref-timeinput... SYSTEM "refpages/timeinput....xml">
+<!ENTITY ref-timeinput SYSTEM "refpages/timeinput.xml">
+<!ENTITY ref-timeoutput SYSTEM "refpages/timeoutput.xml">
+<!ENTITY ref-timeslice SYSTEM "refpages/timeslice.xml">
+<!ENTITY ref-uniform SYSTEM "refpages/uniform.xml">
+<!ENTITY ref-uniqueid SYSTEM "refpages/uniqueid.xml">
+<!ENTITY ref-upstream SYSTEM "refpages/upstream.xml">
+<!ENTITY ref-view SYSTEM "refpages/view.xml">
+<!ENTITY ref-windowaverage SYSTEM "refpages/windowaverage.xml">
+<!ENTITY ref-windowdiversity SYSTEM "refpages/windowdiversity.xml">
+<!ENTITY ref-windowhighpass SYSTEM "refpages/windowhighpass.xml">
+<!ENTITY ref-windowmajority SYSTEM "refpages/windowmajority.xml">
+<!ENTITY ref-windowmaximum SYSTEM "refpages/windowmaximum.xml">
+<!ENTITY ref-windowminimum SYSTEM "refpages/windowminimum.xml">
+<!ENTITY ref-windowtotal SYSTEM "refpages/windowtotal.xml">
+<!ENTITY ref-xcoordinate SYSTEM "refpages/xcoordinate.xml">
+<!ENTITY ref-xor SYSTEM "refpages/xor.xml">
+<!ENTITY ref-ycoordinate SYSTEM "refpages/ycoordinate.xml">
+
+<!-- the applications operator entities -->
+<!ENTITY ref-app-asc2map SYSTEM "apps/asc2map.xml">
+<!ENTITY ref-app-col2map SYSTEM "apps/col2map.xml">
+<!ENTITY ref-app-legend SYSTEM "apps/legend.xml">
+<!ENTITY ref-app-map2asc SYSTEM "apps/map2asc.xml">
+<!ENTITY ref-app-map2col SYSTEM "apps/map2col.xml">
+<!ENTITY ref-app-mapattr SYSTEM "apps/mapattr.xml">
+<!ENTITY ref-app-resample SYSTEM "apps/resample.xml">
+<!ENTITY ref-app-table SYSTEM "apps/table.xml">
+<!ENTITY ref-app-timeplot SYSTEM "apps/timeplot.xml">
+
+
+ <!ENTITY abr-group-title "<title>Group</title>">
+ <!ENTITY abr-group-start "This operation belongs to the group of ">
+
+ <!ENTITY apps-group-create "<refsect1>&abr-group-title;<para>&abr-group-start; Creation of PCRaster maps</para></refsect1>">
+ <!ENTITY apps-group-exp "<refsect1>&abr-group-title;<para>&abr-group-start; Data export from PCRaster map</para></refsect1>">
+
+ <!ENTITY pcr-group-bool "<refsect1>&abr-group-title;<para>&abr-group-start; Boolean operators </para></refsect1>">
+ <!ENTITY pcr-group-ari "<refsect1>&abr-group-title;<para>&abr-group-start; Arithmetic operators </para></refsect1>">
+ <!ENTITY pcr-group-ldd "<refsect1>&abr-group-title;<para>&abr-group-start; Neighbourhood operators; local drain directions </para></refsect1>">
+
+ <!ENTITY pcr-group-TimeOPT "<refsect1>&abr-group-title;<para>&abr-group-start; Time operators </para></refsect1>">
+ <!ENTITY pcr-group-area "<refsect1>&abr-group-title;<para>&abr-group-start; Area operators </para></refsect1>">
+ <!ENTITY pcr-group-areafield "<refsect1>&abr-group-title;<para>&abr-group-start; Random number generators; Areas </para></refsect1>">
+ <!ENTITY pcr-group-comp "<refsect1>&abr-group-title;<para>&abr-group-start; Comparison operators </para></refsect1>">
+ <!ENTITY pcr-group-cond "<refsect1>&abr-group-title;<para>&abr-group-start; Conditional operators </para></refsect1>">
+ <!ENTITY pcr-group-derelev "<refsect1>&abr-group-title;<para>&abr-group-start; Derivatives of elevation maps </para></refsect1>">
+ <!ENTITY pcr-group-lookup "<refsect1>&abr-group-title;<para>&abr-group-start; Point operators; relations in tables </para></refsect1>">
+ <!ENTITY pcr-group-map "<refsect1>&abr-group-title;<para>&abr-group-start; Map operators </para></refsect1>">
+ <!ENTITY pcr-group-mapfield "<refsect1>&abr-group-title;<para>&abr-group-start; Random number generators; Maps </para></refsect1>">
+ <!ENTITY pcr-group-max "<refsect1>&abr-group-title;<para>&abr-group-start; Maximize, minimize </para></refsect1>">
+ <!ENTITY pcr-group-mv "<refsect1>&abr-group-title;<para>&abr-group-start; Missing value creation </para></refsect1>">
+ <!ENTITY pcr-group-order "<refsect1>&abr-group-title;<para>&abr-group-start; Order </para></refsect1>">
+ <!ENTITY pcr-group-pointcor "<refsect1>&abr-group-title;<para>&abr-group-start; Coordinates, unique ID's </para></refsect1>">
+ <!ENTITY pcr-group-pointfield "<refsect1>&abr-group-title;<para>&abr-group-start; Random number generators; Cells </para></refsect1>">
+ <!ENTITY pcr-group-rounding "<refsect1>&abr-group-title;<para>&abr-group-start; Rounding </para></refsect1>">
+ <!ENTITY pcr-group-spread "<refsect1>&abr-group-title;<para>&abr-group-start; Neighbourhood operators; spread operators </para></refsect1>">
+ <!ENTITY pcr-group-typeconvers "<refsect1>&abr-group-title;<para>&abr-group-start; Conversion and assignment </para></refsect1>">
+ <!ENTITY pcr-group-visi "<refsect1>&abr-group-title;<para>&abr-group-start; Neigbourhood operator; operators for visibility analysis </para></refsect1>">
+ <!ENTITY pcr-group-wind "<refsect1>&abr-group-title;<para>&abr-group-start; Neigbourhood operators; window operators </para></refsect1>">
+<!-- IMPORTANT line below endof local entity MUST be on single line; xxeEditable depends on it -->
+ 
+   ]>
+<!--
+<refentry id="xor" role="pcr-operator">
+On the highest level we do have a role
+  pcr-operator operator in pcrcalc
+  pcr-function function in pcrcalc
+  pcr-applications,  a command, such as map2asc, asc2map etc 
+-->
+<book>
+<bookinfo>
+  <title>PCRaster Version 2 Manual</title> 
+  <pubdate>This document was generated
+  <?dbtimestamp format="Y-m-d"?>.</pubdate>
+</bookinfo>
+
+&intro;
+&database;
+&howto;
+&cartmod;
+&dynamic;
+
+&function;
+&glossary;
+&reference;
+
+<reference id='secalphop'>
+<title>List of PCRaster Operators</title>
+&ref-plus;
+&ref-minus;
+&ref-slash;
+&ref-ster;
+&ref-sterster;
+&ref-abs;
+&ref-accucapacity;
+&ref-accuflux;
+&ref-accufraction;
+&ref-accuthreshold;
+&ref-accutrigger;
+&ref-acos;
+&ref-and;
+&ref-argorder;
+&ref-argorderaddarealimited;
+&ref-argorderarealimited;
+&ref-areaarea;
+&ref-areaaverage;
+&ref-areadiversity;
+&ref-areamajority;
+&ref-areamaximum;
+&ref-areaminimum;
+&ref-areanormal;
+&ref-areaorder;
+&ref-areatotal;
+&ref-areauniform;
+&ref-asin;
+&ref-aspect;
+&ref-atan;
+&ref-boolean;
+&ref-catchment;
+&ref-catchmenttotal;
+&ref-cellarea;
+&ref-celllength;
+&ref-clump;
+&ref-cos;
+&ref-cover;
+&ref-defined;
+&ref-directional;
+&ref-downstream;
+&ref-downstreamdist;
+&ref-eq;
+&ref-exp;
+&ref-extentofview;
+&ref-fac;
+&ref-ge;
+&ref-gt;
+&ref-idiv;
+&ref-ifthen;
+&ref-ifthenelse;
+&ref-kinematic;
+&ref-ldd;
+&ref-lddcreate;
+&ref-lddcreatedem;
+&ref-ldddist;
+&ref-lddmask;
+&ref-lddrepair;
+&ref-le;
+&ref-ln;
+&ref-log10;
+&ref-lookup;
+&ref-lt;
+&ref-maparea;
+&ref-mapmaximum;
+&ref-mapminimum;
+&ref-mapnormal;
+&ref-maptotal;
+&ref-mapuniform;
+&ref-max;
+&ref-min;
+&ref-mod;
+&ref-ne;
+&ref-nodirection;
+&ref-nominal;
+&ref-normal;
+&ref-not;
+&ref-or;
+&ref-order;
+&ref-ordinal;
+&ref-path;
+&ref-pit;
+&ref-plancurv;
+&ref-pred;
+&ref-profcurv;
+&ref-rounddown;
+&ref-roundoff;
+&ref-roundup;
+&ref-scalar;
+&ref-sin;
+&ref-slope;
+&ref-slopelength;
+&ref-spread;
+&ref-spreadldd;
+&ref-spreadlddzone;
+&ref-spreadmax;
+&ref-spreadzone;
+&ref-sqr;
+&ref-sqrt;
+&ref-streamorder;
+&ref-subcatchment;
+&ref-succ;
+&ref-tan;
+&ref-time;
+&ref-timeinput...;
+&ref-timeinput;
+&ref-timeoutput;
+&ref-timeslice;
+&ref-uniform;
+&ref-uniqueid;
+&ref-upstream;
+&ref-view;
+&ref-windowaverage;
+&ref-windowdiversity;
+&ref-windowhighpass;
+&ref-windowmajority;
+&ref-windowmaximum;
+&ref-windowminimum;
+&ref-windowtotal;
+&ref-xcoordinate;
+&ref-xor;
+&ref-ycoordinate;
+</reference>
+
+
+<reference>
+  <title>PCRaster applications</title>
+&ref-app-asc2map;
+&ref-app-col2map;
+&ref-app-legend;
+&ref-app-map2asc;
+&ref-app-map2col;
+&ref-app-mapattr;
+&ref-app-resample;
+&ref-app-table;
+&ref-app-timeplot;
+</reference>
+<index/>
+<!--
+  gaat dat nu automatisch?
+     &genindex; OLS: <index/> should do the job...
+  -->
+</book>
+
+<!-- 
+  Local Variables:
+   mode: sgml
+   End
+   -->

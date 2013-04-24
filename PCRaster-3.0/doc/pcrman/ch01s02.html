@@ -1,0 +1,88 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.2. GIS and Cartographic Modelling</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch01.html" title="Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout"><link rel="prev" href="ch01.html" title="Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout"><link rel="next" href="ch01s03.html" title="1.3. Dynamic Modelling"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">1.2. GIS and Cartographic Modelling</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01.html">Prev</a> </td><th width="60%" align="center">Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout</th><td width="20%" align="right"> <a accesskey="n" href="ch01s03.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secintrogis"></a>1.2. GIS and Cartographic Modelling</h2></div></div></div><p>
+
+The central module of the PCRaster system is the group of PCRaster
+operations where the operations for Cartographic Modelling
+ 
+<a class="indexterm" name="id2939344"></a>
+ 
+<a class="indexterm" name="id2934131"></a>
+are integrated at a high level with the GIS functions of the package. The main
+GIS functions supported are user interfaces (i.a. screen display, hard copy
+output), conversion of data with other GIS packages and database
+management. No digitizing  
+ 
+<a class="indexterm" name="id2934059"></a>
+and scanning
+ 
+<a class="indexterm" name="id2918258"></a>
+functionalities are implemented, but data transfer
+to and from other GIS packages that support these functionalities is simple.
+Spatial data are stored in the database as <span class="emphasis"><em>PCRaster maps</em></span>, this is a
+binary format used for representation of raster maps in PCRaster.
+</p><p>
+
+
+The Cartographic Modelling part consist of operators for the static
+analysis of maps. This set of operators follows the concept of Map
+Algebra  
+ 
+<a class="indexterm" name="id2934410"></a>
+and Cartographic Modelling. There are
+several versions of Map Algebra, all with different names, but the
+concept used in PCRaster is strongly related to the concept of the MAP
+package designed by Tomlin (<a class="xref" href="bi01.html#tomlin80" title="The Map Analysis Package (draft manual)">[7]</a>,
+<a class="xref" href="bi01.html#tomlin90" title="Geographic Information Systems and Cartographic Modelling">[8]</a>) and the algebra used by <a class="xref" href="bi01.html#berry87b" title="Beyond Mapping: Concepts, Algorithms, and Issues in GIS">[1]</a>. The Cartographic Modelling part
+consists of a set of primitive operators that induce a change in the
+properties of the cells, where the change in properties is calculated on
+the basis of some kind of dependency within cells (point operations)
+or between cells (neighbourhood operations, area operations, map
+operations). An extensive set of operators is available in the PCRaster
+system: several point operators (analytical and arithmetical functions,
+Boolean operators, operators for relations, comparison, rounding, field
+generation etc.), neighbourhood operators for calculations in moving
+windows (highpass filtering, edge filtering, moving averages, etc.),
+area operators for calculations within specified areas (for instance soil
+groups), operators for the calculation of cost paths. In the PCRaster
+package a rich suite of geomorphological and hydrological functions is
+available that goes behind the range of operations generally considered as
+Map Algebra. These include functions for visibility analysis, catchment
+analysis and routing of transport (drainage) of material in a catchment
+using interactively generated local drain direction maps and transport
+(routing) operations.
+</p><p>
+This set of operators is a computer language designed especially for
+spatial and temporal analysis. It is an algebraic language, which means
+that the PCRaster operations can be applied and combined in the same way
+as algebraic calculations. In general an operation is done by typing:
+
+</p><div class="informalexample"><div class="literallayout"><p><br>
+<b>pcrcalc</b> <span class="emphasis"><em>Result</em></span> = PCRasterOperator(<span class="emphasis"><em>PCRasterExpression</em></span>)<br>
+</p></div></div><p>
+
+where <b>pcrcalc</b> activates the PCRaster operation shell
+and PCRasterOperator is one of the PCRaster operations resulting in
+the <span class="emphasis"><em>Result</em></span>. The <span class="emphasis"><em>Result</em></span>
+may be a map or a non spatial value. The operation is done on the
+map <span class="emphasis"><em>PCRasterExpression</em></span>. This map is called an
+<span class="emphasis"><em>Expression</em></span> because it may be a map, but it may also
+be a PCRaster operation or a set of operations that result in a map
+or a non spatial value. This means that several PCRaster operations
+may be nested in one command. For instance the maximum slope on a
+slope map generated on basis of the elevation map Elevation can be
+calculated in one command line using the <b>mapmaximum</b>
+and <b>slope</b> operators by typing:
+
+</p><pre class="programlisting"> pcrcalc Result = mapmaximum(slope(Elevation)) </pre><p>
+
+As explained above, the separate commands are applied from the command
+line. Additionally, by linking these commands into PCRaster scripts or
+programs, it is possible to perform a theoretically unlimited number of
+commands consecutively. This is usually referred to as (static) Cartographic
+Modelling. Cartographic Modelling does not have a concept of time:
+several operations are performed consecutively, but they do not necessarily
+represent a process over time: the operations performed represent one,
+static change in the property of cells. 
+</p><p>
+Elements of GIS and Catrographic modelling, like the database of the PCRaster package 
+(<a class="xref" href="ch02.html" title="Chapter 2. The Database">Chapter 2</a>), GIS functions (<a class="xref" href="ch03.html" title="Chapter 3. How to Import or Export Data, Display Maps, Global Options">Chapter 3</a>) and Cartographic Modelling (<a class="xref" href="ch04.html" title="Chapter 4. Cartographic Modelling">Chapter 4</a>) are described in the next chapters.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch01s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 1. Introduction to the PCRaster Package: Concepts, Package Layout </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 1.3. Dynamic Modelling</td></tr></table></div></body></html>

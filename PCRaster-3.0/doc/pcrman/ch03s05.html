@@ -1,0 +1,24 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.5. Point data column files: database management</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="ch03.html" title="Chapter 3. How to Import or Export Data, Display Maps, Global Options"><link rel="prev" href="ch03s04.html" title="3.4. Time series: database management"><link rel="next" href="ch03s06.html" title="3.6. Global options and local options"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.5. Point data column files: database management</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><th width="60%" align="center">Chapter 3. How to Import or Export Data, Display Maps, Global Options</th><td width="20%" align="right"> <a accesskey="n" href="ch03s06.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="secimportpoint"></a>3.5. Point data column files: database management</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportpointintro"></a>3.5.1. Introduction</h3></div></div></div><p>
+The format of point data column files has been explained in the previous chapter (<a class="xref" href="ch02s06.html" title="2.6. Point data column files">Section 2.6</a>). Underneath (<a class="xref" href="ch03s05.html#secimportpointcrea" title="3.5.2. Creating point data column files, conversion to/from PCRaster maps">Section 3.5.2</a>) the database management with point data column filess described.
+</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="secimportpointcrea"></a>3.5.2. Creating point data column files, conversion to/from PCRaster maps</h3></div></div></div><p>
+If you have spatial data in a spread sheet program, database management
+program or a package for statistics you can create a point data column
+file by exporting your data as ascii formatted text. Before exporting,
+we advise you to put the x and y coordinates in the first and second
+column respectively. The third and following columns may contain
+the data. After exporting as ascii text, you can check and edit the
+ascii column file with a text editor. If you want to convert it to a
+PCRaster map it must have the simplified Geo-EAS format or the plain
+column file format, which is described in the previous chapter (<a class="xref" href="ch02s06.html" title="2.6. Point data column files">Section 2.6</a>).
+Conversion is done with the <b>col2map</b> operator (<a class="xref" href="ch03s02.html#secimportmapcrea" title="3.2.1. Creation of a PCRaster map; data import">Section 3.2.1</a>) about importing to a PCRaster map or see
+the operator <a class="link" href="rn02re123.html" title="col2map"><b>col2map</b></a>.
+Interpolation of regular or irregular spaced point data to a PCRaster
+map can be done with the gstat module.
+</p><p>
+ 
+<a class="indexterm" name="id2949187"></a>
+Additionally, you can create a point data column file by exporting data
+from a PCRaster map, with the <b>map2col</b> operator. The
+point data column file will be in plain column file format or in
+simplified Geo-EAS format. See the <a class="link" href="rn02re126.html" title="map2col"><b>map2col</b> operator</a>.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.4. Time series: database management </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.6. Global options and local options</td></tr></table></div></body></html>

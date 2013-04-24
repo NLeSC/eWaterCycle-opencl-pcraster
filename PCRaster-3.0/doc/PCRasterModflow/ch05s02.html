@@ -1,0 +1,79 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>5.2.  PCRaster Python model script</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRasterModflow"><link rel="up" href="ch05.html" title="Chapter 5. Examples"><link rel="prev" href="ch05.html" title="Chapter 5. Examples"><link rel="next" href="ch06.html" title="Chapter 6. License"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.2. 
+      PCRaster Python model script
+    </th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05.html">Prev</a> </td><th width="60%" align="center">Chapter 5. Examples</th><td width="20%" align="right"> <a accesskey="n" href="ch06.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id535625"></a>5.2. 
+      PCRaster Python model script
+    </h2></div></div></div><p>
+      </p><pre class="screen"># This example script demonstrates the use of the
+# PCRasterModflow extension. It recreates the example
+# problem given in the user guide of MODFLOW-2000
+# (Open file report 00-92)
+#
+# To run the script use
+# python2.5 example.py
+
+from PCRaster import *
+
+
+setclone("clone.map")
+mf = initialise(clone())
+
+# grid specification
+mf.createBottomLayer("bottom.map", "l1_top.map")
+mf.addConfinedLayer("l2_top.map")
+mf.addLayer("l3_top.map")
+mf.addConfinedLayer("l4_top.map")
+mf.addLayer("elev.map")
+
+# simulation parameter
+mf.setDISParameter(1, 0, 86400, 1, 1, 1)
+
+# adding the boundary conditions to the MODFLOW model
+mf.setBoundary("l1_bound.map", 1)
+mf.setBoundary("l3_bound.map", 3)
+mf.setBoundary("l5_bound.map", 5)
+
+# adding the initial values to the MODFLOW model
+mf.setInitialHead("head.map", 1)
+mf.setInitialHead("head.map", 3)
+mf.setInitialHead("head.map", 5)
+
+# adding the conductivities to the MODFLOW model
+mf.setConductivity(0, "hcond_l1.map", "vcond_l1.map", 1)
+mf.setConductivity(0, "hcond_l1.map", "vcond_l2.map", 2)
+mf.setConductivity(0, "hcond_l3.map", "vcond_l3.map", 3)
+mf.setConductivity(0, "hcond_l3.map", "vcond_l4.map", 4)
+mf.setConductivity(1, "hcond_l5.map", "vcond_l5.map", 5)
+
+# solver package
+mf.setSIP(50, 5, 1.0, 0.001, 0, 0.001)
+
+mf.setDryHead(1E30)
+
+# adding the drain
+mf.setDrain("drain_elev.map", "drain_cond.map", 5)
+
+# specifying the recharge
+mf.setRecharge("rch.map", 1)
+
+# adding well 
+mf.setWell("well_l1.map", 1)
+mf.setWell("well_l3.map", 3)
+mf.setWell("well_l5.map", 5)
+
+
+# execute MODFLOW modelling engine
+mf.run();
+
+# retrieve head values
+hFive = mf.getHeads(5)
+report(hFive, "hFive.map")
+hThree = mf.getHeads(3)
+report(hThree, "hThree.map")
+hOne = mf.getHeads(1)
+report(hOne, "hOne.map")
+
+# retrieve drain leakage
+dFive = mf.getDrain(5);
+report(dFive, "dFive.map")
+</pre><p>
+    </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch05.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 5. Examples </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 6. License</td></tr></table></div></body></html>

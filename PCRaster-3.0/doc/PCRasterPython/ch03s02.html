@@ -1,0 +1,26 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.2. Reading input maps</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Python"><link rel="up" href="ch03.html" title="Chapter 3. Differences between PCRcalc and PCRaster Python"><link rel="prev" href="ch03.html" title="Chapter 3. Differences between PCRcalc and PCRaster Python"><link rel="next" href="ch03s03.html" title="3.3. Writing output maps"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.2. Reading input maps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Differences between PCRcalc and PCRaster Python</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id343432"></a>3.2. Reading input maps</h2></div></div></div><p>An input map is identified by a Python string containing the pathname to the disk dataset. The function readmap(pathname) reads a map.
+</p><div class="itemizedlist"><ul type="disc"><li><p>PCRaster operations with a function syntax can accept the pathname.
+ </p><pre class="programlisting"># Python code
+Dem = readmap("dem.map")
+Slope1 = slope(Dem)
+# or direct by pathname
+Slope2 = slope("dem.map")
+ </pre></li><li><p>PCRaster operations with an operator syntax do not accept a pathname.</p><pre class="programlisting"># Python code
+# will yield "dem.mapdem.mapdem.map"
+stringTimes3 = "dem.map" * 3
+# will yield a Spatial object
+DemTime3 = readmap("dem.map") * 3
+ </pre></li><li><p>When using the Framework one usually uses the class method readmap(self, filename) instead of the function readmap(pathname).</p><pre class="programlisting"># Python code  ... denotes removed fragments
+...
+class RunoffModel(object):
+...
+  def initial(self):
+    # read static data
+    self.dem = self.readmap("dem.map")
+  def dynamic(self):
+    # reads rain0000.001, rain0000.002, etc.
+    self.rainFall = self.readmap("rain")
+
+dynModel = DynamicFramework(RunoffModel, 50)
+dynModel.run()
+</pre></li></ul></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. Differences between PCRcalc and PCRaster Python </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.3. Writing output maps</td></tr></table></div></body></html>

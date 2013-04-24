@@ -1,0 +1,37 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>directional</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Version 2 Manual"><link rel="up" href="rn01.html" title="List of PCRaster Operators"><link rel="prev" href="rn01re38.html" title="defined"><link rel="next" href="rn01re40.html" title="downstream"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">directional</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rn01re38.html">Prev</a> </td><th width="60%" align="center">List of PCRaster Operators</th><td width="20%" align="right"> <a accesskey="n" href="rn01re40.html">Next</a></td></tr></table><hr></div><div class="refentry" lang="en"><a name="directional"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>directional &#8212; 
+Data conversion to the directional data type
+</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis"><b>pcrcalc</b> [option] <code class="varname">Result</code> = <b>directional</b>( <code class="varname">expression</code> ) </pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody valign="top"><tr><td rowspan="2" valign="top"><code class="varname">expression</code></td><td class="type" valign="top">boolean, nominal, ordinal, scalar, ldd</td></tr><tr><td class="dimension" valign="top">spatial, non spatial</td></tr><tr><td rowspan="2" valign="top"><code class="varname">Result</code></td><td class="type" valign="top">directional</td></tr><tr><td class="dimension" valign="top">dimension of <code class="varname">expression</code></td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id2994665"></a><h2>Options</h2><p class="option">
+--degrees or --radians</p><div class="variablelist"><dl><dt><span class="term">--degrees</span></dt><dd><p> values on <code class="varname">expression</code> are interpreted as degrees (default)
+</p></dd><dt><span class="term">--radians</span></dt><dd><p> values on <code class="varname">expression</code> are interpreted as radians
+</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="id2994724"></a><h2>Operation</h2><p>
+
+If <code class="varname">expression</code> is a PCRaster map or an calculation resulting in a PCRaster map, it is converted: if <code class="varname">expression</code> is of one of the data types boolean, nominal, ordinal, scalar
+the cell values on <code class="varname">expression</code> are converted to the circular scale of
+<code class="varname">Result</code>, on a cell-by-cell basis. If <code class="varname">expression</code> is of the data type ldd,
+the codes on <code class="varname">expression</code> representing local drain directions are
+converted to real directions of drainage and saved as <code class="varname">Result</code>. The
+directions are converted to the circular scale of <code class="varname">Result</code> clockwise,
+assigning 0 degrees (or radians if the option --radians is set) to cells with
+a local drainage towards the top of the map (ldd code 8). A flat cell (cell
+value 5 on <code class="varname">expression</code>) is assigned a -1 on <code class="varname">Result</code>. The command can also generate a map of directional data type with one constant value.
+
+</p><p>
+
+If <code class="varname">expression</code> has no PCRaster data type, a <code class="varname">Result</code> with data type
+directional is generated. This is the case if <code class="varname">expression</code> is a number or
+a calculation with numbers. The value of <code class="varname">expression</code> must be in the
+domain of the directional data type, i.e. if the option --degrees is set: equal
+to 0 or between 0 and 360; if the option radians is set equal to 0 or
+between 0 and 2pi. <code class="varname">Result</code> will be a map with the same location attributes
+as the <a class="link" href="ch03s06.html#GOClone">global clone map</a>; all cells will have the value of
+<code class="varname">expression</code>.
+
+</p></div><div class="refsect1" lang="en"><a name="id2994828"></a><h2>Notes</h2><p>
+
+A cell with missing value on <code class="varname">expression</code> is assigned a missing value on
+<code class="varname">Result</code>.
+
+</p></div><div class="refsect1" lang="en"><a name="id2994846"></a><h2>Group</h2><p>This operation belongs to the group of  Conversion and assignment </p></div><div class="refsect1" lang="en"><a name="id2994854"></a><h2>See Also</h2><p><a class="xref" href="ch02s03.html#secdatbasemaptype" title="2.3.3. Data types">Section 2.3.3</a> 
+<a class="xref" href="ch02s03.html#formdirectional" title="2.3.3.6. Directional data type">Section 2.3.3.6</a> 
+<a class="xref" href="ch04s07.html#DataTyToNumb" title="4.7.2.1. Numbers and data types">Section 4.7.2.1</a> 
+</p></div><div class="refsect1" lang="en"><a name="id2994879"></a><h2>Examples</h2><div class="orderedlist"><ol type="1"><li><div class="informalexample"><pre class="programlisting">pcrcalc  Result1.map = directional(Expr.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result1.map</code></td></tr><tr><td><div><img src="examples/directional.Result1.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr.map</code></td></tr><tr><td><div><img src="examples/directional.Expr.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li><li><div class="informalexample"><pre class="programlisting">pcrcalc  --degrees Result2.map = directional(Expr.map)</pre><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><tbody><tr><td class="pcr-omap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Result2.map</code></td></tr><tr><td><div><img src="examples/directional.Result2.gif"></div></td></tr></tbody></table></td><td class="pcr-imap"><table width="100%" border="0"><colgroup><col></colgroup><tbody><tr><td><code class="varname">Expr.map</code></td></tr><tr><td><div><img src="examples/boolean.Expr.gif"></div></td></tr></tbody></table></td></tr></tbody></table></div></div></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="rn01re38.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="rn01.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="rn01re40.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">defined </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> downstream</td></tr></table></div></body></html>

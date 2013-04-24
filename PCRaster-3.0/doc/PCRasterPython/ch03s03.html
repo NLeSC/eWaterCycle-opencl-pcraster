@@ -1,0 +1,15 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.3. Writing output maps</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="PCRaster Python"><link rel="up" href="ch03.html" title="Chapter 3. Differences between PCRcalc and PCRaster Python"><link rel="prev" href="ch03s02.html" title="3.2. Reading input maps"><link rel="next" href="ch03s04.html" title="3.4. Accessing cell values of a map"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.3. Writing output maps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Differences between PCRcalc and PCRaster Python</th><td width="20%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="id331821"></a>3.3. Writing output maps</h2></div></div></div><p>To store maps use: </p><pre class="programlisting">report(map, filename)
+  Writes a map to a file.
+
+  map      Map you want to write.
+  filename Filename to use.
+</pre><div class="itemizedlist"><ul type="disc"><li><p>Note the differences between PCRcalc and Python</p><pre class="programlisting"># PCRcalc script code
+binding
+  gradient = output.map;
+  dem = dem.map;
+initial
+   report gradient = slope(dem);
+# Python code
+gradient = slope("dem.map")
+report(gradient, "gradient.map")
+</pre></li><li><p>The <code class="function">report</code> operation only writes spatial data to disk. For writing non spatial data as timeseries in the DynamicFramework use the TimeoutTimeseries construct.</p></li></ul></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.2. Reading input maps </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.4. Accessing cell values of a map</td></tr></table></div></body></html>

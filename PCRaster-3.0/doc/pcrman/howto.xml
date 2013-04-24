@@ -1,0 +1,716 @@
+<chapter id="secimport">
+<title>How to Import or Export Data, Display Maps, Global Options</title>
+<section id="secimportintro">
+<title>Introduction</title>
+
+<para>
+This Chapter contains information about how to in- and export data from PCRaster.
+It discusses how to convert data from other
+GIS to one of the kinds of data used in PCRaster (<xref linkend="secimportmapcrea"/>) and how to export data from PCRaster (<xref linkend="secimportmapexpo"/>). 
+Other database management operations are also described, such as how to cut or join together maps and how to change location attributes or the data type of maps (<xref
+linkend="secimportmaptype"/>). Furthermore it will be explained how to attach a legend to a map (<xref linkend="secimportmapleg"/>) and how to display PCRaster
+maps on the computer screen and print a map (<xref
+linkend="secimportmapdis"/>). All operations are done using one of the PCRaster operators given in the
+text. For a detailed description of these operators, see the
+alphabetical list of operators in <xref linkend="secalphop"/>.
+</para>
+
+<para>
+The other sorts of data used in PCRaster (tables, time series
+and point data column files) are ascii formatted. Unlike PCRaster
+maps, these can easily be created, analyzed and edited with other
+software packages.  <xref linkend="secimportlook"/>  and <xref
+linkend="secimporttime"/>  explain the creation of tables and time series,
+respectively. Creation and conversion of point data column files is
+described in <xref linkend="secimportpoint"/>.  The above mentioned
+sections do not describe the formats of these sort of data. The format of
+PCRaster maps (<xref linkend="secdatbasemap"/>),  tables (<xref
+linkend="secdatbaselook"/>), time series (<xref linkend="secdatbasetime"/>) and point data column files (<xref linkend="secdatbasepoint"/>) are described succesively.
+</para>
+
+<para>
+<xref linkend="secimportopt"/> gives a list of <emphasis>global
+options</emphasis> used in PCRaster. Global options are set only once (for
+instance at the beginning of a project) and will affect all operations
+to which they are relevant. <emphasis>Local options</emphasis> which
+are used each time a operation is done, must always be redefined.
+</para>
+</section>
+
+
+<section id="secimportmap">
+<title>PCRaster maps: database management</title>
+<section id="secimportmapcrea">
+<title>Creation of a PCRaster map; data import</title>
+<para>
+PCRaster maps are in a binary format which is only used in PCRaster. As
+a result you cannot analyze PCRaster maps with other software packages.
+So, it is important to know how to convert data (for instance point data
+column files) to and from PCRaster map format.
+</para>
+
+<para id="clonemapCREA" role="indexterm-concept">
+<indexterm role="concept"><primary>clone map</primary></indexterm>
+
+If you start a project and want to use PCRaster maps for analyzing your
+data, first make an empty clone map to define
+the geographical and cartographical location attributes and set this map
+as global clone map with the global option
+<link linkend="GOClone"><pcr-go>clone</pcr-go></link>.
+
+To make the clone map, use the operator <pcr-op>mapattr</pcr-op>;
+the location attributes can be entered using the menu given by the
+<link linkend ="mapattr"><pcr-op>mapattr</pcr-op></link>.
+
+This map can be used as a clone (mask map) for all data sets you want
+to import. A data type and its cell representation can also be attached
+to the clone map using <pcr-op>mapattr</pcr-op>. This data type and cell
+representation will by default be assigned to the data that are imported,
+but the type of the imported data can also be specified during the import.
+</para>
+
+<para>
+<anchor id="LocAtChoice" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>choice of</secondary>
+</indexterm>
+The choice of geographical location attributes must be based upon the
+spatial characteristics of the data set you want to import to the PCRaster
+map format and upon whether x,y coordinates are attached to the data in
+the data set or not. There are two possibilities for data import: 
+</para>
+
+<para>
+1) import of point data with x,y coordinates using either a <emphasis>column file
+in simplified Geo-EAS format</emphasis> or <emphasis>plain column file format</emphasis><anchor id="ColomnInput" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>point data column files</primary>
+  <secondary>conversion to a map</secondary>
+</indexterm>
+</para>
+
+<para>
+<anchor id="AngleAdv" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>angle</primary>
+</indexterm>
+The data file you want to import contains x and y coordinates with data
+values. In this case the location attributes of the PCRaster map must
+be chosen in correspondence with the spatial distribution of the data
+given by the x and y coordinates. If the data are regularly spaced on a
+rectangular grid, you probably want location attributes that match the
+set of x and y coordinates of the data set. If the data are irregularly
+spaced we advise to choose a map size of the smallest bounding rectangle
+(or somewhat larger) that comprises the study area, as shown in <xref
+linkend="fig3.5"/>. In this Figure a rectangle has been chosen that is
+rotated with respect to the real coordinate system (positive angle).
+Quite often, it is better not to rotate the map, and to choose an
+unrotated (smallest) rectangle.  Rotation may result in a map that better
+fits the shape of the study area. But remember that rotation has an
+important effect which may be very clumsy: rotation will not only result
+in a rotated map but of course also in a grid of cells that is rotated
+with respect to the real coordinate system. As a result, cells that are
+in one row on the PCRaster map will not have the same y coordinates;
+the same holds for cells in one column and their x coordinates.  
+</para>
+
+<para>
+Two sorts of column files with x and y coordinates may be imported:
+a <emphasis>column file in simplified Geo-EAS format</emphasis> or a
+<emphasis>plain column file format</emphasis>. These formats are used
+in PCRaster for representation of point data, especially in the gstat
+module for geostatistical analysis.
+<xref linkend="secdatbasepoint"/> describes these formats. Point
+data are imported to PCRaster map format with the PCRaster operator
+<link linkend="col2map"><pcr-op>col2map</pcr-op></link>.
+</para>
+
+<para>
+2) import of data without x and y coordinates (ascii formatted) 
+</para>
+
+<para>
+The data do not contain x and y coordinates: the asciifile with your
+data contains a sequence of cell values, without coordinates. In this
+case, the number of rows and columns of the PCRaster map must correspond
+exactly with the number of rows and columns of the file you want to import
+or else the import of data will result in nonsense.  Among other data,
+maps from the ARC/INFO or Genamap GIS packages are imported in this
+way. It is done with the PCRaster operator <link linkend="asc2map"><pcr-op>asc2map</pcr-op></link>.
+</para>
+</section>
+
+
+<section id="secimportmapexpo">
+<title>Data export from a PCRaster map</title>
+<para>
+Data can be exported from a PCRaster map using one of the operators
+<link linkend="map2col"><pcr-op>map2col</pcr-op></link>
+and <link linkend="map2asc"><pcr-op>map2asc</pcr-op></link>.
+</para>
+
+<para>
+<anchor id="DataExpFrMap" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>conversion</primary>
+  <secondary>from map to point data column file</secondary>
+</indexterm>
+The operator <pcr-op>map2col</pcr-op> exports data to an ascii column file in
+simplified Geo-EAS format or a plain column file format.
+Both contain x,y coordinates and data values. These kind of data are
+also used in the PCRaster package for representation of point data, see
+for formats <xref linkend="secdatbasepoint"/>. The plain column file
+format can easily be imported in spreadsheet, database management or
+word processing programs. It is also used in the gstat module of PCRaster.
+</para>
+
+<para>
+<anchor id="DataExpFrMAsc" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>conversion</primary>
+  <secondary>from map to ascii file without x,y</secondary>
+</indexterm>
+The operator <pcr-op>map2asc</pcr-op> exports to an ascii file which will contain
+only data values, without x and y coordinates.  
+This operator is used if you want to export data to the ARC/INFO
+package.
+</para>
+</section>
+
+
+<section id="secimportmaptype">
+<title>Cutting or joining maps; changing geographical location attributes or
+data types</title>
+<para>
+The spatial characteristics of the spatial data in PCRaster map format can
+be changed with both the operator <link linkend="resample"><pcr-op>resample</pcr-op></link> and <link linkend="mapattr"><pcr-op>mapattr</pcr-op></link>. 
+Note that these two operations have a totally different result: 
+</para>
+
+<para>
+<anchor id="ResampleAMap" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>cutting a map</primary>
+</indexterm>
+If you want to resample your data in a PCRaster map to a new map with
+different geographical location attributes use the operator <pcr-op>resample</pcr-op>.
+First create a new map with the location attributes you wish (this
+is done with <pcr-op>mapattr</pcr-op>). For instance it may have
+geographical location attributes that define an area that only partly
+covers the old map, with a somewhat smaller or larger cell size. Now
+the <pcr-op>resample</pcr-op> operator can be used to resample your old
+data to the new map: for each cell of the new map a new cell value is
+computed on basis of the cell values on the old map that come into the
+cell on the new map.
+</para>
+
+<para>
+The <pcr-op>resample</pcr-op> operator can also be used to join two maps together.
+The maps that are joined together will be resampled and may have
+different location attributes: for instance they may overlap or may not
+overlap or may have different cell sizes.  
+</para>
+
+<para>
+The geographical location attributes of a map can be changed using
+the operator <pcr-op>mapattr</pcr-op>. Using this operator will
+not result in resampling of the data: each cell of the new map will
+contain a value that corresponds with the value on that cell of the old
+map. For instance halving the cell width of a map that consists of 50
+x 50 cells of width 10 m. results in a (smaller) map of 50 x 50 cells
+of width 5 m., containing values that are taken directly from the old
+map. So changing the location attributes with <pcr-op>mapattr</pcr-op>
+will result in a new location of your data with respect to the real
+world coordinate system. Maybe this sounds silly but you may want to
+change the geographical location attributes after a map has been made,
+especially if you made an error in the specification of the location
+attributes with <pcr-op>mapattr</pcr-op>.
+</para>
+
+<para>
+Conversion between data types is done using one of the conversion of data
+type operators (<link linkend="boolean"><pcr-op>boolean</pcr-op></link>, 
+<link linkend="nominal"><pcr-op>nominal</pcr-op></link>, 
+<link linkend="ordinal"><pcr-op>ordinal</pcr-op></link>, 
+<link linkend="scalar"><pcr-op>scalar</pcr-op></link>,
+<link linkend="directional"><pcr-op>directional</pcr-op></link> and 
+<link linkend="ldd"><pcr-op>ldd</pcr-op></link>.
+<anchor id="ConDataType" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>conversion</primary>
+  <secondary>between data types</secondary>
+</indexterm>
+These operators
+change the data type of the input map to the data type that corresponds
+with the name of the operator. Conversion is only possible if it results in
+a map that has some meaning with the new data type attached to it.
+</para>
+</section>
+
+
+<section id="secimportmapleg">
+<title>Attaching a legend to a PCRaster map</title>
+<para>
+The operator <link linkend="legend"><pcr-op>legend</pcr-op></link>
+attaches a legend to a PCRaster map.
+</para>
+</section>
+
+
+<section id="secimportmapdis">
+<title>Screen display, hard copy output of PCRaster maps</title>
+<para>
+<emphasis>hard copy output: not yet included in software</emphasis> 
+</para>
+
+<para>
+Visualisation of PCRaster maps and time series is done with <pcr-op>aguila</pcr-op>.
+</para>
+</section>
+</section>
+
+
+<section id="secimportlook">
+<title>Tables: database management</title>
+<section id="secimportlookintro">
+<title>Introduction</title>
+<para>
+<xref linkend="secimportlookcrea"/> describes how to create or edit
+a table.
+</para>
+</section>
+
+
+<section id="secimportlookcrea">
+<title>Creating and editing tables</title>
+<para>
+By default, the PCRaster package uses column tables. For defining
+relations between two maps of boolean, nominal, ordinal or ldd
+data type it is sometimes better to use matrices instead of column
+tables. If you want to use the matrix tables, set the global option
+<pcr-go>matrixtable</pcr-go>.  This option can be set for one separate
+operation or as general global option. How this is done, will be described later on in this chapter (<xref linkend="secimportopt"/>). If a relationship is specified between more
+than two maps in the matrix, the relation can not be described by a
+matrix table: PCRaster will automatically use a column table.
+</para>
+
+<para>
+A table for the PCRaster operator <pcr-op>lookup</pcr-op>, <link
+linkend="lookup"></link> for creating a new map on basis of a table)
+or an input table for the operator <pcr-op>table</pcr-op>, <link
+linkend="table"></link> for counting the number of
+cells that match the key) can be made with a text editor or alternatively
+with spreadsheet or word processing programs by exporting your table as
+a file in ascii text format. Additionally, the <pcr-op>table</pcr-op>
+operator itself generates a correctly formatted table, which can be used
+(possibly with a few edits) as input table for the <pcr-op>lookup</pcr-op>
+operator.
+</para>
+</section>
+</section>
+
+
+<section id="secimporttime">
+<title>Time series: database management</title>
+<section id="secimporttimeintro">
+<title>Introduction</title>
+<para>
+The format of time series has been described in an earlier chapter (<xref linkend="secdatbasetime"/>). Underneath (<xref linkend="secimporttimecrea"/>) database
+management with time series is described.
+</para>
+</section>
+
+
+<section id="secimporttimecrea">
+<title>Creating and editing time series</title>
+<para>
+If you have time series data in a spread sheet program, database
+management program or a package for statistics you can create a
+PCRaster time series file by exporting your data as ascii formatted
+text. A PCRaster time series file must have the lay-out as described in
+<xref linkend="secdatbasetime"/>.  We advice to export the time series
+data in such a way that the resulting ascii formatted file will have
+a lay-out that looks like the lay-out used in PCRaster. Minor changes
+(for instance adding a header) can be made with a text editor.
+</para>
+
+<para>
+Additionally, a timeseries file can be created by reporting a time series
+file to the database during a run of a dynamic model (see 
+<xref linkend="secseqinreport"/>).
+</para>
+
+<para>
+You can import a PCRaster time series file to an other software package by
+importing the time series as ascii text.
+</para>
+</section>
+</section>
+
+
+<section id="secimportpoint">
+<title>Point data column files: database management</title>
+<section id="secimportpointintro">
+<title>Introduction</title>
+<para>
+The format of point data column files has been explained in the previous chapter (<xref linkend="secdatbasepoint"/>). Underneath (<xref linkend="secimportpointcrea"/>) the database management with point data column filess described.
+</para>
+</section>
+
+
+<section id="secimportpointcrea">
+<title>Creating point data column files, conversion to/from PCRaster maps</title>
+<para>
+If you have spatial data in a spread sheet program, database management
+program or a package for statistics you can create a point data column
+file by exporting your data as ascii formatted text. Before exporting,
+we advise you to put the x and y coordinates in the first and second
+column respectively. The third and following columns may contain
+the data. After exporting as ascii text, you can check and edit the
+ascii column file with a text editor. If you want to convert it to a
+PCRaster map it must have the simplified Geo-EAS format or the plain
+column file format, which is described in the previous chapter (<xref linkend="secdatbasepoint"/>).
+Conversion is done with the <pcr-op>col2map</pcr-op> operator (<xref
+linkend="secimportmapcrea"/>) about importing to a PCRaster map or see
+the operator <link linkend="col2map"><pcr-op>col2map</pcr-op></link>.
+Interpolation of regular or irregular spaced point data to a PCRaster
+map can be done with the gstat module.
+</para>
+
+<para>
+<anchor id="PoiCreFrMap" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>point data column files</primary>
+  <secondary>conversion from a map</secondary>
+</indexterm>
+Additionally, you can create a point data column file by exporting data
+from a PCRaster map, with the <pcr-op>map2col</pcr-op> operator. The
+point data column file will be in plain column file format or in
+simplified Geo-EAS format. See the <link linkend="map2col"><pcr-op>map2col</pcr-op> operator</link>.
+</para>
+</section>
+</section>
+
+
+<section id="secimportopt">
+<title>Global options and local options</title>
+<section id="secimportoptintro">
+<title>Introduction, setting global options</title>
+<para>
+Options define the exact, detailed functionality of the PCRaster
+operators.  Two types of options are used in PCRaster. <emphasis>Local
+options</emphasis> are set each time a PCRaster operation is
+performed. Local options only apply to one PCRaster operator and are
+specified in the command line directly after <pcr-op>pcrcalc</pcr-op>
+by typing -<emphasis>localoption</emphasis>, with one - character,
+where <emphasis>localoption</emphasis> is the local option you want to
+set for the operation.
+</para>
+
+<para>
+Unlike local options, global options define general rules for a set of
+PCRaster operators. Normally, they are set only once (for instance at the
+beginning of a project) and affect all operations to which they are relevant.
+If you use the MS-Windows version of PCRaster, you can set general global
+options by typing after the command prompt:
+
+<informalexample><literallayout>set PCROPTIONS = <pcr-go>globaloption</pcr-go><emphasis>1</emphasis> <pcr-go>globaloption</pcr-go><emphasis>2</emphasis> ...<pcr-go>globaloption</pcr-go><emphasis>n</emphasis></literallayout></informalexample>
+
+where globaloption1 is one of the global options, which, unlike a local
+option, is preceded by <emphasis>two</emphasis> - characters. If you use the
+UNIX version of PCRaster, global options are set by typing after the
+UNIX prompt:
+
+<informalexample><literallayout>PCROPTIONS='<pcr-go>globaloption</pcr-go><emphasis>1</emphasis> <pcr-go>globaloption</pcr-go><emphasis>2</emphasis> ...<pcr-go>globaloption</pcr-go><emphasis>n</emphasis>'; 
+
+export PCROPTIONS</literallayout></informalexample>
+
+Note that in UNIX no spaces are typed on either side of the = sign. For
+instance: <programlisting> PCROPTIONS='<pcr-go>clone</pcr-go>
+CloneStudyArea.map <pcr-go>lddin</pcr-go>'; export
+PCROPTION</programlisting> After applying PCROPTIONS the global options
+have the setting as specified or, if they are not specified, the default
+values. This set of options is used until a new set of options is
+specified with PCROPTIONS. If you set the options again with PCROPTIONS,
+options which are not specified that time are always set to default,
+<emphasis>no</emphasis> old settings are taken.
+</para>
+
+<para>
+If you want to set a different global option for only one operation,
+you can specify a global option in the command line. This is done
+in the same way as it is done for a local option, by typing the
+<pcr-go>globaloption</pcr-go> after <pcr-op>pcrcalc</pcr-op>. If
+a non-<pcr-op>pcrcalc</pcr-op> operator is applied (for instance
+<pcr-op>table</pcr-op>) the global option is typed after the operator. The
+general global option setting described above is overruled only for the
+execution of the operation that is given in the command line.
+</para>
+
+<para>
+You will find the local options and global options in the
+alphabetical list of PCRaster operators (<xref linkend="secalphop"/>). 
+In this list, the local and global options are given for each
+PCRaster operator. All global options are listed and described in the next
+section.
+</para>
+</section>
+
+
+<section id="secimportoptover">
+<title>Overview of global options</title>
+<para>
+<anchor id="LocAtrOp" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>clone map</primary>
+</indexterm>
+<emphasis>global options related to location attributes:</emphasis>  
+
+<variablelist>
+<varlistentry>
+<term>
+ <anchor id="GOClone" role="indexterm-concept"  /> 
+ <pcr-go>clone</pcr-go> <emphasis>CloneMap</emphasis>
+ <indexterm role="concept">
+ <primary>clone, global option</primary>
+ </indexterm>
+</term>
+<listitem>
+
+<para>
+<anchor id="GOUnit" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>location attributes</primary>
+  <secondary>global options related to</secondary>
+</indexterm>
+The CloneMap is a PCRaster map that must have the location attributes of
+the maps you want to use during a project. It may be an empty map made
+at the start of a project using the operator <link linkend="mapattr"><pcr-op>mapattr</pcr-op></link>, see also <xref linkend="secimportmapcrea"/>.
+Alternatively you may specify as CloneMap an existing
+PCRraster map containing data.  </para></listitem>
+</varlistentry><varlistentry><term><pcr-go>unittrue</pcr-go> (default)
+or <pcr-go>unitcell</pcr-go>
+</term>
+<listitem><para>
+This option specifies the units used for the coordinates and sizes of
+the cells. It is of importance to the operations that make calculations
+with distances or areas in the map or to operations that import or
+export coordinates of cells.  
+
+Default, with the option <pcr-go>unittrue</pcr-go>, PCRaster uses
+true distances and the true coordinate system of the map. These are
+given during creation of your map or the clone map of your map with
+<link linkend="mapattr"><pcr-op>mapattr</pcr-op></link>
+and <xref linkend="secdatbasemaphead"/> about the location attributes
+of a map. The cell length is defined by the real length of a cell. The x coordinates
+are real distance coordinates and increase from left to right, starting
+with the x coordinate at the left edge of your map; the y coordinates
+increase from top to bottom, starting with the y coordinate at the top
+edge of your map, or from bottom to top, starting with the y coordinate
+at the bottom edge of the map (depends on the projection you have chosen).
+
+PCRaster uses a sort of matrix coordinates if the option
+<pcr-go>unitcell</pcr-go> is set.  This option is seldom
+used. Both the real coordinate system and the real cell length
+of the maps (given with the <pcr-op>mapattr</pcr-op> operator)
+are totally ignored. In all operations a cell length of 1 is
+used. If coordinates are exported or imported, the top left corner
+of the map is assigned the x,y co-ordinates (0,0); x increases
+from left to right and y increases always from top to bottom. As a
+result the centre of the top left cell of a PCRaster map has always
+<pcr-go>unitcell</pcr-go> x,y coordinates (0.5,0.5).  
+</para></listitem>
+</varlistentry><varlistentry><term><pcr-go>coorcentre</pcr-go> (default)
+or <pcr-go>coorul</pcr-go> or <pcr-go>coorlr</pcr-go>
+<anchor id="GOCoor" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>coorcentre, global option</primary>
+</indexterm>
+</term>
+<listitem><para>
+This option gives the coordinate position that is linked to a cell. If
+coordinates of cells are exported, you can choose to export for each
+cell the x,y coordinates of the centre of the cell (<pcr-go>coorcentre</pcr-go>,
+default), the upper left corner of the cell (<pcr-go>coorul</pcr-go>) or the lower
+right corner of the cell (<pcr-go>coorlr</pcr-go>).
+
+If point data with x,y coordinates are imported to a PCRaster map the
+option determines the assignment of point values that have x,y coordinates
+exactly at the edges of cells. This is only relevant to the operator
+<link linkend="col2map"><pcr-op>col2map</pcr-op></link>.
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<emphasis>global options for defining the sort of directional data type:</emphasis>
+
+<variablelist>
+<varlistentry><term><pcr-go>degrees</pcr-go> (default) or <pcr-go>radians</pcr-go>  
+<anchor id="GOdegrrad" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>degrees</primary>
+  <secondary>global option</secondary>
+</indexterm>
+</term>
+<listitem><para>
+Default, the program interprets directional data as degrees (domain
+[0,360>). If the option <pcr-go>radians</pcr-go> is set, directional
+data are interpreted and displayed as radians (domain [0,2pi>).
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+<emphasis>global options for defining cell representations:</emphasis>
+</para>
+
+<para>
+<anchor id="GOrepres" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>cell</primary>
+  <secondary>representation, global options</secondary>
+</indexterm>
+These options define the representation of cell values used for storage and
+processing of data. The settings are only applied to the maps that
+are created: if you change the cell representation settings during a project,
+only the new maps you generate are assigned the new cell representation.
+The old maps created before you changed the settings will keep the 'old'
+cell representation. 
+
+<variablelist>
+<varlistentry><term>scalar and directional data type:  
+<anchor id="GOSingDou" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>directional data type</primary>
+  <secondary>global options related to</secondary>
+</indexterm>
+<pcr-go>single</pcr-go>
+(default) or <pcr-go>double</pcr-go></term>
+<listitem><para>
+
+Default, the cell representation is <emphasis>single real</emphasis>
+(<pcr-go>single</pcr-go>). If you set <pcr-go>double</pcr-go> it will
+result in <emphasis>double real</emphasis> representation of cell
+values. See also scalar data type, <xref linkend="formscalar"/> and
+directional data type, <xref linkend="formdirectional"/>.
+</para></listitem>
+</varlistentry>
+ <varlistentry>
+ <term>
+  <link linkend="formnominal">nominal</link> 
+  and ordinal data type  
+<anchor id="GOSmaLar" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>large, global option</primary>
+</indexterm>
+: <pcr-go>small</pcr-go> (default)
+/ <pcr-go>large</pcr-go></term>
+<listitem><para>
+Default, nominal and ordinal data are represented by <emphasis>small
+integer</emphasis> cell representation. If you set <pcr-go>large</pcr-go>,
+<emphasis>large integer</emphasis> is used. See also and ordinal data
+type, <xref linkend="formordinal"/>.
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+
+<emphasis>global option for specifying the format of tables</emphasis>
+
+<variablelist>
+<varlistentry><term><pcr-go>columntable</pcr-go> (default) or <pcr-go>matrixtable</pcr-go></term>
+<listitem><para>
+Default, the operators <link linkend="lookup"><pcr-op>lookup</pcr-op></link>
+ and <link linkend="table"><pcr-op>table</pcr-op></link>
+ use column tables (setting <pcr-go>columntable</pcr-go>).
+<anchor id="GOCoMa" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>columntable, global option</primary>
+</indexterm>
+ If the option <pcr-go>matrixtable</pcr-go> is set, a matrix table
+is used. For a description of these formats, see 
+<xref linkend="secdatbaselook"/>.
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+
+<emphasis>global options related to generation of a local drain direction map</emphasis>
+
+<variablelist>
+<varlistentry><term><pcr-go>lddout</pcr-go> (default) or <pcr-go>lddin</pcr-go></term>
+<listitem><para>
+This option determines whether small catchments at the edge of the map
+are or are not considered as pits.  
+<anchor id="GOLdd" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>ldd data type</primary>
+  <secondary>global options related to</secondary>
+</indexterm>
+ See the operators
+<link linkend="lddcreate"><pcr-op>lddcreate</pcr-op></link>
+ and <link linkend="lddcreate"><pcr-op>lddcreatedem</pcr-op></link>.
+</para></listitem>
+</varlistentry><varlistentry><term><pcr-go>lddfill</pcr-go> (default) or <pcr-go>lddcut</pcr-go></term>
+<listitem><para>
+This option determines the way the elevation model is modified in the core
+of pits.  
+<anchor id="GOLddFillCut" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>ldd data type</primary>
+  <secondary>global options related to</secondary>
+</indexterm>
+ See the operator <link linkend="lddcreatedem"><pcr-op>lddcreatedem</pcr-op>.
+</link>
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+
+<emphasis>global option for specifying the neighbourhood of cells</emphasis>
+
+<variablelist>
+<varlistentry><term><pcr-go>diagonal</pcr-go> (default) or <pcr-go>nondiagonal</pcr-go></term>
+<listitem><para>
+This options specifies the neighbourhood of cells in the <pcr-op>clump</pcr-op>
+operation,  
+<anchor id="GODiaNDia" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>diagonal, global option</primary>
+</indexterm>
+ see the <link linkend="clump"><pcr-op>clump</pcr-op> operator</link>.
+</para></listitem>
+</varlistentry>
+</variablelist>
+
+
+<emphasis>global option for defining the sort of message printed during execution of
+an operation</emphasis>
+
+<variablelist>
+<varlistentry><term><pcr-go>noprogress</pcr-go> (default), <pcr-go>progress</pcr-go> or <pcr-go>nothing</pcr-go></term>
+<listitem><para>
+This option affects the message printed on the screen during execution
+of an operation.  
+<anchor id="GOMEssages" role="indexterm-concept"/> 
+<indexterm role="concept">
+<primary>messages printed during execution of operation</primary>
+</indexterm>
+ Default, the name, copyright and version of the software is printed
+ and error messages if errors occur
+(<pcr-go>noprogress</pcr-go>). The option <pcr-go>progress</pcr-go>
+will result in additional information printed during execution, such as
+'busy with row x', etc. If you set the option <pcr-go>nothing</pcr-go>,
+nothing is printed on the screen, except error messages.
+</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</section>
+</section>
+ </chapter> 
+ <!-- 
+	  Local Variables:
+	   mode: sgml
+	   End
+	   -->
