@@ -4,8 +4,6 @@
 from PCRaster import *
 from PCRaster.Framework import *
 
-from _PCRaster import *
-
 class RainModel(DynamicModel):
   def __init__(self, cloneMap):
     DynamicModel.__init__(self)
