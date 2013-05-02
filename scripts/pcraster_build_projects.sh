@@ -10,4 +10,4 @@ source $PROJECTS/devenv/configuration/profiles/Utils.sh
 
 source $PROJECTS/pcraster/environment/configuration/PCRaster-master
 
-build_projects.py
+/home/niels/Development/projects/pcraster/environment/scripts/make_pcraster_package_linux.sh

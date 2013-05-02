@@ -1,14 +1,12 @@
 from pcraster import *
 
-setclone("mask.map")
+setclone("Global_CloneMap_30min.map")
 
-# map with location of rainstation
+inputMap = readmap("Global_InterceptCapacity-Grassland_0000-12-18_30min.map")
+result = readmap("Global_InterceptCapacity-Grassland_0000-12-18_30min.map")
 
-SoilMap = readmap("dem.map")
-result = readmap("dem.map")
-
-for i in range(1):
-    result = result + SoilMap
+for i in range(1000):
+    result = result + inputMap
 
 report(result, "result.map")
 
