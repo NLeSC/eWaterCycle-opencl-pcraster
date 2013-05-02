@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from PCRaster import *
-from PCRaster.Framework import *
+# model for simulation of rainfall
+# 24 timesteps of 6 hours => modelling time one week
+
+from pcraster import *
+from pcraster.framework import *
 
 class RainModel(DynamicModel):
   def __init__(self, cloneMap):

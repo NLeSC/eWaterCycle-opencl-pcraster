@@ -3,8 +3,8 @@
 
 # static model
 
-from PCRaster import *
-from PCRaster.Framework import *
+from pcraster import *
+from pcraster.framework import *
 
 class RunoffModel(StaticModel):
   def __init__(self, cloneMap):

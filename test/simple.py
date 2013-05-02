@@ -1,12 +1,14 @@
-from PCRaster import *
+from pcraster import *
 
 setclone("mask.map")
 
 # map with location of rainstation
 
 SoilMap = readmap("dem.map")
+result = readmap("dem.map")
 
-result = SoilMap * scalar(2)
+for i in range(1):
+    result = result + SoilMap
 
 report(result, "result.map")
 

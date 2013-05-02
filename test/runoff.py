@@ -4,8 +4,8 @@
 # model for simulation of runoff
 # 24 timesteps of 6 hours => modelling time one week
 
-from PCRaster import *
-from PCRaster.Framework import *
+from pcraster import *
+from pcraster.framework import *
 
 class RunoffModel(DynamicModel):
   def __init__(self, cloneMap):
