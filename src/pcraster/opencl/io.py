@@ -9,6 +9,8 @@ Created on May 7, 2013
 
 import pcraster._pcraster as _pcraster
 
+Scalar = _pcraster.Scalar
+
 def setclone(filename):
     '''Set the clone.
    
@@ -42,47 +44,41 @@ def readmap(filename):
     print "opencl readmap"
     return _pcraster.readmap(filename)
 
+# def cellvalue(map, index):
+#     '''Return a cell value from a map.
+#     
+#     map -- Map you want to query.
+#     index -- Linear index of a cell in the map, ranging from [1, number-of-cells].
+#     
+#     Returns a tuple with two elements: the first is the cell value, the second
+#     is a boolean value which shows whether the first element, is valid or not.
+#     If the second element is False, the cell contains a missing value.
+#     See also: cellvalue(map, row, col)
+#     '''
+#     return _pcraster.cellvalue(map, index)
 
-
+def cellvalue(map, row, col = -1):
+    '''Return a cell value from a map.
     
-# 
-#   def("cellvalue", pp::fieldGetCellIndex,
-#   "Return a cell value from a map.\n"
-#   "\n"
-#   "map -- Map you want to query.\n"
-#   "index -- Linear index of a cell in the map, ranging from\n"
-#   "         [1, number-of-cells].\n"
-#   "\n"
-#   "Returns a tuple with two elements: the first is the cell value, the second\n"
-#   "is a boolean value which shows whether the first element, is valid or not.\n"
-#   "If the second element is False, the cell contains a missing value.\n"
-#   "See also: cellvalue(map, row, col)");
-# 
-#   def("cellvalue", pp::fieldGetCellRowCol,
-#   "Return a cell value from a map.\n"
-#   "\n"
-#   "map -- Map you want to query.\n"
-#   "row -- Row index of a cell in the map, ranging from [1, number-of-rows].\n"
-#   "col -- Col index of a cell in the map, ranging from [1, number-of-cols].\n"
-#   "\n"
-#   "Returns a tuple with two elements: the first is the cell value,\n"
-#   "the second is a boolean value which shows whether the first element,\n"
-#   "is valid or not.\n"
-#   "If the second element is False, the cell contains a missing value.\n"
-#   "See also: cellvalue(map, index)");
-# 
-#   def("setglobaloption", pp::setGlobalOption,
-#   "Set the global option. The option argument must not contain the leading\n"
-#   "dashes as used on the command line of pcrcalc.\n"
-#   "\n"
-#   "Python example:\n"
-#   "  setglobaloption(\"unitcell\")\n"
-#   "\n"
-#   "The pcrcalc equivalent:\n"
-#   "  pcrcalc --unitcell -f model.mod\n"
-#   );
-# 
-#   def("pcr2numpy", pcraster::python::field2Array);
-#   def("pcr_as_numpy", pcraster::python::fieldAsArray);
-#   def("numpy2pcr", pcraster::python::numpy2pcr,
-#       return_value_policy<manage_new_object>());
+    map -- Map you want to query.
+    row -- Row index of a cell in the map, ranging from [1, number-of-rows].
+    col -- Col index of a cell in the map, ranging from [1, number-of-cols].
+    
+    Returns a tuple with two elements: the first is the cell value,
+    the second is a boolean value which shows whether the first element,
+    is valid or not.
+    If the second element is False, the cell contains a missing value.
+    See also: cellvalue(map, index)
+    '''
+    if col == -1:
+        return _pcraster.cellvalue(map, row)
+    
+    return _pcraster.cellvalue(map, row, col)
+    
+def setglobaloption(option):
+    '''Set the global option.
+    
+    Not supported currently.
+    '''
+    
+    raise Exception("Setting global options not supported currently.")

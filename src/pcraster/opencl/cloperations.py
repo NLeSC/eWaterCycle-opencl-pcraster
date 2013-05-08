@@ -1,109 +1,309 @@
 '''
-Created on Apr 26, 2013
+Created on May 8, 2013
 
 @author: niels
 '''
-import pyopencl as cl
 
-import numpy
-import numpy.linalg as la
-import pcraster
+import pcraster.operations as pcr_operations
+
+def ifthen(arg1, arg2):
+    return pcr_operations.ifthen(arg1, arg2)
+
+def ifthenelse(arg1, arg2, arg3):
+    return pcr_operations.ifthenelse(arg1, arg2, arg3)
+
+def pcrne(arg1, arg2):
+    return pcr_operations.pcrne(arg1, arg2)
+
+def pcreq(arg1, arg2):
+    return pcr_operations.pcreq(arg1, arg2)
+
+def pcrgt(arg1, arg2):
+    return pcr_operations.pcrgt(arg1, arg2)
+
+def pcrge(arg1, arg2):
+    return pcr_operations.pcrge(arg1, arg2)
+
+def pcrlt(arg1, arg2):
+    return pcr_operations.pcrlt(arg1, arg2)
+
+def pcrle(arg1, arg2):
+    return pcr_operations.pcrle(arg1, arg2)
+
+def min(arg1, *arg2):
+    return pcr_operations.min(arg1, *arg2)
+
+def max(arg1, *arg2):
+    return pcr_operations.max(arg1, *arg2)
+
+def cover(arg1, *arg2):
+    return pcr_operations.cover(arg1, *arg2)
+
+# def timeinput(arg1):
+# def timeinputsparse(arg1):
+# def timeinputmodulo(arg1, arg2):
+# def lookupmapstack(arg1, arg2):
+# def spreadmax(arg1, arg2, arg3, arg4):
+# def spreadmaxzone(arg1, arg2, arg3, arg4):
+# def spread(arg1, arg2, arg3):
+# def spreadzone(arg1, arg2, arg3):
+# def spreadldd(arg1, arg2, arg3, arg4):
+# def spreadlddzone(arg1, arg2, arg3, arg4):
+# def dynamicwaveq(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16):
+# def dynamicwaveh(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16):
+# def order(arg1):
+# def areaorder(arg1, arg2):
+# def argorder(*arg1):
+# def argorderwithid(arg1, arg2):
+# def argorderarealimited(arg1, arg2):
+# def argorderwithidarealimited(arg1, arg2, arg3):
+# def argorderaddarealimited(arg1, arg2, arg3):
+# def argorderwithidaddarealimited(arg1, arg2, arg3, arg4):
+# def windowminimum(arg1, arg2):
+# def brenner(arg1, arg2, arg3, arg4, arg5, arg6):
+# def windowmaximum(arg1, arg2):
+# def windowdiversity(arg1, arg2):
+# def areadiversity(arg1, arg2):
+# def areamajority(arg1, arg2):
+# def windowmajority(arg1, arg2):
+
+def pcrmul(arg1, arg2):
+    return pcr_operations.pcrmul(arg1, arg2)
+
+def pcrfdiv(arg1, arg2):
+    return pcr_operations.pcrfdiv(arg1, arg2)
+
+def pcrpow(arg1, arg2):
+    return pcr_operations.pcrpow(arg1, arg2)
+
+def pcrmod(arg1, arg2):
+    return pcr_operations.pcrmod(arg1, arg2)
+
+def pcridiv(arg1, arg2):
+    return pcr_operations.pcridiv(arg1, arg2)
+
+def pcruadd(arg1):
+    return pcr_operations.pcruadd(arg1)
+
+def pcrumin(arg1):
+    return pcr_operations.pcrumin(arg1)
+
+def pcrbadd(arg1, arg2):
+    return pcr_operations.pcrbadd(arg1, arg2)
+
+def pcrbmin(arg1, arg2):
+    return pcr_operations.pcrbmin(arg1, arg2)
+
+# def timeinputscalar(arg1, arg2):
+# def timeinputdirectional(arg1, arg2):
+# def timeinputboolean(arg1, arg2):
+# def timeinputldd(arg1, arg2):
+# def timeinputnominal(arg1, arg2):
+# def timeinputordinal(arg1, arg2):
+# def lookupnominal(arg1, *arg2):
+# def lookupboolean(arg1, *arg2):
+# def lookupordinal(arg1, *arg2):
+# def lookupscalar(arg1, *arg2):
+# def lookuplinear(arg1, arg2):
+# def lookupdirectional(arg1, *arg2):
+# def lookupldd(arg1, *arg2):
+# def indexnominal(arg1):
+# def indexboolean(arg1):
+# def indexordinal(arg1):
+# def indexscalar(arg1):
+# def indexdirectional(arg1):
+# def indexldd(arg1):
+# def indextable(arg1):
+# def index(arg1):
+
+def ldd(arg1):
+    return pcr_operations.ldd(arg1)
+
+# def directional(arg1):
+
+def scalar(arg1):
+    return pcr_operations.scalar(arg1)
     
-context = cl.create_some_context()
-command_queue = cl.CommandQueue(context, properties= cl.command_queue_properties.PROFILING_ENABLE)
+# def boolean(arg1):
 
-prg = cl.Program(context, """
-        __kernel void sum(__global const float *a,
-        __global const float *b, __global float *result, const int map_width)
-        {
-          int myX = get_global_id(0);
-          int myY = get_global_id(1);
-          int myIndex = (get_global_size(0) * myY) + myX;
-          
-          if (a[myIndex] == 1e20f) {
-              result[myIndex] = 1e20f;
-          } else if (b[myIndex] == 1e20f) {
-              result[myIndex] = 1e20f;
-          } else {
-              result[myIndex] = a[myIndex] + b[myIndex];
-          }
-        }
-        """).build()
+def nominal(arg1):
+    return pcr_operations.nominal(arg1)
+
+# def ordinal(arg1):
+# def pcrand(arg1, arg2):
+# def pcror(arg1, arg2):
+# def pcrxor(arg1, arg2):
+# def pcrnot(arg1):
+
+def sin(arg1):
+    return pcr_operations.sin(arg1)
+
+def cos(arg1):
+    return pcr_operations.cos(arg1)
+
+def tan(arg1):
+    return pcr_operations.tan(arg1)
+
+def asin(arg1):
+    return pcr_operations.asin(arg1)
+
+def acos(arg1):
+    return pcr_operations.acos(arg1)
+
+def atan(arg1):
+    return pcr_operations.atan(arg1)
+
+def abs(arg1):
+    return pcr_operations.abs(arg1)
+
+def exp(arg1):
+    return pcr_operations.exp(arg1)
+
+# def fac(arg1):
+# def rounddown(arg1):
+# def ln(arg1):
+# def log10(arg1):
+# def roundup(arg1):
+# def roundoff(arg1):
+
+def sqrt(arg1):
+    return pcr_operations.sqrt(arg1)
+
+# def sqr(arg1):
+# def normal(arg1):
+# def uniform(arg1):
+
+def xcoordinate(arg1):
+    return pcr_operations.xcoordinate(arg1)
+    
+
+def ycoordinate(arg1):
+    return pcr_operations.ycoordinate(arg1)
         
-#          uint ones = 0xffffffff;
-#          float pcr_nan = as_float(0xffffffff); 
-#          result[myIndex] = isnan(a[myIndex]) ?  : a[myIndex] + b[myIndex];
+        
+# def uniqueid(arg1):
+# def move(arg1, arg2, arg3):
+# def shift(arg1, arg2, arg3):
+# def shift0(arg1, arg2, arg3):
+# def celllength():
+# def cellarea():
+# def time():
+# def timeslice():
+# def mapnormal():
+# def mapuniform():
+# def succ(arg1):
+# def pred(arg1):
+# def pit(arg1):
+# def nodirection(arg1):
 
-
-#rather complicated way to generate a float with all bits set (missing value in the pcraster format)
-onearray = numpy.empty(1, numpy.float32)
-as_int_array = onearray.view(numpy.uint32)  
-as_int_array[0] = int("0xffffffff", 16)
-pcraster_float32_mv = onearray[0]
-
-mf = cl.mem_flags
-
-def numpy2raster(ndarray):
-    #ndarray[numpy.isnan(ndarray)]=1e20
-    return pcraster.numpy2pcr(pcraster.Scalar, ndarray, 1e20)
-
-def raster2numpy(raster):
-    return pcraster.pcr2numpy(raster, 1e20)
-
-def new_scalar():
-    return pcraster.newScalarField()
-
-def as_numpy(map):
-    return pcraster.pcr_as_numpy(map, numpy.nan)
-
-def enqueue_sum(a_buffer, b_buffer, result_buffer, shape):
-    width = numpy.int32(shape[0])
-    #prg.sum(command_queue, shape, a_buffer, b_buffer, result_buffer, width)
-    event = prg.sum(command_queue, shape, a_buffer, b_buffer, result_buffer, width)
-#    event.wait()
-#    elapsed = 1e-9 * (event.profile.end - event.profile.start)
-#    print "Execution time: %g s" % elapsed
-
-def do_copy(src_buffer, dst_array):    
-    cl.enqueue_copy(command_queue, dst_array, src_buffer)
+def mapminimum(arg1):
+    return pcr_operations.mapminimum(arg1)
     
-def create_readbuffer(ndarray):
-    return cl.Buffer(context, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=ndarray)
+def mapmaximum(arg1):
+    return pcr_operations.mapmaximum(arg1)
 
-def create_writebuffer(size):
-    return cl.Buffer(context, mf.WRITE_ONLY, size)
+def defined(arg1):
+    return pcr_operations.defined(arg1)
 
-def set_mv(ndarray):
-    #ndarray[numpy.isnan(ndarray)]= pcraster_float32_mv
-    pass
-    
-def badd(arg1, arg2):
-    '''binary add two maps together. returns a new map'''
+# def maparea(arg1):
 
-#    print "start of badd operation"
-   
-    #pcraster maps as numpy arrays 
-    a_ndarray = raster2numpy(arg1)
-    b_ndarray = raster2numpy(arg2)
-    
-#    print "a array = ", a_ndarray
-#    print "b array = ", b_ndarray
-    
-    a_buffer = create_readbuffer(a_ndarray)
-    b_buffer = create_readbuffer(b_ndarray)
-    
-    result_buffer = create_writebuffer(a_ndarray.nbytes)
+def spatial(arg1):
+    return pcr_operations.spatial(arg1)
 
-    enqueue_sum(a_buffer, b_buffer, result_buffer, a_ndarray.shape)
+# def accustate(arg1, arg2):
+# def accuflux(arg1, arg2):
+# def muskingum(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9):
+# def dynwavestate(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11):
+# def dynwaveflux(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11):
+# def lookupstate(arg1, arg2, arg3, arg4, arg5):
+# def lookuppotential(arg1, arg2, arg3, arg4, arg5):
+# def accucapacitystate(arg1, arg2, arg3):
+# def accucapacityflux(arg1, arg2, arg3):
+# def accuthresholdstate(arg1, arg2, arg3):
+# def accuthresholdflux(arg1, arg2, arg3):
+# def accufractionstate(arg1, arg2, arg3):
+# def accufractionflux(arg1, arg2, arg3):
+# def accutriggerstate(arg1, arg2, arg3):
+# def accutriggerflux(arg1, arg2, arg3):
 
-    result_ndarray = numpy.empty_like(a_ndarray)
+def accutraveltimestate(arg1, arg2, arg3):
+    return pcr_operations.accutraveltimestate(arg1, arg2, arg3)
 
-#    print "result array = ", result_ndarray
-    
-    #copy result buffer into result map
-    do_copy(result_buffer, result_ndarray)
+def accutraveltimeflux(arg1, arg2, arg3):
+    return pcr_operations.accutraveltimeflux(arg1, arg2, arg3)
+ 
+# def accutraveltimefractionremoved(arg1, arg2, arg3, arg4):
+# def accutraveltimefractionstate(arg1, arg2, arg3, arg4):
+# def accutraveltimefractionflux(arg1, arg2, arg3, arg4):
+# def diffusestate(arg1, arg2, arg3):
+# def diffuseflux(arg1, arg2, arg3):
+# def kinwavestate(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8):
+# def kinwaveflux(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8):
+# def kinematic(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8):
+# def timeoutput(arg1, arg2):
 
-    #explicitly set pcraster_mv if needed    
-    set_mv(result_ndarray)
-    
-    return numpy2raster(result_ndarray)
+def maptotal(arg1):
+    return pcr_operations.maptotal(arg1)
+
+# def mapand(arg1):
+# def mapor(arg1):
+# def areaarea(arg1):
+# def clump(arg1):
+# def drain(arg1, arg2):
+# def path(arg1, arg2):
+# def aspect(arg1):
+# def slope(arg1):
+# def window4total(arg1):
+# def profcurv(arg1):
+# def plancurv(arg1):
+# def view(arg1, arg2):
+# def extentofview(arg1, arg2):
+# def inversedistance(arg1, arg2, arg3, arg4, arg5):
+# def catchment(arg1, arg2):
+# def subcatchment(arg1, arg2):
+# def windowaverage(arg1, arg2):
+# def markwhilesumle(arg1, arg2, arg3):
+# def markwhilesumge(arg1, arg2, arg3):
+# def ellipseaverage(arg1, arg2, arg3, arg4):
+# def influencesimplegauss(arg1, arg2, arg3):
+# def distributesimplegauss(arg1, arg2, arg3):
+# def ibngauss(arg1, arg2, arg3):
+# def horizontan(arg1, arg2):
+# def catchmenttotal(arg1, arg2):
+# def areamaximum(arg1, arg2):
+# def areaminimum(arg1, arg2):
+# def areaaverage(arg1, arg2):
+# def areatotal(arg1, arg2):
+# def areauniform(arg1):
+# def areanormal(arg1):
+# def windowtotal(arg1, arg2):
+# def windowhighpass(arg1, arg2):
+
+def ldddist(arg1, arg2, arg3):
+    return pcr_operations.ldddist(arg1, arg2, arg3)
+
+def upstream(arg1, arg2):
+    return pcr_operations.upstream(arg1, arg2)
+
+# def streamorder(arg1):
+# def transient(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+# def downstream(arg1, arg2):
+# def downstreamdist(arg1):
+# def lddmask(arg1, arg2):
+
+def lddrepair(arg1):
+    return pcr_operations.lddrepair(arg1)
+
+# def slopelength(arg1, arg2):
+# def lddcreate(arg1, arg2, arg3, arg4, arg5):
+# def lddcreatedem(arg1, arg2, arg3, arg4, arg5):
+# def lddcreatend(arg1, arg2, arg3, arg4, arg5):
+# def lddcreatenddem(arg1, arg2, arg3, arg4, arg5):
+# def riksfraction(arg1, arg2, arg3):
+# def squarefraction(arg1, arg2, arg3):
+# def gradx(arg1):
+# def grady(arg1):
+# def divergence(arg1, arg2):
+# def diver(arg1, arg2, arg3, arg4):
+# def lax(arg1, arg2):
+# def laplacian(arg1):
