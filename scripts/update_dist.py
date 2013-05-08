@@ -10,11 +10,10 @@ import tarfile
 import shutil
 import subprocess
 
-
 scriptdir = os.path.dirname(os.path.abspath(__file__))
 pcraster_dir = os.path.dirname(scriptdir)
 
-distdir = os.path.join(pcraster_dir, 'pcraster-custom')
+distdir = os.path.join(pcraster_dir, 'dist')
 
 #move old dist dir if needed
 if os.path.exists(distdir):
@@ -34,9 +33,9 @@ if os.path.exists(build_tmp):
 os.mkdir(build_tmp)
 
 #call bash script to make pcraster package.
-bash_script = os.path.join(scriptdir, 'make_dist_set_environment.sh')
+bash_script = os.path.join(scriptdir, 'pcraster_make_pcraster_package_linux.sh')
 
-return_code = subprocess.call(bash_script + " " + distdir, shell=True, cwd=build_tmp)
+return_code = subprocess.call(bash_script, shell=True, cwd=build_tmp)
 
 sys.exit(0)
 
