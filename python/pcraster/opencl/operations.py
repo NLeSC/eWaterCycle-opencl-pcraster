@@ -5,6 +5,7 @@ Created on May 8, 2013
 '''
 
 import pcraster.operations as pcr_operations
+from pcraster.opencl.field import OpenCLField
 
 def ifthen(arg1, arg2):
     return pcr_operations.ifthen(arg1, arg2)
@@ -91,7 +92,12 @@ def pcrumin(arg1):
     return pcr_operations.pcrumin(arg1)
 
 def pcrbadd(arg1, arg2):
-    return pcr_operations.pcrbadd(arg1, arg2)
+    pcrmap1 = arg1.pcrmap
+    pcrmap2 = arg2.pcrmap
+    
+    pcrresult = pcr_operations.pcrbadd(pcrmap1, pcrmap2)
+     
+    return OpenCLField(pcrresult)
 
 def pcrbmin(arg1, arg2):
     return pcr_operations.pcrbmin(arg1, arg2)
@@ -133,11 +139,20 @@ def scalar(arg1):
 def nominal(arg1):
     return pcr_operations.nominal(arg1)
 
-# def ordinal(arg1):
-# def pcrand(arg1, arg2):
-# def pcror(arg1, arg2):
-# def pcrxor(arg1, arg2):
-# def pcrnot(arg1):
+def ordinal(arg1):
+    return pcr_operations.ordinal(arg1)
+
+def pcrand(arg1, arg2):
+    return pcr_operations.pcrand(arg1, arg2)
+
+def pcror(arg1, arg2):
+    return pcr_operations.pcror(arg1, arg2)
+
+def pcrxor(arg1, arg2):
+    return pcr_operations.pcrxor(arg1, arg2)
+
+def pcrnot(arg1):
+    return pcr_operations.pcrnot(arg1)
 
 def sin(arg1):
     return pcr_operations.sin(arg1)

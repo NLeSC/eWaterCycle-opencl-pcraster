@@ -8,6 +8,7 @@ Created on May 7, 2013
 '''
 
 import pcraster._pcraster as _pcraster
+from pcraster.opencl.field import OpenCLField
 
 Scalar = _pcraster.Scalar
 
@@ -34,15 +35,19 @@ def report(map, filename):
     filename -- Filename to use.
     '''
     print "opencl report"
-    _pcraster.report(map, filename)
-    
+    _pcraster.report(map.pcrmap, filename)
+
 def readmap(filename):
     '''Read a map.
     
     filename -- Filename of a map to read.
     '''
     print "opencl readmap"
-    return _pcraster.readmap(filename)
+    
+    pcrmap = _pcraster.readmap(filename)
+    
+    return OpenCLField(pcrmap)
+    
 
 # def cellvalue(map, index):
 #     '''Return a cell value from a map.
