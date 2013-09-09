@@ -18,6 +18,7 @@ ldd = lddcreate("dem.map", 1e31, 1e31, 1e31, 1e31)
 report(ldd, "ldd.map")
 
 # Generating a map with a random value taken from a normal distribution
+# Note: originally used mapnormal, only made a single value
 randomField = max(scalar(0), scalar(0.005) + normal(True) / scalar(1000))
 report(randomField, "randomField.map")
 
