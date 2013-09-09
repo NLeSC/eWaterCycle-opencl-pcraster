@@ -17,9 +17,8 @@ report(infilcap, "infilcap.map")
 ldd = lddcreate("dem.map", 1e31, 1e31, 1e31, 1e31)
 report(ldd, "ldd.map")
 
-
 # Generating a map with a random value taken from a normal distribution
-randomField = max(scalar(0), scalar(0.005) + mapnormal() / scalar(1000))
+randomField = max(scalar(0), scalar(0.005) + normal(True) / scalar(1000))
 report(randomField, "randomField.map")
 
 # Execute the accuthreshold operator with simulated rainfall
@@ -27,5 +26,6 @@ runoff = accuthresholdflux("ldd.map", randomField, "infilcap.map")
 report(runoff, "runoff.map")
 
 # Generating a map holding elevation values above 95m
-uplandArea = ifthen("dem.map" > scalar(95), "dem.map")
+# NOTE: replaced ">" with pcrgt
+uplandArea = ifthen(pcrgt("dem.map",scalar(95)), "dem.map")
 report(uplandArea, "upland.map")

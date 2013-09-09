@@ -5,40 +5,94 @@ Created on May 8, 2013
 '''
 
 import pcraster.operations as pcr_operations
-from pcraster.opencl.field import OpenCLField
+from pcraster.opencl.map import OpenCLMap
+import types
+from pcraster import _pcraster
 
+def to_pcr(argument):
+    if isinstance(argument, types.StringTypes) or isinstance(argument, types.IntType) or isinstance(argument, types.LongType) or isinstance(argument, types.FloatType):
+        #filenames and number types handled by pcraster
+        return argument
+    elif isinstance(argument, OpenCLMap):
+        return argument.toPcrMap()
+    elif isinstance(argument, _pcraster.Field):
+        print 'warning: conversion to PCRaster of already PCRaster field'
+        return argument
+    else:
+        raise Exception('OpenCL PCRaster cannot handle argument: ' + str(argument))
+    
+def from_pcr(result):
+    print 'converting to pcr ' + str(result)
+    
+    #normal case, result is a map
+    if result.isSpatial():
+        print 'making a map from ' + str(result)
+        return OpenCLMap(result)
+    
+    #corner case: result is a single number (or boolean). Return a standard python value 
+    
+    value, isValid = _pcraster.cellvalue(result, 0)
+    
+    if not isValid:
+        print 'not valid'
+        return None 
+    elif result.dataType() == _pcraster.Boolean:
+        print 'boolean'
+        return bool(value)
+    elif result.dataType() == _pcraster.Scalar:
+        print 'scalar'
+        return float(value)
+    elif result.dataType() == _pcraster.Nominal:
+        print 'nominal'
+        return int(value)
+    elif result.dataType() == _pcraster.Ordinal:
+        print 'ordinal'
+        return int(value)
+    else:
+        raise Exception('Unsupported data type in conversion ' + result.dataType())
+    
+def list_to_pcr(*arguments):
+    result = [len(arguments)]
+    
+    for count, argument in enumerate(arguments):
+        print count, '=', argument
+        result[count] = to_pcr(argument)
+    
+    return result
+    
 def ifthen(arg1, arg2):
-    return pcr_operations.ifthen(arg1, arg2)
+    return from_pcr(pcr_operations.ifthen(to_pcr(arg1), to_pcr(arg2)))
 
 def ifthenelse(arg1, arg2, arg3):
-    return pcr_operations.ifthenelse(arg1, arg2, arg3)
+    return from_pcr(pcr_operations.ifthenelse(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
 
 def pcrne(arg1, arg2):
-    return pcr_operations.pcrne(arg1, arg2)
+    return from_pcr(pcr_operations.pcrne(to_pcr(arg1), to_pcr(arg2)))
 
 def pcreq(arg1, arg2):
-    return pcr_operations.pcreq(arg1, arg2)
+    return from_pcr(pcr_operations.pcreq(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrgt(arg1, arg2):
-    return pcr_operations.pcrgt(arg1, arg2)
+    return from_pcr(pcr_operations.pcrgt(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrge(arg1, arg2):
-    return pcr_operations.pcrge(arg1, arg2)
+    return from_pcr(pcr_operations.pcrge(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrlt(arg1, arg2):
-    return pcr_operations.pcrlt(arg1, arg2)
+    return from_pcr(pcr_operations.pcrlt(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrle(arg1, arg2):
-    return pcr_operations.pcrle(arg1, arg2)
+    return from_pcr(pcr_operations.pcrle(to_pcr(arg1), to_pcr(arg2)))
 
 def min(arg1, *arg2):
-    return pcr_operations.min(arg1, *arg2)
+    return from_pcr(pcr_operations.min(to_pcr(arg1), *list_to_pcr(*arg2)))
 
 def max(arg1, *arg2):
-    return pcr_operations.max(arg1, *arg2)
+    print 'maxcl on ' + str(len(arg2))
+    return from_pcr(pcr_operations.max(to_pcr(arg1), *list_to_pcr(*arg2)))
 
 def cover(arg1, *arg2):
-    return pcr_operations.cover(arg1, *arg2)
+    return from_pcr(pcr_operations.cover(to_pcr(arg1), *list_to_pcr(*arg2)))
 
 # def timeinput(arg1):
 # def timeinputsparse(arg1):
@@ -46,9 +100,12 @@ def cover(arg1, *arg2):
 # def lookupmapstack(arg1, arg2):
 # def spreadmax(arg1, arg2, arg3, arg4):
 # def spreadmaxzone(arg1, arg2, arg3, arg4):
-# def spread(arg1, arg2, arg3):
+
+def spread(arg1, arg2, arg3):
+    return from_pcr(pcr_operations.spread(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
+
 def spreadzone(arg1, arg2, arg3):
-  return pcr_operations.spreadzone(arg1, arg2, arg3)
+    return from_pcr(pcr_operations.spreadzone(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
 
 # def spreadldd(arg1, arg2, arg3, arg4):
 # def spreadlddzone(arg1, arg2, arg3, arg4):
@@ -71,39 +128,34 @@ def spreadzone(arg1, arg2, arg3):
 # def windowmajority(arg1, arg2):
 
 def pcrmul(arg1, arg2):
-    return pcr_operations.pcrmul(arg1, arg2)
+    return from_pcr(pcr_operations.pcrmul(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrfdiv(arg1, arg2):
-    return pcr_operations.pcrfdiv(arg1, arg2)
+    return from_pcr(pcr_operations.pcrfdiv(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrpow(arg1, arg2):
-    return pcr_operations.pcrpow(arg1, arg2)
+    return from_pcr(pcr_operations.pcrpow(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrmod(arg1, arg2):
-    return pcr_operations.pcrmod(arg1, arg2)
+    return from_pcr(pcr_operations.pcrmod(to_pcr(arg1), to_pcr(arg2)))
 
 def pcridiv(arg1, arg2):
-    return pcr_operations.pcridiv(arg1, arg2)
+    return from_pcr(pcr_operations.pcridiv(to_pcr(arg1), to_pcr(arg2)))
 
 def pcruadd(arg1):
-    return pcr_operations.pcruadd(arg1)
+    return from_pcr(pcr_operations.pcruadd(to_pcr(arg1)))
 
 def pcrumin(arg1):
-    return pcr_operations.pcrumin(arg1)
+    return from_pcr(pcr_operations.pcrumin(to_pcr(arg1)))
 
 def pcrbadd(arg1, arg2):
-    pcrmap1 = arg1.pcrmap
-    pcrmap2 = arg2.pcrmap
-    
-    pcrresult = pcr_operations.pcrbadd(pcrmap1, pcrmap2)
-     
-    return OpenCLField(pcrresult)
+    return from_pcr(pcr_operations.pcrbadd(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrbmin(arg1, arg2):
-    return pcr_operations.pcrbmin(arg1, arg2)
+    return from_pcr(pcr_operations.pcrbmin(to_pcr(arg1), to_pcr(arg2)))
 
 def timeinputscalar(arg1, arg2):
-    return pcr_operations.timeinputscalar(arg1, arg2)
+    return from_pcr(pcr_operations.timeinputscalar(to_pcr(arg1), to_pcr(arg2)))
 
 # def timeinputdirectional(arg1, arg2):
 # def timeinputboolean(arg1, arg2):
@@ -113,7 +165,10 @@ def timeinputscalar(arg1, arg2):
 # def lookupnominal(arg1, *arg2):
 # def lookupboolean(arg1, *arg2):
 # def lookupordinal(arg1, *arg2):
-# def lookupscalar(arg1, *arg2):
+
+def lookupscalar(arg1, *arg2):
+    return from_pcr(pcr_operations.lookupscalar(to_pcr(arg1), *list_to_pcr(*arg2)))
+
 # def lookuplinear(arg1, arg2):
 # def lookupdirectional(arg1, *arg2):
 # def lookupldd(arg1, *arg2):
@@ -127,56 +182,56 @@ def timeinputscalar(arg1, arg2):
 # def index(arg1):
 
 def ldd(arg1):
-    return pcr_operations.ldd(arg1)
+    return from_pcr(pcr_operations.ldd(to_pcr(arg1)))
 
 # def directional(arg1):
 
 def scalar(arg1):
-    return pcr_operations.scalar(arg1)
+    return from_pcr(pcr_operations.scalar(to_pcr(arg1)))
     
 # def boolean(arg1):
 
 def nominal(arg1):
-    return pcr_operations.nominal(arg1)
+    return from_pcr(pcr_operations.nominal(to_pcr(arg1)))
 
 def ordinal(arg1):
-    return pcr_operations.ordinal(arg1)
+    return from_pcr(pcr_operations.ordinal(to_pcr(arg1)))
 
 def pcrand(arg1, arg2):
-    return pcr_operations.pcrand(arg1, arg2)
+    return from_pcr(pcr_operations.pcrand(to_pcr(arg1), to_pcr(arg2)))
 
 def pcror(arg1, arg2):
-    return pcr_operations.pcror(arg1, arg2)
+    return from_pcr(pcr_operations.pcror(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrxor(arg1, arg2):
-    return pcr_operations.pcrxor(arg1, arg2)
+    return from_pcr(pcr_operations.pcrxor(to_pcr(arg1), to_pcr(arg2)))
 
 def pcrnot(arg1):
-    return pcr_operations.pcrnot(arg1)
+    return from_pcr(pcr_operations.pcrnot(to_pcr(arg1)))
 
 def sin(arg1):
-    return pcr_operations.sin(arg1)
+    return from_pcr(pcr_operations.sin(to_pcr(arg1)))
 
 def cos(arg1):
-    return pcr_operations.cos(arg1)
+    return from_pcr(pcr_operations.cos(to_pcr(arg1)))
 
 def tan(arg1):
-    return pcr_operations.tan(arg1)
+    return from_pcr(pcr_operations.tan(to_pcr(arg1)))
 
 def asin(arg1):
-    return pcr_operations.asin(arg1)
+    return from_pcr(pcr_operations.asin(to_pcr(arg1)))
 
 def acos(arg1):
-    return pcr_operations.acos(arg1)
+    return from_pcr(pcr_operations.acos(to_pcr(arg1)))
 
 def atan(arg1):
-    return pcr_operations.atan(arg1)
+    return from_pcr(pcr_operations.atan(to_pcr(arg1)))
 
 def abs(arg1):
-    return pcr_operations.abs(arg1)
+    return from_pcr(pcr_operations.abs(to_pcr(arg1)))
 
 def exp(arg1):
-    return pcr_operations.exp(arg1)
+    return from_pcr(pcr_operations.exp(to_pcr(arg1)))
 
 # def fac(arg1):
 # def rounddown(arg1):
@@ -186,18 +241,20 @@ def exp(arg1):
 # def roundoff(arg1):
 
 def sqrt(arg1):
-    return pcr_operations.sqrt(arg1)
+    return from_pcr(pcr_operations.sqrt(to_pcr(arg1)))
 
 # def sqr(arg1):
-# def normal(arg1):
+def normal(arg1):
+    return from_pcr(pcr_operations.normal(to_pcr(arg1)))
+
 # def uniform(arg1):
 
 def xcoordinate(arg1):
-    return pcr_operations.xcoordinate(arg1)
+    return from_pcr(pcr_operations.xcoordinate(to_pcr(arg1)))
     
 
 def ycoordinate(arg1):
-    return pcr_operations.ycoordinate(arg1)
+    return from_pcr(pcr_operations.ycoordinate(to_pcr(arg1)))
         
         
 # def uniqueid(arg1):
@@ -208,7 +265,11 @@ def ycoordinate(arg1):
 # def cellarea():
 # def time():
 # def timeslice():
-# def mapnormal():
+
+def mapnormal():
+    print 'calling map normal'
+    return from_pcr(pcr_operations.mapnormal())
+    
 # def mapuniform():
 # def succ(arg1):
 # def pred(arg1):
@@ -216,18 +277,18 @@ def ycoordinate(arg1):
 # def nodirection(arg1):
 
 def mapminimum(arg1):
-    return pcr_operations.mapminimum(arg1)
+    return from_pcr(pcr_operations.mapminimum(to_pcr(arg1)))
     
 def mapmaximum(arg1):
-    return pcr_operations.mapmaximum(arg1)
+    return from_pcr(pcr_operations.mapmaximum(to_pcr(arg1)))
 
 def defined(arg1):
-    return pcr_operations.defined(arg1)
+    return from_pcr(pcr_operations.defined(to_pcr(arg1)))
 
 # def maparea(arg1):
 
 def spatial(arg1):
-    return pcr_operations.spatial(arg1)
+    return from_pcr(pcr_operations.spatial(to_pcr(arg1)))
 
 # def accustate(arg1, arg2):
 # def accuflux(arg1, arg2):
@@ -238,18 +299,23 @@ def spatial(arg1):
 # def lookuppotential(arg1, arg2, arg3, arg4, arg5):
 # def accucapacitystate(arg1, arg2, arg3):
 # def accucapacityflux(arg1, arg2, arg3):
-# def accuthresholdstate(arg1, arg2, arg3):
-# def accuthresholdflux(arg1, arg2, arg3):
+
+def accuthresholdstate(arg1, arg2, arg3):
+    return from_pcr(pcr_operations.accuthresholdstate(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
+
+def accuthresholdflux(arg1, arg2, arg3):
+    return from_pcr(pcr_operations.accuthresholdflux(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
+ 
 # def accufractionstate(arg1, arg2, arg3):
 # def accufractionflux(arg1, arg2, arg3):
 # def accutriggerstate(arg1, arg2, arg3):
 # def accutriggerflux(arg1, arg2, arg3):
 
 def accutraveltimestate(arg1, arg2, arg3):
-    return pcr_operations.accutraveltimestate(arg1, arg2, arg3)
+    return from_pcr(pcr_operations.accutraveltimestate(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
 
 def accutraveltimeflux(arg1, arg2, arg3):
-    return pcr_operations.accutraveltimeflux(arg1, arg2, arg3)
+    return from_pcr(pcr_operations.accutraveltimeflux(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
  
 # def accutraveltimefractionremoved(arg1, arg2, arg3, arg4):
 # def accutraveltimefractionstate(arg1, arg2, arg3, arg4):
@@ -262,7 +328,7 @@ def accutraveltimeflux(arg1, arg2, arg3):
 # def timeoutput(arg1, arg2):
 
 def maptotal(arg1):
-    return pcr_operations.maptotal(arg1)
+    return from_pcr(pcr_operations.maptotal(to_pcr(arg1)))
 
 # def mapand(arg1):
 # def mapor(arg1):
@@ -299,10 +365,10 @@ def maptotal(arg1):
 # def windowhighpass(arg1, arg2):
 
 def ldddist(arg1, arg2, arg3):
-    return pcr_operations.ldddist(arg1, arg2, arg3)
+    return from_pcr(pcr_operations.ldddist(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3)))
 
 def upstream(arg1, arg2):
-    return pcr_operations.upstream(arg1, arg2)
+    return from_pcr(pcr_operations.upstream(to_pcr(arg1), to_pcr(arg2)))
 
 # def streamorder(arg1):
 # def transient(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
@@ -311,10 +377,12 @@ def upstream(arg1, arg2):
 # def lddmask(arg1, arg2):
 
 def lddrepair(arg1):
-    return pcr_operations.lddrepair(arg1)
+    return from_pcr(pcr_operations.lddrepair(to_pcr(arg1)))
 
 # def slopelength(arg1, arg2):
-# def lddcreate(arg1, arg2, arg3, arg4, arg5):
+def lddcreate(arg1, arg2, arg3, arg4, arg5):
+    return from_pcr(pcr_operations.lddcreate(to_pcr(arg1), to_pcr(arg2), to_pcr(arg3), to_pcr(arg4), to_pcr(arg5)))
+    
 # def lddcreatedem(arg1, arg2, arg3, arg4, arg5):
 # def lddcreatend(arg1, arg2, arg3, arg4, arg5):
 # def lddcreatenddem(arg1, arg2, arg3, arg4, arg5):

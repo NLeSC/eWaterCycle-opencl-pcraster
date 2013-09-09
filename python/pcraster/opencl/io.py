@@ -8,9 +8,17 @@ Created on May 7, 2013
 '''
 
 import pcraster._pcraster as _pcraster
-from pcraster.opencl.field import OpenCLField
+from pcraster.opencl.map import OpenCLMap
 
 Scalar = _pcraster.Scalar
+
+clone = None
+
+def clone():
+    '''Get the clone map
+    '''
+    print "get clone in opencl pcraster"
+    return clone
 
 def setclone(filename):
     '''Set the clone.
@@ -19,6 +27,7 @@ def setclone(filename):
     '''
     print "set clone in opencl pcraster"
     _pcraster.setclone(filename)
+    clone = OpenCLMap(_pcraster.clone())
 
 # def report(source, destination):
 # FIXME: also support a filename as a source for report
@@ -46,7 +55,7 @@ def readmap(filename):
     
     pcrmap = _pcraster.readmap(filename)
     
-    return OpenCLField(pcrmap)
+    return OpenCLMap(pcrmap)
     
 
 # def cellvalue(map, index):

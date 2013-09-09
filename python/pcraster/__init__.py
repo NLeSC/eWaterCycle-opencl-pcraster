@@ -1,6 +1,6 @@
 #Note: order is significant!
 
-use_opencl = True
+use_opencl = False
 
 if use_opencl:
     from pcraster.opencl import *
