@@ -195,8 +195,6 @@ def max(arg1, *arg2):
         arg2[i] = _pcraster.newNonSpatialField(arg2[i])
     operator = _pcraster._major2op(_pcraster.MAJOR_CODE.OP_MAX)
     results = []
-    
-    print 'maxing on' + str(len(arg2))
     for i in range(len(arg2)):
       _pcraster._rte().pushField(arg1)
       _pcraster._rte().pushField(arg2[i])

@@ -85,9 +85,9 @@ def cellvalue(map, row, col = -1):
     See also: cellvalue(map, index)
     '''
     if col == -1:
-        return _pcraster.cellvalue(map, row)
+        return _pcraster.cellvalue(map.pcrmap, row)
     
-    return _pcraster.cellvalue(map, row, col)
+    return _pcraster.cellvalue(map.pcrmap, row, col)
     
 def setglobaloption(option):
     '''Set the global option.

@@ -6,18 +6,19 @@ Created on May 8, 2013
 
 @author: niels
 '''
-def pcr_as_numpy(
-        map,
-        mv):
-    """
-    View a map as a numpy array. Changes in map will be reflected in numpy array and vice versa
-
-    map -- Map you want to convert.
-    mv -- Value to use in the result array cells as a missing value.
-
-    Returns an array.
-    """
-    return pcr.pcr_as_numpy(pcr.clone(), map, mv)
+# def pcr_as_numpy(
+#         map,
+#         mv):
+#     """
+#     View a map as a numpy array. Changes in map will be reflected in numpy array and vice versa
+# 
+#     map -- Map you want to convert.
+#     mv -- Value to use in the result array cells as a missing value.
+# 
+#     Returns an array.
+#     """
+#     return pcr.pcr_as_numpy(pcr.clone(), map.pcrmap, mv)
+from pcraster.opencl.map import OpenCLMap
 
 def pcr2numpy(
         map,
@@ -30,7 +31,7 @@ def pcr2numpy(
 
     Returns an array.
     """
-    return pcr.pcr2numpy(pcr.clone(), map, mv)
+    return pcr.pcr2numpy(pcr.clone(), map.pcrmap, mv)
 
 
 def numpy2pcr(
@@ -50,4 +51,4 @@ def numpy2pcr(
     if dataType == pcr.Scalar or dataType == pcr.Directional:
         array = array.astype(numpy.float64)
 
-    return pcr.numpy2pcr(pcr.clone(), dataType, array, mv)
+    return OpenCLMap(pcr.numpy2pcr(pcr.clone(), dataType, array, mv))

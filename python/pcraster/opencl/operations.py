@@ -22,7 +22,7 @@ def to_pcr(argument):
         raise Exception('OpenCL PCRaster cannot handle argument: ' + str(argument))
     
 def from_pcr(result):
-    print 'converting to pcr ' + str(result)
+    print 'converting from pcr ' + str(result)
     
     #normal case, result is a map
     if result.isSpatial():
@@ -30,7 +30,8 @@ def from_pcr(result):
         return OpenCLMap(result)
     
     #corner case: result is a single number (or boolean). Return a standard python value 
-    
+    return OpenCLMap(result)
+
     value, isValid = _pcraster.cellvalue(result, 0)
     
     if not isValid:
@@ -288,6 +289,8 @@ def defined(arg1):
 # def maparea(arg1):
 
 def spatial(arg1):
+    print "spatial argument"
+    print arg1
     return from_pcr(pcr_operations.spatial(to_pcr(arg1)))
 
 # def accustate(arg1, arg2):
