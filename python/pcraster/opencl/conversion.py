@@ -18,7 +18,7 @@ Created on May 8, 2013
 #     Returns an array.
 #     """
 #     return pcr.pcr_as_numpy(pcr.clone(), map.pcrmap, mv)
-from pcraster.opencl.map import OpenCLMap
+from pcraster.opencl.field import Field
 
 def pcr2numpy(
         map,
@@ -51,4 +51,4 @@ def numpy2pcr(
     if dataType == pcr.Scalar or dataType == pcr.Directional:
         array = array.astype(numpy.float64)
 
-    return OpenCLMap(pcr.numpy2pcr(pcr.clone(), dataType, array, mv))
+    return Field(pcr.numpy2pcr(pcr.clone(), dataType, array, mv))

@@ -4,22 +4,54 @@ Created on Sep 6, 2013
 @author: niels
 '''
 
-import operations
+import native_operations as operations
+from pcraster import _pcraster
+from pcraster import numpy_operations
 
-class OpenCLMap(object):
+import pyopencl
+from . import io
+import numpy
 
-    def __init__(self, pcrmap):
-        self.pcrmap = pcrmap 
+class Field(object):
+
+    def __init__(self, opencl_context, original = None):
+        if original is None:
+            self.is_spatial = True
+            
+        elif isinstance(original, _pcraster.Field):
+            if original.dataType != _pcraster.Scalar:
+                raise Exception("OpenCL PCRaster only supports scalar fields")
+            
+            self.is_spatial = original.isSpatial
+            self.buffer = self.create_opencl_buffer(opencl_context)
+            
+            self.copy_from_pcraster_field(opencl_context, original)
         
-    def toPcrMap(self):
-        return self.pcrmap
+    def is_spatial(self):
+        return self.is_spatial
+
+    def create_opencl_buffer(self, opencl_context):
+        clone = io.clone()
+
+        if self.is_spatial:
+            self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone.map_data_size)
+        else:
+            #single data item
+            self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, numpy.float32.itemsize)
+
+    def copy_from_pcraster_field(self, opencl_context, pcraster_field):
+        numpy_array = numpy_operations.pcr_as_numpy(pcraster_field)
+        
     
-    # Some syntactic sugar to allow the use of operators on Maps.
+    def to_pcraster_field(self):
+        pass
+    
+    # Some syntactic sugar to allow the use of operators on fields.
     # See http://docs.python.org/2/reference/datamodel.html#emulating-numeric-types
     # Note the reverse of the arguments in all reflected(swapped) operands when calling the operation
     #
     # TODO: also add in-place operators such as "+="
-        
+    
     def __and__(self, other):
         return operations.pcrand(self, other)
      
@@ -104,11 +136,17 @@ class OpenCLMap(object):
      
     def __pos__(self):
         return operations.pcruadd(self)
-     
-     
-    #FIXME: we do not support non-spacial fields in OpenCL Python
-    #def _bool(self):
-    #def _int(self):
-    #def _float(self):
-    #def__nonzero__(self):
-     
+    
+    #TODO: implement
+    
+    def _bool(self):
+        raise Exception("Not implemented")
+    
+    def _int(self):
+        raise Exception("Not implemented")
+
+    def _float(self):
+        raise Exception("Not implemented")
+            
+    def __nonzero__(self):
+        raise Exception("Not implemented")

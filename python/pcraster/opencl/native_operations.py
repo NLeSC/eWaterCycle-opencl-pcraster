@@ -1,56 +1,60 @@
 '''
+Operations implemented using pcraster
+
 Created on May 8, 2013
 
 @author: niels
 '''
 
 import pcraster.operations as pcr_operations
-from pcraster.opencl.map import OpenCLMap
+from pcraster.opencl.field import Field
 import types
 from pcraster import _pcraster
+import traceback
 
 def to_pcr(argument):
     if isinstance(argument, types.StringTypes) or isinstance(argument, types.IntType) or isinstance(argument, types.LongType) or isinstance(argument, types.FloatType):
-        #filenames and number types handled by pcraster
+        #filenames and primitive number types handled by pcraster
         return argument
-    elif isinstance(argument, OpenCLMap):
-        return argument.toPcrMap()
-    elif isinstance(argument, _pcraster.Field):
-        print 'warning: conversion to PCRaster of already PCRaster field'
-        return argument
+    elif isinstance(argument, Field):
+        return argument.toPcr()
     else:
         raise Exception('OpenCL PCRaster cannot handle argument: ' + str(argument))
     
 def from_pcr(result):
-    print 'converting from pcr ' + str(result)
-    
-    #normal case, result is a map
-    if result.isSpatial():
-        print 'making a map from ' + str(result)
-        return OpenCLMap(result)
-    
-    #corner case: result is a single number (or boolean). Return a standard python value 
-    return OpenCLMap(result)
+    #print 'converting from pcr ' + str(result)
 
-    value, isValid = _pcraster.cellvalue(result, 0)
-    
-    if not isValid:
-        print 'not valid'
-        return None 
-    elif result.dataType() == _pcraster.Boolean:
-        print 'boolean'
-        return bool(value)
-    elif result.dataType() == _pcraster.Scalar:
-        print 'scalar'
-        return float(value)
-    elif result.dataType() == _pcraster.Nominal:
-        print 'nominal'
-        return int(value)
-    elif result.dataType() == _pcraster.Ordinal:
-        print 'ordinal'
-        return int(value)
-    else:
-        raise Exception('Unsupported data type in conversion ' + result.dataType())
+    return Field(result)
+
+
+#     #normal case, result is a map
+#     if result.isSpatial():
+#         return Field(result)
+#      
+#     #corner case: result is a single number (or boolean). Return a standard python value
+#      
+#     value, isValid = _pcraster.cellvalue(result, 0)
+#      
+#     if not isValid:
+#         print 'not valid'
+#         return None 
+#     elif result.dataType() == _pcraster.Boolean:
+#         print 'boolean'
+#         return bool(value)
+#     elif result.dataType() == _pcraster.Scalar:
+#         print 'scalar'
+#         return float(value)
+#     elif result.dataType() == _pcraster.Nominal:
+#         print 'nominal'
+#         return int(value)
+#     elif result.dataType() == _pcraster.Ordinal:
+#         print 'ordinal'
+#         return int(value)
+#     elif result.dataType() == _pcraster.Directional:
+#         print 'directional'
+#         return float(value)
+#     else:
+#         raise Exception('Unsupported data type in conversion ' + str(result.dataType()))
     
 def list_to_pcr(*arguments):
     result = [len(arguments)]
@@ -60,6 +64,7 @@ def list_to_pcr(*arguments):
         result[count] = to_pcr(argument)
     
     return result
+
     
 def ifthen(arg1, arg2):
     return from_pcr(pcr_operations.ifthen(to_pcr(arg1), to_pcr(arg2)))
@@ -89,7 +94,6 @@ def min(arg1, *arg2):
     return from_pcr(pcr_operations.min(to_pcr(arg1), *list_to_pcr(*arg2)))
 
 def max(arg1, *arg2):
-    print 'maxcl on ' + str(len(arg2))
     return from_pcr(pcr_operations.max(to_pcr(arg1), *list_to_pcr(*arg2)))
 
 def cover(arg1, *arg2):
@@ -185,12 +189,15 @@ def lookupscalar(arg1, *arg2):
 def ldd(arg1):
     return from_pcr(pcr_operations.ldd(to_pcr(arg1)))
 
-# def directional(arg1):
+def directional(arg1):
+    return from_pcr(pcr_operations.directional(to_pcr(arg1)))
 
 def scalar(arg1):
-    return from_pcr(pcr_operations.scalar(to_pcr(arg1)))
+     return from_pcr(pcr_operations.scalar(to_pcr(arg1)))
     
-# def boolean(arg1):
+def boolean(arg1):
+    return from_pcr(pcr_operations.boolean(to_pcr(arg1)))
+
 
 def nominal(arg1):
     return from_pcr(pcr_operations.nominal(to_pcr(arg1)))
@@ -289,8 +296,6 @@ def defined(arg1):
 # def maparea(arg1):
 
 def spatial(arg1):
-    print "spatial argument"
-    print arg1
     return from_pcr(pcr_operations.spatial(to_pcr(arg1)))
 
 # def accustate(arg1, arg2):
