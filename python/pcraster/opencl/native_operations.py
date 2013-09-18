@@ -9,8 +9,6 @@ Created on May 8, 2013
 import pcraster.operations as pcr_operations
 from pcraster.opencl.field import Field
 import types
-from pcraster import _pcraster
-import traceback
 
 def to_pcr(argument):
     if isinstance(argument, types.StringTypes) or isinstance(argument, types.IntType) or isinstance(argument, types.LongType) or isinstance(argument, types.FloatType):
@@ -402,3 +400,5 @@ def lddcreate(arg1, arg2, arg3, arg4, arg5):
 # def diver(arg1, arg2, arg3, arg4):
 # def lax(arg1, arg2):
 # def laplacian(arg1):
+
+

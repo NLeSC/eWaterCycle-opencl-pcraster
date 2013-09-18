@@ -7,9 +7,9 @@ Created on Sep 6, 2013
 import native_operations as operations
 from pcraster import _pcraster
 from pcraster import numpy_operations
+from . import clone
 
 import pyopencl
-from . import io
 import numpy
 
 class Field(object):
@@ -31,7 +31,7 @@ class Field(object):
         return self.is_spatial
 
     def create_opencl_buffer(self, opencl_context):
-        clone = io.clone()
+        clone = clone.clone()
 
         if self.is_spatial:
             self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone.map_data_size)
@@ -40,7 +40,8 @@ class Field(object):
             self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, numpy.float32.itemsize)
 
     def copy_from_pcraster_field(self, opencl_context, pcraster_field):
-        numpy_array = numpy_operations.pcr_as_numpy(pcraster_field)
+        #numpy_array = numpy_operations.pcr_as_numpy(pcraster_field)
+        pass
         
     
     def to_pcraster_field(self):

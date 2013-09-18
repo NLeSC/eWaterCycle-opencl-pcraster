@@ -45,3 +45,15 @@ def numpy2pcr(
         array = array.astype(numpy.float64)
 
     return _pcraster.numpy2pcr(_pcraster.clone(), dataType, array, mv)
+
+
+def pcr_as_numpy(
+        map):
+    """
+    Reference PCRaster maps from NumPy arrays.
+
+    map -- Map to reference.
+
+    Returns an array.
+    """
+    return _pcraster.pcr_as_numpy(_pcraster.clone(), map)
