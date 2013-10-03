@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Changes &mdash; PCRaster 4.0.0-beta-20130917 documentation</title>
+    <title>Changes &mdash; PCRaster 4.0.0-beta-20131003 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '4.0.0-beta-20130917',
+        VERSION:     '4.0.0-beta-20131003',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PCRaster 4.0.0-beta-20130917 documentation" href="index.html" />
+    <link rel="top" title="PCRaster 4.0.0-beta-20131003 documentation" href="index.html" />
     <link rel="prev" title="Develop PCRaster" href="develop.html" /> 
   </head>
   <body>
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="develop.html" title="Develop PCRaster"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PCRaster 4.0.0-beta-20130917 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PCRaster 4.0.0-beta-20131003 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -75,6 +75,8 @@
 <li>PCRaster Python package uses lower case names for package names. Update all PCRaster related imports and change them to lower case. See also the <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">Style Guide for Python Code</a>.</li>
 <li>Removed <tt class="docutils literal"><span class="pre">pcraster.numpy</span></tt> sub-package. Numpy functionality is merged in the <tt class="docutils literal"><span class="pre">pcraster</span></tt> main package and available without an explicit import of the <tt class="docutils literal"><span class="pre">numpy</span></tt> sub-package. Remove any import of <tt class="docutils literal"><span class="pre">pcraster.numpy</span></tt> and rename any calls of <tt class="docutils literal"><span class="pre">pcraster.numpy.pcr2numpy</span></tt> and <tt class="docutils literal"><span class="pre">pcraster.numpy.numpy2pcr</span></tt> to <tt class="docutils literal"><span class="pre">pcraster.pcr2numpy</span></tt> and <tt class="docutils literal"><span class="pre">pcraster.numpy2pcr</span></tt>.</li>
 <li>Removed <tt class="docutils literal"><span class="pre">pcr2numarray</span></tt> and <tt class="docutils literal"><span class="pre">numarray2pcr</span></tt> which were already deprecated. Use <tt class="docutils literal"><span class="pre">pcr2numpy</span></tt> and <tt class="docutils literal"><span class="pre">numpy2pcr</span></tt>.</li>
+<li>Reimplemented <tt class="docutils literal"><span class="pre">numpy2pcr</span></tt>. It is faster now.</li>
+<li>Added a <cite>setclone</cite> overload taking <cite>nrRows</cite>, <cite>nrCols</cite>, <cite>cellSize</cite>, <cite>west</cite>, <cite>north</cite>. No need to pass the name of an existing raster anymore.</li>
 </ul>
 </div>
 <div class="section" id="modflow-extension">
@@ -141,7 +143,7 @@
         <li class="right" >
           <a href="develop.html" title="Develop PCRaster"
              >previous</a> |</li>
-        <li><a href="index.html">PCRaster 4.0.0-beta-20130917 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PCRaster 4.0.0-beta-20131003 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Install PCRaster &mdash; PCRaster 4.0.0-beta-20130917 documentation</title>
+    <title>Install PCRaster &mdash; PCRaster 4.0.0-beta-20131003 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '4.0.0-beta-20130917',
+        VERSION:     '4.0.0-beta-20131003',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PCRaster 4.0.0-beta-20130917 documentation" href="index.html" />
+    <link rel="top" title="PCRaster 4.0.0-beta-20131003 documentation" href="index.html" />
     <link rel="next" title="Build PCRaster" href="build.html" />
     <link rel="prev" title="Welcome to PCRaster’s documentation!" href="index.html" /> 
   </head>
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to PCRaster’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PCRaster 4.0.0-beta-20130917 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PCRaster 4.0.0-beta-20131003 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -119,6 +119,22 @@ tar zxf /tmp/pcraster-lsbcc-4_x86-64.tar.gz
 </li>
 </ol>
 <p>On other versions of Windows a similar procedure must be folowed.</p>
+<p>An alternative is to create a batch script that can be run before using PCRaster:</p>
+<div class="highlight-bat"><div class="highlight"><pre><span class="c">rem Configure environment for use of Python.</span>
+<span class="k">set</span> <span class="nv">python_root</span><span class="o">=</span>C:\Python<span class="m">27</span>
+<span class="k">set</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">%python_root%</span>;<span class="nv">%PATH%</span>
+<span class="k">set</span> <span class="nv">python_root</span><span class="o">=</span>
+
+<span class="c">rem Configure environment for use of PCRaster.</span>
+<span class="c">rem This variable is different for each version of PCRaster.</span>
+<span class="k">set</span> <span class="nv">pcraster_version</span><span class="o">=</span>pcraster<span class="m">-4</span>.<span class="m">0</span>.<span class="m">0</span>-beta<span class="m">-20130917</span>_x<span class="m">86-32</span>_msvs<span class="m">-9</span>
+<span class="k">set</span> <span class="nv">pcraster_root</span><span class="o">=</span><span class="nv">%HOMEPATH%</span>\Desktop\<span class="nv">%pcraster_version%</span>
+<span class="k">set</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">%pcraster_root%</span>\bin;<span class="nv">%PATH%</span>
+<span class="k">set</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">%pcraster_root%</span>\python;<span class="nv">%PYTHONPATH%</span>
+<span class="k">set</span> <span class="nv">pcraster_root</span><span class="o">=</span>
+<span class="k">set</span> <span class="nv">pcraster_version</span><span class="o">=</span>
+</pre></div>
+</div>
 <p>PCRaster is now installed and ready to be used.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -194,7 +210,7 @@ tar zxf /tmp/pcraster-lsbcc-4_x86-64.tar.gz
         <li class="right" >
           <a href="index.html" title="Welcome to PCRaster’s documentation!"
              >previous</a> |</li>
-        <li><a href="index.html">PCRaster 4.0.0-beta-20130917 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PCRaster 4.0.0-beta-20131003 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

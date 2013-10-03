@@ -41,9 +41,6 @@ def numpy2pcr(
 
     Returns a map.
     """
-    if dataType == _pcraster.Scalar or dataType == _pcraster.Directional:
-        array = array.astype(numpy.float64)
-
     return _pcraster.numpy2pcr(_pcraster.clone(), dataType, array, mv)
 
 
