@@ -15,4 +15,4 @@ class RasterSpace(object):
         self.west = west
         self.cellSize = cellSize
         
-        self.map_data_size = nrRows * nrCols * numpy.float32.itemsize
+        self.map_data_size = nrRows * nrCols * numpy.dtype(numpy.float32).itemsize

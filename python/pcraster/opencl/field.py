@@ -7,14 +7,15 @@ Created on Sep 6, 2013
 import native_operations as operations
 from pcraster import _pcraster
 from pcraster import numpy_operations
-from . import clone
 
 import pyopencl
 import numpy
+from pcraster.opencl.rasterspace import RasterSpace
+from pcraster.opencl import clone
 
 class Field(object):
 
-    def __init__(self, opencl_context, original = None):
+    def __init__(self, opencl_context, original=None):
         if original is None:
             self.is_spatial = True
             
@@ -31,18 +32,18 @@ class Field(object):
         return self.is_spatial
 
     def create_opencl_buffer(self, opencl_context):
-        clone = clone.clone()
+        clone_space = clone.clone()
 
         if self.is_spatial:
-            self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone.map_data_size)
+            self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone_space.map_data_size)
         else:
-            #single data item
-            self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, numpy.float32.itemsize)
+            # single data item
+            self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, numpy.dtype(numpy.float32).itemsize)
 
     def copy_from_pcraster_field(self, opencl_context, pcraster_field):
         numpy_array = numpy_operations.pcr_as_numpy(pcraster_field)
-        self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone.map_data_size)
-        #pyopencl.en
+        self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone().map_data_size)
+        # pyopencl.en
         pass
         
     
@@ -140,7 +141,7 @@ class Field(object):
     def __pos__(self):
         return operations.pcruadd(self)
     
-    #TODO: implement
+    # TODO: implement
     
     def _bool(self):
         raise Exception("Not implemented")

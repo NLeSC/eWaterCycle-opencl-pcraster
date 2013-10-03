@@ -9,7 +9,6 @@ Created on May 7, 2013
 
 import pcraster._pcraster as _pcraster
 from pcraster.opencl.field import Field
-from pcraster.opencl.rasterspace import RasterSpace
 
 
 def report(map, filename):
