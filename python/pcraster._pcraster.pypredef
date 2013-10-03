@@ -1,0 +1,136 @@
+_rte = RunTime    
+
+def report(map, filename):
+    ''''Write a map to a file.
+    
+    @type map: Field
+    @type filename: String
+    '''
+    
+def readmap(filename):
+    '''Read a map.
+
+    @type filename String    
+    '''
+    return Field
+    
+    
+def clone():
+    '''return the clone RasterSpace
+    '''
+    
+    return RasterSpace
+    
+def setclone(filename):
+    '''Set the clone. Either from a file (supply filename) or from nrRows, nrCols, cellSize, west and north.
+    
+    @type filename String
+    '''
+    
+def cellvalue(map, row, col = -1):
+    '''Return a cell value from a map.
+    
+    map -- Map you want to query.
+    row -- Row index of a cell in the map, ranging from [1, number-of-rows].
+    col -- Col index of a cell in the map, ranging from [1, number-of-cols].
+    
+    Returns a tuple with two elements: the first is the cell value,
+    the second is a boolean value which shows whether the first element,
+    is valid or not.
+    If the second element is False, the cell contains a missing value.
+    See also: cellvalue(map, index)
+    
+    @type map Field
+    @type row int
+    @type col int
+    '''
+    return float, boolean
+    
+def setrandomseed(seed):
+    '''Set the random seed.
+  
+    seed -- An integer value >= 0. If the seed is 0 then the seed is taken
+            from the current time.\n
+          
+    @type seed int   
+    '''  
+    
+    
+def pcr2numpy(
+        map,
+        mv):
+    """
+    Convert entities from PCRaster to NumPy.
+
+    map -- Map you want to convert.
+    mv -- Value to use in the result array cells as a missing value.
+
+    Returns an array.
+    """
+    return _pcraster.pcr2numpy(_pcraster.clone(), map, mv)
+
+
+def numpy2pcr(
+        dataType,
+        array,
+        mv):
+    """
+    Convert entities from NumPy to PCRaster.
+
+    dataType -- Either Boolean, Nominal, Ordinal, Scalar, Directional or
+                Ldd.
+    array -- Array you want to convert.
+    mv -- Value that identifies a missing value in the array.
+
+    Returns a map.
+    
+    @type dataType ValueScale
+    @type array numpy.ndarray
+    @type mv float
+    """
+    return Field
+
+def pcr_as_numpy(
+        map):
+    '''
+    Reference PCRaster maps from NumPy arrays.
+
+    map -- Map to reference.
+
+    Returns an array.
+    
+    @type map Field
+    '''
+    return numpy.ndarray
+
+def newNonSpatialField(argument):
+    
+    
+class Field:
+	'''Native pcraster field'''
+		
+class Scalar:
+	'''Native pcraster Scalar'''
+
+class Directional:
+	'''Native pcraster Directional'''
+	
+class Ordinal:
+	'''Native pcraster Ordinal'''
+
+class Nominal:
+	'''Native pcraster Nominal'''
+		
+class RasterSpace:
+	nrRows = int
+	nrCols = int
+	
+class RunTime:
+    def pushField:
+        """Add a field to the pcraster runtime
+        
+        @type Field
+        """
+		
+		
+			

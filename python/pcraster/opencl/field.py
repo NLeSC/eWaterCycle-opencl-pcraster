@@ -18,14 +18,14 @@ class Field(object):
         if original is None:
             self.is_spatial = True
             
+            self.buffer = self.create_opencl_buffer(opencl_context)
+            
         elif isinstance(original, _pcraster.Field):
             if original.dataType != _pcraster.Scalar:
                 raise Exception("OpenCL PCRaster only supports scalar fields")
             
             self.is_spatial = original.isSpatial
-            self.buffer = self.create_opencl_buffer(opencl_context)
-            
-            self.copy_from_pcraster_field(opencl_context, original)
+            self.buffer = self.copy_from_pcraster_field(opencl_context, original)
         
     def is_spatial(self):
         return self.is_spatial
@@ -40,7 +40,9 @@ class Field(object):
             self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, numpy.float32.itemsize)
 
     def copy_from_pcraster_field(self, opencl_context, pcraster_field):
-        #numpy_array = numpy_operations.pcr_as_numpy(pcraster_field)
+        numpy_array = numpy_operations.pcr_as_numpy(pcraster_field)
+        self.buffer = pyopencl.Buffer(opencl_context, pyopencl.mem_flags.READ_WRITE, clone.map_data_size)
+        #pyopencl.en
         pass
         
     
