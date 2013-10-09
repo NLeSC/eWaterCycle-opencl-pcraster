@@ -8,7 +8,7 @@ Created on May 7, 2013
 '''
 
 import pcraster._pcraster as _pcraster
-from pcraster.opencl.field import Field
+from pcraster.opencl.interface import Field
 
 
 def report(map, filename):
@@ -18,7 +18,7 @@ def report(map, filename):
     filename -- Filename to use.
     '''
     print "opencl report"
-    _pcraster.report(map.pcrmap, filename)
+    _pcraster.report(map.getPcrField(), filename)
 
 def readmap(filename):
     '''Read a map.
@@ -29,7 +29,7 @@ def readmap(filename):
     
     pcrmap = _pcraster.readmap(filename)
     
-    return Field(pcrmap)
+    return Field(pcrmap, pcrmap.isSpatial(), False)
     
 
 # def cellvalue(map, index):
@@ -59,9 +59,9 @@ def cellvalue(map, row, col = -1):
     See also: cellvalue(map, index)
     '''
     if col == -1:
-        return _pcraster.cellvalue(map.pcrmap, row)
+        return _pcraster.cellvalue(map.getPcrField(), row)
     
-    return _pcraster.cellvalue(map.pcrmap, row, col)
+    return _pcraster.cellvalue(map.getPcrField(), row, col)
     
 def setglobaloption(option):
     '''Set the global option.

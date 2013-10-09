@@ -1,59 +1,164 @@
 '''
-Operations implemented using pcraster
+Pure Python implementation of the PCRaster interface. All calls are forwarded to either PCRaster or OpenCL implementations.
 
-Created on May 8, 2013
+Created on Sep 6, 2013
 
-@author: niels
+@author: Niels Drost
 '''
 
 import pcraster.operations as pcr_operations
-from pcraster.opencl.field import Field
+import pcraster.numpy_operations as pcr_numpy_operations
+import pcraster._pcraster as pcr_native
 import types
+
+from pcraster.opencl.valuescale import *
+from pcraster.opencl.opencl import OpenCL
+
+class Field(object):
+
+    def __init__(self, backing_buffer, is_spatial, is_opencl):
+        self.backing_buffer = backing_buffer
+        self.is_spatial = is_spatial
+        self.is_opencl = is_opencl
+        
+    def isSpatial(self):
+        return self.is_spatial
+    
+    def isOpenCL(self):
+        return self.is_opencl
+    
+    def getPcrField(self):
+        if self.is_opencl:
+            raise Exception("Field is backed by an OpenCL buffer, not a PCRaster field")
+        return self.backing_buffer
+    
+    def getOpenCLBuffer(self):
+        if not self.is_opencl:
+            raise Exception("Field is backed by a PCRaster field, not an OpenCL buffer")
+        return self.backing_buffer
+    
+    # Some syntactic sugar to allow the use of operators on fields.
+    # See http://docs.python.org/2/reference/datamodel.html#emulating-numeric-types
+    # Note the reverse of the arguments in all reflected(swapped) operands when calling the operation
+    #
+    # TODO: also add in-place operators such as "+="
+    
+    def __and__(self, other):
+        return pcrand(self, other)
+     
+    def __rand__(self, other):
+        return pcrand(other, self)
+     
+    def __or__(self, other):
+        return pcror(self, other)
+     
+    def __ror__(self, other):
+        return pcror(other, self)
+     
+    def __xor__(self, other):
+        return pcrxor(self, other)
+     
+    def __invert__(self):
+        return pcrnot(self)
+     
+    def __ne__(self, other):
+        return pcrne(self, other)
+     
+    def __eq__(self, other):
+        return pcreq(self, other)
+     
+    def __gt__(self, other):
+        return pcrgt(self, other)
+     
+    def __ge__(self, other):
+        return pcrge(self, other)
+     
+    def __lt__(self, other):
+        return pcrlt(self, other)
+     
+    def __le__(self, other):
+        return pcrle(self, other)
+     
+    def __mul__(self, other):
+        return pcrmul(self, other)
+     
+    def __rmul__(self, other):
+        return pcrmul(other, self)
+     
+    def __div__(self, other):
+        return pcrfdiv(self, other)
+     
+    def __rdiv__(self, other):
+        return pcrfdiv(other, self)
+     
+    def __floordiv__(self, other):
+        return pcridiv(self, other)
+     
+    def __rfloordiv__(self, other):
+        return pcridiv(other, self)
+     
+    def __pow__(self, other):
+        return pcrpow(self, other)
+     
+    def __rpow__(self, other):
+        return pcrpow(other, self)
+     
+    def __mod__(self, other):
+        return pcrmod(self, other)
+     
+    def __rmod__(self, other):
+        return pcrmod(other, self)
+     
+    def __add__(self, other):
+        return pcrbadd(self, other)
+     
+    def __radd__(self, other):
+        print 'radd'
+        return pcrbadd(other, self)
+     
+    def __sub__(self, other):
+        return pcrbmin(self, other)
+     
+    def __rsub__(self, other):
+        return pcrbmin(other, self)
+     
+    def __neg__(self):
+        return pcrumin(self)
+     
+    def __pos__(self):
+        return pcruadd(self)
+    
+    # TODO: implement
+    
+    def _bool(self):
+        raise Exception("Not implemented")
+    
+    def _int(self):
+        raise Exception("Not implemented")
+
+    def _float(self):
+        raise Exception("Not implemented")
+            
+    def __nonzero__(self):
+        raise Exception("Not implemented")
+
+
 
 def to_pcr(argument):
     if isinstance(argument, types.StringTypes) or isinstance(argument, types.IntType) or isinstance(argument, types.LongType) or isinstance(argument, types.FloatType):
-        #filenames and primitive number types handled by pcraster
+        # filenames and primitive number types handled by pcraster
         return argument
     elif isinstance(argument, Field):
-        return argument.toPcr()
+        if argument.isOpenCL():
+            return OpenCL.convert_to_pcraster(argument)
+        else:
+            return argument.getPcrField()
     else:
         raise Exception('OpenCL PCRaster cannot handle argument: ' + str(argument))
     
 def from_pcr(result):
-    #print 'converting from pcr ' + str(result)
+    return Field(result, result.isSpatial(), False)
 
-    return Field(result)
-
-
-#     #normal case, result is a map
-#     if result.isSpatial():
-#         return Field(result)
-#      
-#     #corner case: result is a single number (or boolean). Return a standard python value
-#      
-#     value, isValid = _pcraster.cellvalue(result, 0)
-#      
-#     if not isValid:
-#         print 'not valid'
-#         return None 
-#     elif result.dataType() == _pcraster.Boolean:
-#         print 'boolean'
-#         return bool(value)
-#     elif result.dataType() == _pcraster.Scalar:
-#         print 'scalar'
-#         return float(value)
-#     elif result.dataType() == _pcraster.Nominal:
-#         print 'nominal'
-#         return int(value)
-#     elif result.dataType() == _pcraster.Ordinal:
-#         print 'ordinal'
-#         return int(value)
-#     elif result.dataType() == _pcraster.Directional:
-#         print 'directional'
-#         return float(value)
-#     else:
-#         raise Exception('Unsupported data type in conversion ' + str(result.dataType()))
-    
 def list_to_pcr(*arguments):
     result = [len(arguments)]
     
@@ -62,6 +167,39 @@ def list_to_pcr(*arguments):
         result[count] = to_pcr(argument)
     
     return result
+
+
+def pcr2numpy(
+        map,
+        mv):
+    """
+    Convert entities from PCRaster to NumPy.
+
+    map -- Map you want to convert.
+    mv -- Value to use in the result array cells as a missing value.
+
+    Returns an array.
+    """
+    return pcr_numpy_operations.pcr2numpy(map.getPcrField(), mv)
+
+
+def numpy2pcr(
+        dataType,
+        array,
+        mv):
+    """
+    Convert entities from NumPy to PCRaster.
+
+    dataType -- Either Boolean, Nominal, Ordinal, Scalar, Directional or
+                Ldd.
+    array -- Array you want to convert.
+    mv -- Value that identifies a missing value in the array.
+
+    Returns a map.
+    """
+    return from_pcr(pcr_numpy_operations.numpy2pcr(dataType.toPCR(), array, mv))
+
+# API Functions implemented by calling pcraster
 
     
 def ifthen(arg1, arg2):
@@ -191,7 +329,7 @@ def directional(arg1):
     return from_pcr(pcr_operations.directional(to_pcr(arg1)))
 
 def scalar(arg1):
-     return from_pcr(pcr_operations.scalar(to_pcr(arg1)))
+    return from_pcr(pcr_operations.scalar(to_pcr(arg1)))
     
 def boolean(arg1):
     return from_pcr(pcr_operations.boolean(to_pcr(arg1)))
@@ -250,6 +388,7 @@ def sqrt(arg1):
     return from_pcr(pcr_operations.sqrt(to_pcr(arg1)))
 
 # def sqr(arg1):
+
 def normal(arg1):
     return from_pcr(pcr_operations.normal(to_pcr(arg1)))
 
@@ -400,5 +539,7 @@ def lddcreate(arg1, arg2, arg3, arg4, arg5):
 # def diver(arg1, arg2, arg3, arg4):
 # def lax(arg1, arg2):
 # def laplacian(arg1):
+
+
 
 
